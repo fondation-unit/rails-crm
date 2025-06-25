@@ -50,12 +50,22 @@ group :development, :test do
 
   gem "syntax_tree"
   gem "faker"
+  gem "rspec-rails"
+  gem "rubocop-rspec", require: false
+  gem "factory_bot_rails"
+  gem "simplecov", require: false
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "factory_bot_rails"
+  gem "letter_opener"
 end
 
 gem "jsbundling-rails", "~> 1.3.1"
 gem "annotaterb"
+
+gem "pundit", "~> 2.5"
+
+gem "pwned", "~> 2.4"

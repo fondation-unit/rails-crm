@@ -1,0 +1,7 @@
+<h1>Welcome to Confirmable, <%= @user.email_address %></h1>
+
+<p>
+  Please, confirm your account by clicking the link below:
+  <%= link_to "Confirm my account", confirmations_url(token: @user.expiring_token) %>
+</p>
+
