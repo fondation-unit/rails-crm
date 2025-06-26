@@ -1,4 +1,4 @@
-class RegistrationsController < ApplicationController
+class Users::RegistrationsController < ApplicationController
   allow_unauthenticated_access only: %i[new create]
   before_action :resume_session, only: %i[new create]
 

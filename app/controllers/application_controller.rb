@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
     if !Current.user.can_access_app?
       terminate_session
-      redirect_to new_session_path,
+      redirect_to new_users_session_path,
                   alert:
                     "You need to confirm your account before using the app."
     end
