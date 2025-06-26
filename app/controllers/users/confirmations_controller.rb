@@ -1,4 +1,5 @@
 class Users::ConfirmationsController < ApplicationController
+  skip_before_action :require_authentication
   def create
     Current.user.send_confirmation_email
     redirect_to root_path, notice: "Confirmation email resent"
