@@ -1,4 +1,4 @@
-class RegistrationsController < ApplicationController
+class Users::RegistrationsController < ApplicationController
   allow_unauthenticated_access only: %i[new create]
   before_action :resume_session, only: %i[new create]
 
@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       start_new_session_for @user
-      ConfirmationsController.create(@user)
+      redirect_to root_path, notice: I18n.t("user.sign_up_successful")
     else
       flash[:alert] = @user.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
