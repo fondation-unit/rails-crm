@@ -1,4 +1,6 @@
 class Users::ConfirmationsController < ApplicationController
+  skip_before_action :require_authentication
+  
   layout "authentication"
 
   def create
