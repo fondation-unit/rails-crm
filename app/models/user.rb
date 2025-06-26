@@ -21,6 +21,8 @@ class User < ApplicationRecord
   generates_token_for :user_confirmation,
                       expires_in: ACCESS_BEFORE_CONFIRMATION_IN_HOURS
 
+  after_create :send_confirmation_email
+
   def confirm!
     return true if confirmed?
     update!(confirmed_at: Time.current)
