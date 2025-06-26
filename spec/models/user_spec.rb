@@ -2,16 +2,18 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   let(:user) { build(:user) }
+
   describe "validation" do
     it "must have email address" do
       puts user.inspect
       puts user.email_address
       puts user.password
-      expect(user.valid?).to be_truthy
+      expect(user).to be_valid
     end
-    it "should be saved" do
-      expect(User.count).to eq(0)
-      expect { user.save! }.to change { User.count }.by(1)
+
+    it "is saved" do
+      expect(described_class.count).to eq(0)
+      expect { user.save! }.to change(described_class, :count).by(1)
     end
   end
 end
