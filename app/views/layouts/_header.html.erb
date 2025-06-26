@@ -9,7 +9,7 @@
     <% end %>
 
     <div>
-      <% if current_user.present? %>
+      <% if !current_user.present? %>
         <%=
           link_to 'Sign in',
                   new_users_session_path,
