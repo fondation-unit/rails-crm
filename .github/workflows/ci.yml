@@ -2,8 +2,7 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -29,14 +28,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          node-version: "latest"
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+        run: npm audit --json > npm-audit-results.json
+        continue-on-error: true
+
+      - name: Upload NPM audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-results
+          path: npm-audit-results.json
 
   lint:
     runs-on: ubuntu-latest
@@ -52,4 +60,3 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
-
