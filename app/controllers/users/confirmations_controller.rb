@@ -1,4 +1,6 @@
 class Users::ConfirmationsController < ApplicationController
+  layout "authentication"
+
   def create
     Current.user.send_confirmation_email
     redirect_to root_path, notice: "Confirmation email resent"
