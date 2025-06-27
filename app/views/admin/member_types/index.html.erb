@@ -1,4 +1,7 @@
-<h1>Les membres du consortium</h1>
+<div class="d-flex w-100 justify-content-between">
+    <h1>Les membres</h1>
+    <%= link_to "Ajouter un type de membre", new_admin_member_type_path, class: "btn btn-primary align-self-center" %>
+</div>
 <%=
   render 'shared/tables/sortable_table',
          headers: [
@@ -6,8 +9,10 @@
            [:name, 'Nom'],
          ],
          objects: @membersTypes,
-         columns: %w[id],
+         columns: %w[id name],
+         
          formatters: {
            created_at: ->(membersType) { date_readable(membersType.created_at) },
+           url: ->(membersType) { edit_admin_member_type_path(membersType.id) },
          }
 %>
