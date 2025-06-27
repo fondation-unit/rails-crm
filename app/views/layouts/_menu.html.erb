@@ -1,15 +1,19 @@
 <div class="navbar-collapse collapse" id="sidebar-menu">
-    <ul class="navbar-nav pt-lg-3">
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Crm</a>
+  <ul class="navbar-nav pt-lg-3">
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Crm</a>
+    </li>
+    <li class="nav-item dropdown">
+      <%= link_to 'Les membres', root_path, class: 'nav-link dropdown-toggle' %>
+      <ul class="dropdown-menu dropdown-menu-dark show">
+        <li>
+          <%=
+            link_to 'Les types de membres',
+                    admin_member_types_path,
+                    class: 'nav-link dropdown-toggle'
+          %>
         </li>
-        <li class="nav-item dropdown">
-            <%= link_to "Les membres", root_path, class: "nav-link dropdown-toggle" %>
-            <ul class="dropdown-menu dropdown-menu-dark show">
-                <li>
-                    <%= link_to "Les types de membres", admin_memberstype_path , class: "nav-link dropdown-toggle" %>
-                </li>
-            </ul>
-        </li>
-    </ul>
+      </ul>
+    </li>
+  </ul>
 </div>
