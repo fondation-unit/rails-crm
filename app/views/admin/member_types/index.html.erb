@@ -1,0 +1,13 @@
+<h1>Les membres du consortium</h1>
+<%=
+  render 'shared/tables/sortable_table',
+         headers: [
+           [:id, '#'],
+           [:name, 'Nom'],
+         ],
+         objects: @membersTypes,
+         columns: %w[id],
+         formatters: {
+           created_at: ->(membersType) { date_readable(membersType.created_at) },
+         }
+%>
