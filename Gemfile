@@ -69,3 +69,4 @@ gem "annotaterb"
 gem "pundit", "~> 2.5"
 
 gem "pwned", "~> 2.4"
+gem "pagy", "~> 9.3.4"

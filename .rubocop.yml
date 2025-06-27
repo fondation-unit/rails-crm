@@ -13,3 +13,8 @@ RSpec/ExampleLength:
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+Naming/VariableName:
+  Enabled: true
+  EnforcedStyle: snake_case
+  AllowedPatterns: []

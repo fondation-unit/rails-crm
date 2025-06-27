@@ -1,0 +1,14 @@
+<h1>Ajouter un type de membre</h1>
+<%= form_with url: admin_member_types_path, model: @memberType, method: :post do |f| %>
+    <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control"  %>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <% if @memberType.persisted? %>
+            Mettre à jour
+        <% else %>
+            Créer
+        <% end %>
+    </button>
+<% end %>
