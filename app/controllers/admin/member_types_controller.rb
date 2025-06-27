@@ -1,6 +1,4 @@
-class Admin::MemberTypesController < ApplicationController
-  before_action :require_authentication
-
+class Admin::MemberTypesController < Admin::AdminController
   def index
   end
 

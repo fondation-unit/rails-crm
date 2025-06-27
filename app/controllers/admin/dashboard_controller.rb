@@ -1,5 +1,4 @@
-class Admin::DashboardController < ApplicationController
-  before_action :require_authentication
+class Admin::DashboardController < Admin::AdminController
   def index
   end
 end
