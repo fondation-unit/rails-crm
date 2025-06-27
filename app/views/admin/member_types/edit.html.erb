@@ -1,5 +1,5 @@
 <h1>Ajouter un type de membre</h1>
-<%= form_with url: admin_member_types_path, model: @member_type, method: :post do |f| %>
+<%= form_with url: admin_member_type_path(@member_type), model: @member_type, method: :put do |f| %>
     <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, class: "form-control"  %>
