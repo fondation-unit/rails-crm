@@ -1,0 +1,61 @@
+<% content_for :title, I18n.t('Sign in') %>
+
+<%= form_with url: users_session_path do |form| %>
+  <div class="email mb-3">
+    <label class="sr-only" for="signin-email">Email</label>
+    <%=
+      form.email_field :email_address,
+                       required: true,
+                       autofocus: true,
+                       class: 'form-control signin-email',
+                       autocomplete: 'username',
+                       placeholder: 'Saisissez votre email'
+    %>
+  </div>
+
+  <div class="password mb-3">
+    <label class="sr-only" for="signin-password">Mot de passe</label>
+
+    <%=
+      form.password_field :password,
+                          required: true,
+                          class: 'form-control signin-password',
+                          autocomplete: 'current-password',
+                          placeholder: 'Saisissez votre mot de passe',
+                          maxlength: 72
+    %><br />
+
+    <div class="extra mt-3 row justify-content-between">
+      <div class="col-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="RememberPassword"
+          />
+          <label class="form-check-label" for="RememberPassword">
+            Se souvenir de moi
+          </label>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="forgot-password text-end">
+          <%= link_to 'Mot de passe oublié ?', new_users_password_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <%=
+      form.submit 'Se connecter',
+                  class: 'btn btn-primary w-100 theme-btn mx-auto'
+    %>
+  </div>
+<% end %>
+<div class="auth-option text-center pt-5">
+  Pas encore de compte ? Inscrivez-vous
+  <%= link_to 'ici', new_users_registrations_url, class: 'text-link' %>.
+</div>
