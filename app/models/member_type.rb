@@ -1,3 +1,3 @@
-class MembersType < ApplicationRecord
+class MemberType < ApplicationRecord
   validates :name, presence: true
 end

@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.string :last_name, null: false
       t.string :email_address, null: false
       t.string :password_digest, null: false
+      t.datetime :confirmation_sent_at, null: true
+      t.datetime :confirmed_at, null: true
 
       t.timestamps
     end
