@@ -50,14 +50,8 @@
             </h2>
 
             <div class="auth-form-container text-start">
-                <%=
-                  tag.div(flash[:alert], style: 'color:red') if flash[:alert]
-                %>
-                <%=
-                  if flash[:notice]
-                    tag.div(flash[:notice], style: 'color:green')
-                  end
-                %>
+                <%= tag.div(flash[:alert], style: 'color:red') if flash[:alert] %>
+                <%= tag.div(flash[:notice], style: 'color:green') if flash[:notice] %>
 
                 <%= yield %>
 

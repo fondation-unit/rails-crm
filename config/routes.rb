@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :dashboard
     resources :member_types
+    resources :members
   end
 end

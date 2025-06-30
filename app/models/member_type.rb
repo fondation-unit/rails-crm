@@ -1,4 +1,5 @@
 class MemberType < ApplicationRecord
+  has_and_belongs_to_many :member
   validates :name, presence: true
 end
 
