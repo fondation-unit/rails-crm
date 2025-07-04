@@ -1,0 +1,69 @@
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "embeddedLanguageFormatting": "auto",
+  "htmlWhitespaceSensitivity": "css",
+  "insertPragma": false,
+  "jsxBracketSameLine": false,
+  "jsxSingleQuote": true,
+  "proseWrap": "preserve",
+  "quoteProps": "as-needed",
+  "requirePragma": false,
+  "vueIndentScriptAndStyle": false,
+  "overrides": [
+    {
+      "files": "*.erb",
+      "options": {
+        "parser": "html",
+        "printWidth": 120,
+        "tabWidth": 2,
+        "htmlWhitespaceSensitivity": "ignore"
+      }
+    },
+    {
+      "files": ["*.scss", "*.sass"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": true,
+        "cssDeclarationSorterOrder": "smacss",
+        "colorFormat": "hex",
+        "lowerCaseHex": true,
+        "hexColorShort": true,
+        "keepSingleLineBlocks": true
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "options": {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "options": {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2,
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

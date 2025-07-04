@@ -1,0 +1,13 @@
+<%= form_with url: url, model: member_type do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <button type="submit" class="btn btn-primary">
+    <% if @member_type.persisted? %>
+      Mettre à jour
+    <% else %>
+      Créer
+    <% end %>
+  </button>
+<% end %>
