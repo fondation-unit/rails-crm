@@ -1,7 +1,7 @@
 class Admin::MembersController < Admin::AdminController
   def index
-    @members = Member.all
-    @pagy, @records = pagy(@members)
+    members = Member.all
+    @pagy, @records = pagy(members)
   end
 
   def new
