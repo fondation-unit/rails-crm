@@ -7,17 +7,11 @@ class Admin::MembersController < Admin::AdminController
   def new
     @member = Member.new
     @member_types = MemberType.all.order("name" => "asc")
-    @current_member_types = []
   end
 
   def create
-    if @member = Member.create!(member_params)
-      @member_types = params[:member_types]
-      @member_types.each do |mtype|
-        @member_type = MemberType.find(mtype)
-        @member.member_types << @member_type
-      end
-
+    @member = Member.new(member_params)
+    if @member.save
       redirect_to admin_members_path, notice: "Membre #{@member.name} créé"
     else
       render :new
@@ -27,11 +21,14 @@ class Admin::MembersController < Admin::AdminController
   def edit
     @member = Member.find(params[:id])
     @member_types = MemberType.all.order("name" => "asc")
-    @current_member_types = @member.member_types
-    #raise @current_member_types.inspect
   end
 
   def update
+    @member = Member.find(params[:id])
+    if @member.update(member_params)
+      redirect_to admin_members_path,
+                  notice: "Membre \"#{@member.name}\" mis à jour"
+    end
   end
 
   def destroy
@@ -45,6 +42,8 @@ class Admin::MembersController < Admin::AdminController
   private
 
   def member_params
-    params.expect(member: %i[name address zip_code city logo member_types])
+    params.expect(
+      member: [:name, :address, :zip_code, :city, :logo, member_type_ids: []]
+    )
   end
 end

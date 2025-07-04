@@ -48,6 +48,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_30_102923) do
   create_table "member_types_members", id: false, force: :cascade do |t|
     t.integer "member_id", null: false
     t.integer "member_type_id", null: false
+    t.index ["member_id", "member_type_id"], name: "index_member_types_members_on_member_id_and_member_type_id"
+    t.index ["member_type_id", "member_id"], name: "index_member_types_members_on_member_type_id_and_member_id"
   end
 
   create_table "members", force: :cascade do |t|
