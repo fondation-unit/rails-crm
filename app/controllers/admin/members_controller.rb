@@ -6,7 +6,7 @@ class Admin::MembersController < Admin::AdminController
 
   def new
     @member = Member.new
-    @member_types = MemberType.all.order("name" => "asc")
+    @member_types = MemberType.ordered
   end
 
   def create
@@ -20,7 +20,7 @@ class Admin::MembersController < Admin::AdminController
 
   def edit
     @member = Member.find(params[:id])
-    @member_types = MemberType.all.order("name" => "asc")
+    @member_types = MemberType.ordered
   end
 
   def update
