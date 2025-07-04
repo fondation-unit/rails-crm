@@ -4,7 +4,14 @@
       <a class="nav-link disabled" href="#">Crm</a>
     </li>
     <li class="nav-item dropdown">
-      <%= link_to 'Les membres', admin_members_path, class: 'nav-link dropdown-toggle', data: {'bs-toggle': "dropdown"} %>
+      <%=
+        link_to 'Les membres',
+                admin_members_path,
+                class: 'nav-link dropdown-toggle',
+                data: {
+                  'bs-toggle': 'dropdown',
+                }
+      %>
       <ul class="dropdown-menu show">
         <li>
           <%=

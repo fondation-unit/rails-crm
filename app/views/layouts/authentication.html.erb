@@ -37,12 +37,11 @@
           <%= yield %>
         </div>
         <div class="col-md-6">
-
           <% if File.file? "#{Rails.root.join("app", "assets", "images")}/header-background.jpg" %>
-          <div class="image w-100">
-          <%= image_tag 'header-background.jpg', class: 'maw-100' %>
-          </div>
-        <% end %>
+            <div class="image w-100">
+              <%= image_tag 'header-background.jpg', class: 'maw-100' %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
