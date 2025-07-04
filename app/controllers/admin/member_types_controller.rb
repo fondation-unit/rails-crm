@@ -1,6 +1,6 @@
 class Admin::MemberTypesController < Admin::AdminController
   def index
-    @member_types = MemberType.all.order("name" => "asc")
+    @member_types = MemberType.ordered
     @pagy, @records = pagy(@member_types)
   end
   def new
