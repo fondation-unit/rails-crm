@@ -1,28 +1,31 @@
 <table class="table" data-controller="sortable">
-    <thead>
-        <tr>
-            <% headers.each do |header, name| %>
-            <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= header %>">
-                <%= name %>
-            </th>
-            <% end %>
-        </tr>
-    </thead>
-    <tbody>
+  <thead>
+    <tr>
+      <% headers.each do |header, name| %>
+        <th
+          scope="col"
+          data-action="click->sortable#sort"
+          data-sortable-column-value="<%= header %>"
+        >
+          <%= name %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
     <% if objects %>
-        <% objects.each do |obj| %>
+      <% objects.each do |obj| %>
         <tr>
-            <% columns.each do |col| %>
+          <% columns.each do |col| %>
             <% if formatters&.key?(col.to_sym) %>
-            <td><%= formatters[col.to_sym].call(obj) %></td>
+              <td><%= formatters[col.to_sym].call(obj) %></td>
             <% else %>
-            <td><%= obj.send(col) %></td>
+              <td><%= obj.send(col) %></td>
             <% end %>
-            <% end %>
-            <td></td>
+          <% end %>
+          <td></td>
         </tr>
-
-        <% end %> 
-        <% end %> 
-    </tbody>
+      <% end %>
+    <% end %>
+  </tbody>
 </table>
