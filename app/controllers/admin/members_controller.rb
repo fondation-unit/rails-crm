@@ -1,6 +1,6 @@
 class Admin::MembersController < Admin::AdminController
   def index
-    members = Member.all
+    members = Member.all.order(sort_column => sort_direction)
     @pagy, @records = pagy(members)
   end
 
@@ -50,6 +50,18 @@ class Admin::MembersController < Admin::AdminController
   end
 
   private
+
+  def sort_column
+    if %w[id first_name last_name email_address].include?(params[:sort])
+      params[:sort]
+    else
+      "id"
+    end
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
   def member_params
     params.expect(

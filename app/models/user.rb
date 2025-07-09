@@ -2,6 +2,7 @@ class User < ApplicationRecord
   ACCESS_BEFORE_CONFIRMATION_IN_HOURS = 1.hour
 
   has_secure_password
+
   has_many :sessions, dependent: :destroy
   generates_token_for :user_confirmation,
                       expires_in: ACCESS_BEFORE_CONFIRMATION_IN_HOURS
