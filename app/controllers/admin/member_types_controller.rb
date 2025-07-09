@@ -21,6 +21,7 @@ class Admin::MemberTypesController < Admin::AdminController
 
   def update
     @member_type = MemberType.find(params[:id])
+
     if @member_type.update!(post_params)
       redirect_to admin_member_types_path,
                   notice: "Type de membre \"#{@member_type.name}\" mis à jour"
@@ -32,6 +33,7 @@ class Admin::MemberTypesController < Admin::AdminController
   def destroy
     @member_type = MemberType.find(params[:id])
     nom = @member_type.name
+
     if @member_type.destroy!
       redirect_to admin_member_types_path,
                   notice: "Type de membre \"#{nom}\" supprimé"
