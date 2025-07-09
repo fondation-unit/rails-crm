@@ -13,7 +13,7 @@ class Admin::MembersController < Admin::AdminController
     @member = Member.new(member_params)
 
     if @member.save
-      redirect_to admin_members_path, notice: "Membre #{@member.name} créé"
+      redirect_to admin_members_path, notice: "Membre #{@member.last_name} créé"
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -39,7 +39,7 @@ class Admin::MembersController < Admin::AdminController
 
   def destroy
     @member = Member.find(params[:id])
-    nom = @member.name
+    nom = @member.last_name
 
     if @member.destroy
       redirect_to admin_members_path, notice: "Membre \"#{nom}\" supprimé"
@@ -65,7 +65,16 @@ class Admin::MembersController < Admin::AdminController
 
   def member_params
     params.expect(
-      member: [:name, :address, :zip_code, :city, :logo, member_type_ids: []]
+      member: [
+        :first_name,
+        :last_name,
+        :email_address,
+        :address,
+        :zip_code,
+        :city,
+        :logo,
+        member_type_ids: []
+      ]
     )
   end
 end

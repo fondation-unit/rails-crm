@@ -1,7 +1,7 @@
 <%= form_with url: url, model: member_type do |f| %>
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= f.text_field :name, required: true, class: 'form-control' %>
   </div>
   <button type="submit" class="btn btn-primary">
     <% if @member_type.persisted? %>
