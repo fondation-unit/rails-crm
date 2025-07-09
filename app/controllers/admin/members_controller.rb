@@ -15,7 +15,8 @@ class Admin::MembersController < Admin::AdminController
     if @member.save
       redirect_to admin_members_path, notice: "Membre #{@member.name} créé"
     else
-      render :new
+      flash[:alert] = @member.errors.full_messages.join(", ")
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -30,6 +31,9 @@ class Admin::MembersController < Admin::AdminController
     if @member.update(member_params)
       redirect_to admin_members_path,
                   notice: "Membre \"#{@member.name}\" mis à jour"
+    else
+      flash[:alert] = @member.errors.full_messages.join(", ")
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -37,8 +41,11 @@ class Admin::MembersController < Admin::AdminController
     @member = Member.find(params[:id])
     nom = @member.name
 
-    if @member.destroy!
+    if @member.destroy
       redirect_to admin_members_path, notice: "Membre \"#{nom}\" supprimé"
+    else
+      redirect_to admin_members_path,
+                  alert: "Erreur lors de la suppression du membre"
     end
   end
 
