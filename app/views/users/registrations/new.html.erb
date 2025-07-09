@@ -61,17 +61,12 @@
       <div class="inline">
         <%=
           form.submit 'Sign up',
-                      class:
-                        'rounded-lg py-2 px-6 bg-blue-600 text-white inline-block font-medium cursor-pointer'
+                      class: 'rounded-lg py-2 px-6 bg-blue-600 text-white inline-block font-medium cursor-pointer'
         %>
       </div>
 
       <div class="mt-4 text-sm text-gray-500 sm:mt-0">
-        <%=
-          link_to 'Forgot password?',
-                  new_users_password_path,
-                  class: 'text-gray-700 underline'
-        %>
+        <%= link_to 'Forgot password?', new_users_password_path, class: 'text-gray-700 underline' %>
       </div>
     </div>
   </div>

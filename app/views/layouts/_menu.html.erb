@@ -5,20 +5,11 @@
     </li>
     <li class="nav-item dropdown">
       <%=
-        link_to 'Les membres',
-                admin_members_path,
-                class: 'nav-link dropdown-toggle',
-                data: {
-                  'bs-toggle': 'dropdown',
-                }
+        link_to 'Les membres', admin_members_path, class: 'nav-link dropdown-toggle', data: { 'bs-toggle': 'dropdown' }
       %>
       <ul class="dropdown-menu show">
         <li>
-          <%=
-            link_to 'Les types de membres',
-                    admin_member_types_path,
-                    class: 'dropdown-item'
-          %>
+          <%= link_to 'Les types de membres', admin_member_types_path, class: 'dropdown-item' %>
         </li>
       </ul>
     </li>
