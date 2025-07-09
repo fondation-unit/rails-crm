@@ -11,8 +11,8 @@ User.create!(
   first_name: "User",
   last_name: "Dummy",
   email_address: "dummy@example.com",
-  password: "STOPimb1524*",
-  password_confirmation: "STOPimb1524*",
+  password: ENV["DUMMY_USER_PASSWORD"],
+  password_confirmation: ENV["DUMMY_USER_PASSWORD"],
   confirmation_sent_at: Time.current,
   confirmed_at: Time.current
 )
