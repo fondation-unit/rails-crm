@@ -22,7 +22,6 @@
     {
       "files": "*.erb",
       "options": {
-        "parser": "html",
         "printWidth": 120,
         "tabWidth": 2,
         "htmlWhitespaceSensitivity": "ignore"

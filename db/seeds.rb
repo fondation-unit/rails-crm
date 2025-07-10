@@ -11,8 +11,21 @@ User.create!(
   first_name: "User",
   last_name: "Dummy",
   email_address: "dummy@example.com",
-  password: "STOPimb1524*",
-  password_confirmation: "STOPimb1524*",
+  password: ENV["DUMMY_USER_PASSWORD"],
+  password_confirmation: ENV["DUMMY_USER_PASSWORD"],
   confirmation_sent_at: Time.current,
   confirmed_at: Time.current
 )
+
+%i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
+
+10.times do |i|
+  member =
+    Member.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email_address: "dummy#{i}@example.com"
+    )
+
+  member.member_types << MemberType.all.to_a.sample(rand(1..3))
+end

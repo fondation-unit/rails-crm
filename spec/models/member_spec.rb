@@ -8,11 +8,13 @@ end
 #
 # Table name: members
 #
-#  id         :integer          not null, primary key
-#  address    :string
-#  city       :string
-#  name       :string
-#  zip_code   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  address       :string
+#  city          :string
+#  email_address :string
+#  first_name    :string           not null
+#  last_name     :string           not null
+#  zip_code      :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #

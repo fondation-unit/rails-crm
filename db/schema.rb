@@ -40,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_30_102923) do
   end
 
   create_table "member_types", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,7 +53,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_30_102923) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.string "name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email_address"
     t.string "address"
     t.string "zip_code"
     t.string "city"

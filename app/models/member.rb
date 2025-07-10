@@ -1,12 +1,18 @@
 class Member < ApplicationRecord
-  has_one_attached :logo
-
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
 
-  validates :name, presence: true
-  validates :address, presence: true
-  validates :zip_code, presence: true
-  validates :city, presence: true
+  has_one_attached :logo
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :address, presence: false
+  validates :zip_code, presence: false
+  validates :city, presence: false
+  validates :email_address,
+            uniqueness: true,
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP
+            }
 
   default_scope { includes([:member_types]) }
 end
@@ -15,11 +21,13 @@ end
 #
 # Table name: members
 #
-#  id         :integer          not null, primary key
-#  address    :string
-#  city       :string
-#  name       :string
-#  zip_code   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  address       :string
+#  city          :string
+#  email_address :string
+#  first_name    :string           not null
+#  last_name     :string           not null
+#  zip_code      :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
