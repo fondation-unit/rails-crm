@@ -19,11 +19,7 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
-    <%=
-      javascript_include_tag 'application',
-                             'data-turbo-track': 'reload',
-                             type: 'module'
-    %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
   </head>
 
   <body>
@@ -37,12 +33,11 @@
           <%= yield %>
         </div>
         <div class="col-md-6">
-
           <% if File.file? "#{Rails.root.join("app", "assets", "images")}/header-background.jpg" %>
-          <div class="image w-100">
-          <%= image_tag 'header-background.jpg', class: 'maw-100' %>
-          </div>
-        <% end %>
+            <div class="image w-100">
+              <%= image_tag 'header-background.jpg', class: 'maw-100' %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

@@ -23,20 +23,14 @@
                           autocomplete: 'current-password',
                           placeholder: 'Saisissez votre mot de passe',
                           maxlength: 72
-    %><br />
+    %>
+    <br />
 
     <div class="extra mt-3 row justify-content-between">
       <div class="col-6">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="RememberPassword"
-          />
-          <label class="form-check-label" for="RememberPassword">
-            Se souvenir de moi
-          </label>
+          <input class="form-check-input" type="checkbox" value="" id="RememberPassword" />
+          <label class="form-check-label" for="RememberPassword">Se souvenir de moi</label>
         </div>
       </div>
 
@@ -49,13 +43,11 @@
   </div>
 
   <div class="text-center">
-    <%=
-      form.submit 'Se connecter',
-                  class: 'btn btn-primary w-100 theme-btn mx-auto'
-    %>
+    <%= form.submit 'Se connecter', class: 'btn btn-primary w-100 theme-btn mx-auto' %>
   </div>
 <% end %>
 <div class="auth-option text-center pt-5">
   Pas encore de compte ? Inscrivez-vous
-  <%= link_to 'ici', new_users_registrations_url, class: 'text-link' %>.
+  <%= link_to 'ici', new_users_registrations_url, class: 'text-link' %>
+  .
 </div>
