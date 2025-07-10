@@ -1,8 +1,2 @@
 <h1>Ajouter un membre</h1>
-<%=
-  render 'form_members',
-         member: @member,
-         url: admin_members_path,
-         member_types: @member_types,
-         method: 'post'
-%>
+<%= render 'form_members', member: @member, url: admin_members_path, member_types: @member_types, method: 'post' %>

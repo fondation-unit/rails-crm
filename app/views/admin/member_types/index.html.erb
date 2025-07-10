@@ -1,10 +1,6 @@
 <div class="d-flex w-100 justify-content-between">
     <h1>Les types de membres</h1>
-    <%=
-    link_to 'Ajouter un type de membre',
-            new_admin_member_type_path,
-            class: 'btn btn-primary align-self-center'
-  %>
+    <%= link_to 'Ajouter un type de membre', new_admin_member_type_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
   render 'shared/tables/sortable_table',
@@ -13,16 +9,13 @@
          pagy: @pagy,
          columns: %w[id name edit delete],
          formatters: {
-           edit: ->(member_type) {
-             link_to 'Editer', edit_admin_member_type_path(member_type)
-           },
+           edit: ->(member_type) { link_to 'Editer', edit_admin_member_type_path(member_type) },
            delete: ->(member_type) {
              link_to 'Supprimer',
                      admin_member_type_path(member_type),
                      data: {
                        turbo_method: :delete,
-                       turbo_confirm:
-                         'Etes-vous sur de vouloir effacer ce type de membre ?',
+                       turbo_confirm: 'Etes-vous sur de vouloir effacer ce type de membre ?',
                      }
            },
          }

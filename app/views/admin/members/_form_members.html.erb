@@ -1,7 +1,15 @@
 <%= form_with url: url, method: method, model: member do |f| %>
 <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, required: true, class: 'form-control' %>
+</div>
+<div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :email_address %>
+    <%= f.email_field :email_address, required: true, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
     <%= f.label :address %>

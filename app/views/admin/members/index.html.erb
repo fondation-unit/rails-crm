@@ -1,36 +1,28 @@
 <div class="d-flex w-100 justify-content-between">
     <h1>Les membres</h1>
-    <%=
-    link_to 'Ajouter un membre',
-            new_admin_member_path,
-            class: 'btn btn-primary align-self-center'
-  %>
+    <%= link_to 'Ajouter un membre', new_admin_member_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
   render 'shared/tables/sortable_table',
          headers: [
            [:id, '#'],
-           [:name, 'Nom'],
-           [:name, 'Adresse'],
-           [:name, 'Code postal'],
-           [:name, 'Ville'],
+           [:first_name, 'Prénom'],
+           [:last_name, 'Nom'],
+           [:email_address, 'Adresse mail'],
            [:edit, ''],
            [:delete, ''],
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id name address zip_code city edit delete],
+         columns: %w[id first_name last_name email_address edit delete],
          formatters: {
-           edit: ->(member) {
-             link_to 'Editer', edit_admin_member_path(member)
-           },
+           edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
            delete: ->(member) {
              link_to 'Supprimer',
                      admin_member_path(member),
                      data: {
                        turbo_method: :delete,
-                       turbo_confirm:
-                         'Etes-vous sur de vouloir effacer ce membre ?',
+                       turbo_confirm: 'Etes-vous sur de vouloir effacer ce membre ?',
                      }
            },
          }
