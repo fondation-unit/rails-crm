@@ -1,26 +1,26 @@
 <div class="navbar-collapse collapse" id="sidebar-menu">
-  <ul class="navbar-nav pt-lg-3">
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Crm</a>
-    </li>
-    <li class="nav-item dropdown">
-      <%=
-        link_to 'Les membres',
-                admin_members_path,
-                class: 'nav-link dropdown-toggle',
-                data: {
-                  'bs-toggle': 'dropdown',
-                }
-      %>
-      <ul class="dropdown-menu show">
-        <li>
-          <%=
-            link_to 'Les types de membres',
-                    admin_member_types_path,
-                    class: 'dropdown-item'
-          %>
+    <ul class="navbar-nav pt-lg-3">
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Crm</a>
         </li>
-      </ul>
-    </li>
-  </ul>
+        <li class="nav-item dropdown">
+            <%=
+link_to 'Les membres',
+      admin_members_path,
+      class: 'nav-link dropdown-toggle',
+      data: {
+        'bs-toggle': 'dropdown',
+      }
+%>
+            <ul class="dropdown-menu show">
+                <li>
+                    <%=
+  link_to 'Les types de membres',
+          admin_member_types_path,
+          class: 'dropdown-item'
+%>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>

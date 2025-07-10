@@ -1,44 +1,44 @@
 <%= form_with url: url, method: method, model: member do |f| %>
-  <div class="form-group">
+<div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
-  </div>
-  <div class="form-group my-4">
+</div>
+<div class="form-group my-4">
     <%= f.label :address %>
     <%= f.text_field :address, class: 'form-control' %>
-  </div>
-  <div class="form-group my-4">
+</div>
+<div class="form-group my-4">
     <%= f.label :zip_code %>
     <%= f.text_field :zip_code, class: 'form-control' %>
-  </div>
-  <div class="form-group my-4">
+</div>
+<div class="form-group my-4">
     <%= f.label :city %>
     <%= f.text_field :city, class: 'form-control' %>
-  </div>
-  <div class="form_group my-4">
+</div>
+<div class="form_group my-4">
     <%= f.label :logo %>
     <%= f.file_field :logo, class: 'form-control-file' %>
-  </div>
-  <% if member_types %>
-    <%= f.label 'Type de membre' %>
-    <div class="form_group my-4">
-      <%=
+</div>
+<% if member_types %>
+<%= f.label 'Type de membre' %>
+<div class="form_group my-4">
+    <%=
         f.collection_check_boxes :member_type_ids, member_types,
           :id,
           :name,
           {} do |b| %>
-        <div class="form-check">
-          <%= b.check_box(class: 'form-check-input') %>
-          <%= b.label(class: 'form-check-label') { b.object.name } %>
-        </div>
-      <% end %>
+    <div class="form-check">
+        <%= b.check_box(class: 'form-check-input') %>
+        <%= b.label(class: 'form-check-label') { b.object.name } %>
     </div>
-  <% end %>
-  <button type="submit" class="btn btn-primary">
-    <% if member.persisted? %>
-      Mettre à jour
-    <% else %>
-      Créer
     <% end %>
-  </button>
+</div>
+<% end %>
+<button type="submit" class="btn btn-primary">
+    <% if member.persisted? %>
+    Mettre à jour
+    <% else %>
+    Créer
+    <% end %>
+</button>
 <% end %>

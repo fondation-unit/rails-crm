@@ -1,22 +1,22 @@
 <header class="d-flex navbar navbar-expand-lg sticky-top">
-  <nav class="container bd-gutter flex-wrap flex-lg-nowrap justify-content-end">
-    <div>
-      <% if !current_user.present? %>
-        <%=
+    <nav class="container bd-gutter flex-wrap flex-lg-nowrap justify-content-end">
+        <div>
+            <% if !current_user.present? %>
+            <%=
           link_to 'Sign in',
                   new_users_session_path,
                   class:
                     'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
         %>
-      <% else %>
-        <%=
+            <% else %>
+            <%=
           button_to 'Sign out',
                     users_session_path,
                     method: :delete,
                     class:
                       'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
         %>
-      <% end %>
-    </div>
-  </nav>
+            <% end %>
+        </div>
+    </nav>
 </header>
