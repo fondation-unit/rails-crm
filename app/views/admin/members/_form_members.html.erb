@@ -1,59 +1,59 @@
 <%= form_with url: url, method: method, model: member do |f| %>
-<div class="form-group">
+  <div class="form-group">
     <%= f.label :institution %>
     <%= f.text_field :institution, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :first_name %>
     <%= f.text_field :first_name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :last_name %>
     <%= f.text_field :last_name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :email_address %>
     <%= f.email_field :email_address, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :department %>
     <%= f.text_field :department, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :position %>
     <%= f.text_field :position, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :phone_number %>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
-</div>
-<% if member.logo.attached? %>
-<%= image_tag url_for(member.logo)  %>
-<% end %>
-<div class="form_group my-4">
+  </div>
+  <%# if member.logo.attached? %>
+  <%#= image_tag url_for(member.logo) %>
+  <%# end %>
+  <div class="form_group my-4">
     <%= f.label :logo %>
     <%= f.file_field :logo, class: 'form-control-file' %>
-</div>
-<% if member_types %>
-<%= f.label 'Type de membre' %>
-<div class="form_group my-4">
-    <%=
+  </div>
+  <% if member_types %>
+    <%= f.label 'Type de membre' %>
+    <div class="form_group my-4">
+      <%=
         f.collection_check_boxes :member_type_ids, member_types,
           :id,
           :name,
           {} do |b| %>
-    <div class="form-check">
-        <%= b.check_box(class: 'form-check-input') %>
-        <%= b.label(class: 'form-check-label') { b.object.name } %>
+        <div class="form-check">
+          <%= b.check_box(class: 'form-check-input') %>
+          <%= b.label(class: 'form-check-label') { b.object.name } %>
+        </div>
+      <% end %>
     </div>
-    <% end %>
-</div>
-<% end %>
-<button type="submit" class="btn btn-primary">
+  <% end %>
+  <button type="submit" class="btn btn-primary">
     <% if member.persisted? %>
-    Mettre à jour
+      Mettre à jour
     <% else %>
-    Créer
+      Créer
     <% end %>
-</button>
+  </button>
 <% end %>
