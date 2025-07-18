@@ -13,7 +13,7 @@
         <% objects.each do |obj| %>
         <tr>
             <% columns.each do |col| %>
-            <% if formatters&.key?(col.to_sym) %>
+            <% if defined?(formatters) && formatters&.key?(col.to_sym) %>
             <td><%= formatters[col.to_sym].call(obj) %></td>
             <% else %>
             <td><%= obj.send(col) %></td>

@@ -20,6 +20,7 @@
     "watch:css": "sass --quiet --watch ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --load-path=node_modules"
   },
   "devDependencies": {
+    "postcss-scss": "^4.0.9",
     "prettier": "^2.2.1",
     "prettier-plugin-erb": "^0.4.0",
     "ts-loader": "^9.5.2",
