@@ -19,13 +19,31 @@ User.create!(
 
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
+5.times do |o|
+  Organization.create!(
+    name: Faker::Company.name,
+    address: Faker::Address.full_address,
+    zip_code: Faker::Address.zip_code,
+    city: Faker::Address.city,
+    lat: Faker::Address.latitude,
+    lng: Faker::Address.longitude
+  )
+end
+
 10.times do |i|
   member =
     Member.create!(
+      gender: Faker::Gender.type,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      email_address: "dummy#{i}@example.com"
+      position: Faker::Job.position,
+      phone_number: Faker::PhoneNumber.cell_phone,
+      email_address: "dummy#{i}@example.com",
+      copil: Faker::Boolean,
+      comex: Faker::Boolean,
+      notes: Faker::Lorem.paragraph
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
+  member.organizations << Organization.all.to_a.sample(rand(1))
 end

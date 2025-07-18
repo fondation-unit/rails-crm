@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title><%= content_for(:title) || 'Rails Crm' %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,26 +21,27 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
-  </head>
+</head>
 
-  <body>
+<body>
     <%= render 'layouts/header' %>
 
     <div class="container-fluid">
-      <%= tag.div(flash[:alert], style: 'color:red') if flash[:alert] %>
-      <%= tag.div(flash[:notice], style: 'color:green') if flash[:notice] %>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <%= yield %>
-        </div>
-        <div class="col-md-6">
-          <% if File.file? "#{Rails.root.join("app", "assets", "images")}/header-background.jpg" %>
-            <div class="image w-100">
-              <%= image_tag 'header-background.jpg', class: 'maw-100' %>
+        <%= tag.div(flash[:alert], style: 'color:red') if flash[:alert] %>
+        <%= tag.div(flash[:notice], style: 'color:green') if flash[:notice] %>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <%= yield %>
             </div>
-          <% end %>
+            <div class="col-md-6">
+                <% if File.file? "#{Rails.root.join("app", "assets", "images")}/header-background.jpg" %>
+                <div class="image w-100">
+                    <%= image_tag 'header-background.jpg', class: 'maw-100' %>
+                </div>
+                <% end %>
+            </div>
         </div>
-      </div>
     </div>
-  </body>
+</body>
+
 </html>
