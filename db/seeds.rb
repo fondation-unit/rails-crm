@@ -45,5 +45,5 @@ end
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
-  member.organizations << Organization.all.to_a.sample(rand(1))
+  member.organizations << Organization.all.to_a.sample(rand(1..2))
 end
