@@ -1,0 +1,13 @@
+<%= form_with url: url, model: organization do |f| %>
+<div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true, class: 'form-control' %>
+</div>
+<button type="submit" class="btn btn-primary">
+    <% if @organization.persisted? %>
+    Mettre à jour
+    <% else %>
+    Créer
+    <% end %>
+</button>
+<% end %>

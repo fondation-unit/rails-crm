@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     resource :dashboard
     resources :member_types
     resources :members
+    resources :organizations
   end
 end

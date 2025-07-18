@@ -27,7 +27,7 @@ class Admin::MembersController < Admin::AdminController
 
   def edit
     @member = Member.find(params[:id])
-    p @member
+    @organizations = Organization.ordered
     @member_types = MemberType.ordered
   end
 
