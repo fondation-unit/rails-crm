@@ -9,6 +9,8 @@ class Organization < ApplicationRecord
   validates :city, presence: false
   validates :lat, presence: false
   validates :lng, presence: false
+
+  scope :ordered, -> { order(name: "asc") }
 end
 
 # == Schema Information
