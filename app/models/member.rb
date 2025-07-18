@@ -17,6 +17,10 @@ class Member < ApplicationRecord
             }
 
   default_scope { includes([:member_types]) }
+
+  def organizations_names
+    organizations.collect { |org| org.name }
+  end
 end
 
 # == Schema Information

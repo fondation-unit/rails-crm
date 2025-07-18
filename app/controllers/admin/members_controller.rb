@@ -3,13 +3,13 @@ class Admin::MembersController < Admin::AdminController
     members =
       Member.all.includes(:organizations).order(sort_column => sort_direction)
 
-    p members
     @pagy, @records = pagy(members)
   end
 
   def new
     @member = Member.new
     @member_types = MemberType.ordered
+    @organizations = Organization.ordered
   end
 
   def create

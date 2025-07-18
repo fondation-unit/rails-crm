@@ -1,6 +1,6 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1>Les membres</h1>
-    <%= link_to 'Ajouter un membre', new_admin_member_path, class: 'btn btn-primary align-self-center' %>
+  <h1>Les membres</h1>
+  <%= link_to 'Ajouter un membre', new_admin_member_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
   render 'shared/tables/sortable_table',
@@ -16,7 +16,7 @@
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id member.organizations.name first_name last_name email_address phone_number edit delete],
+         columns: %w[id organizations_names first_name last_name email_address phone_number edit delete],
          formatters: {
            edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
            delete: ->(member) {
@@ -27,5 +27,6 @@
                        turbo_confirm: 'Etes-vous sur de vouloir effacer ce membre ?',
                      }
            },
+           organizations_names: ->(member) { member.organizations_names.join(', ') },
          }
 %>
