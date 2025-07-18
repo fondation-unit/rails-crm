@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_30_102923) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_11_145604) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,12 +53,33 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_30_102923) do
   end
 
   create_table "members", force: :cascade do |t|
+    t.string "gender"
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "email_address"
+    t.string "email_address", null: false
+    t.string "position"
+    t.string "phone_number"
+    t.boolean "copil"
+    t.boolean "comex"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "members_organizations", id: false, force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.integer "organization_id", null: false
+    t.index ["member_id", "organization_id"], name: "index_members_organizations_on_member_id_and_organization_id"
+    t.index ["organization_id", "member_id"], name: "index_members_organizations_on_organization_id_and_member_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name", null: false
     t.string "address"
     t.string "zip_code"
     t.string "city"
+    t.float "lat"
+    t.float "lng"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

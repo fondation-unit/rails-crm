@@ -15,11 +15,15 @@
   },
   "[scss]": {
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
   },
   "[sass]": {
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
   },
   "[ruby]": {
     "editor.formatOnSave": true,

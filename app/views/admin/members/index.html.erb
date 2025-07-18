@@ -6,15 +6,17 @@
   render 'shared/tables/sortable_table',
          headers: [
            [:id, '#'],
+           [:organizations, 'Institution'],
            [:first_name, 'Prénom'],
            [:last_name, 'Nom'],
            [:email_address, 'Adresse mail'],
+           [:phone_number, 'Téléphone'],
            [:edit, ''],
            [:delete, ''],
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id first_name last_name email_address edit delete],
+         columns: %w[id organizations_names first_name last_name email_address phone_number edit delete],
          formatters: {
            edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
            delete: ->(member) {
@@ -25,5 +27,6 @@
                        turbo_confirm: 'Etes-vous sur de vouloir effacer ce membre ?',
                      }
            },
+           organizations_names: ->(member) { member.organizations_names.join(', ') },
          }
 %>

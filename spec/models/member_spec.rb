@@ -9,12 +9,15 @@ end
 # Table name: members
 #
 #  id            :integer          not null, primary key
-#  address       :string
-#  city          :string
-#  email_address :string
+#  comex         :boolean
+#  copil         :boolean
+#  email_address :string           not null
 #  first_name    :string           not null
+#  gender        :string
 #  last_name     :string           not null
-#  zip_code      :string
+#  notes         :text
+#  phone_number  :string
+#  position      :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
