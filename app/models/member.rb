@@ -1,13 +1,15 @@
 class Member < ApplicationRecord
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
+  has_and_belongs_to_many :organizations, join_table: "members_organizations"
 
-  has_one_attached :logo
-
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :address, presence: false
-  validates :zip_code, presence: false
-  validates :city, presence: false
+  validates :first_name, :last_name, presence: true
+  validates :gender,
+            :position,
+            :phone_number,
+            :copil,
+            :comex,
+            :notes,
+            presence: false
   validates :email_address,
             uniqueness: true,
             format: {
@@ -22,12 +24,15 @@ end
 # Table name: members
 #
 #  id            :integer          not null, primary key
-#  address       :string
-#  city          :string
-#  email_address :string
+#  comex         :boolean
+#  copil         :boolean
+#  email_address :string           not null
 #  first_name    :string           not null
+#  gender        :string
 #  last_name     :string           not null
-#  zip_code      :string
+#  notes         :text
+#  phone_number  :string
+#  position      :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

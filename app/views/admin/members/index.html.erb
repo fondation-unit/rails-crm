@@ -6,15 +6,17 @@
   render 'shared/tables/sortable_table',
          headers: [
            [:id, '#'],
+           [:organizations, 'Institution'],
            [:first_name, 'Prénom'],
            [:last_name, 'Nom'],
            [:email_address, 'Adresse mail'],
+           [:phone_number, 'Téléphone'],
            [:edit, ''],
            [:delete, ''],
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id first_name last_name email_address edit delete],
+         columns: %w[id member.organizations.name first_name last_name email_address phone_number edit delete],
          formatters: {
            edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
            delete: ->(member) {
