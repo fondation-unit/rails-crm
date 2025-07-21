@@ -1,4 +1,6 @@
 class Member < ApplicationRecord
+  include NameNormalization
+
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
 
@@ -15,6 +17,8 @@ class Member < ApplicationRecord
             format: {
               with: URI::MailTo::EMAIL_REGEXP
             }
+
+  normalize_user_names :first_name, :last_name
 
   default_scope { includes([:member_types]) }
 
