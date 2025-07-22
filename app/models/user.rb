@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include NameNormalization
+
   ACCESS_BEFORE_CONFIRMATION_IN_HOURS = 1.hour
 
   has_secure_password
@@ -18,6 +20,7 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  normalize_user_names :first_name, :last_name
 
   generates_token_for :user_confirmation,
                       expires_in: ACCESS_BEFORE_CONFIRMATION_IN_HOURS
