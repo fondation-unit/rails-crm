@@ -1,0 +1,32 @@
+<div class="d-flex w-100 flex-column justify-content-between">
+    <h1><%= @organization.name %></h1>
+    <div class="card coords col-md-6 p-4">
+        <div class="d-flex flex-md-row align-items-start">
+            <div class="content">
+                <p>
+                    <%= @organization.address %><br>
+                    <%= @organization.zip_code %><br>
+                    <%= @organization.city %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <h2 class="my-5">Les membres de <%= @organization.name %></h2>
+    <%=
+  render 'shared/tables/sortable_table',
+         headers: [
+           [:id, '#'],
+           [:first_name, 'Prénom'],
+           [:last_name, 'Nom'],
+           [:email_address, 'Adresse mail'],
+           [:phone_number, 'Téléphone'],
+           [:edit, ''],
+         ],
+         objects: @organization.members,
+         pagy: @pagy,
+         columns: %w[id first_name last_name email_address phone_number edit],
+         formatters: {
+           edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
+         }
+%>
+</div>
