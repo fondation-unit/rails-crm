@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title><%= content_for(:title) || 'Rails Crm' %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -19,33 +20,39 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="page">
-      <aside class="navbar navbar-vertical navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <%= link_to root_path, class:"navbar-brand mb-0 h1" do %>
-            <% if File.file? "#{Rails.root.join("app", "assets",
+        <aside class="navbar navbar-vertical navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <%= link_to root_path, class:"navbar-brand mb-0 h1" do %>
+                <% if File.file? "#{Rails.root.join("app", "assets",
           "images")}/logo-baseline.png" %>
-              <%= image_tag 'logo-baseline.png', height: '50' %>
-            <% else %>
-              <%= Rails.application.config.site_name %>
-            <% end %>
-          <% end %>
-          <%= render 'layouts/menu' %>
-        </div>
-      </aside>
-      <%= render 'layouts/header' %>
-      <div class="page-wrapper">
-        <h2 class="auth-heading text-center mb-5"><%= content_for(:title) %></h2>
+                <%= image_tag 'logo-baseline.png', height: '50' %>
+                <% else %>
+                <%= Rails.application.config.site_name %>
+                <% end %>
+                <% end %>
+                <%= render 'layouts/menu' %>
+            </div>
+        </aside>
+        <%= render 'layouts/header' %>
+        <div class="page-wrapper">
+            <h2 class="auth-heading text-center mb-5"><%= content_for(:title) %></h2>
 
-        <div class="auth-form-container text-start">
-          <%= tag.div(flash[:alert], style: 'color:red') if flash[:alert] %>
-          <%= tag.div(flash[:notice], style: 'color:green') if flash[:notice] %>
-          <%= yield %>
+            <div class="auth-form-container text-start">
+                <% flash.each do |key, value| %>
+                <div class="alert alert-<%= flash_class(key) %> alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <%= value %>
+                </div>
+                <% end %>
+
+                <%= yield %>
+            </div>
         </div>
-      </div>
     </div>
-  </body>
+</body>
+
 </html>
