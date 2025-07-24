@@ -4,6 +4,8 @@ class Member < ApplicationRecord
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
 
+  has_rich_text :notes
+
   validates :first_name, :last_name, presence: true
   validates :gender,
             :position,
@@ -23,7 +25,7 @@ class Member < ApplicationRecord
   default_scope { includes([:member_types]) }
 
   def organizations_names
-    organizations.collect { |org| org.name }
+    organizations.collect { |org| { name: org.name, id: org.id } }
   end
 end
 

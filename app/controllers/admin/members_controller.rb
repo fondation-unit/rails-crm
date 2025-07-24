@@ -49,7 +49,7 @@ class Admin::MembersController < Admin::AdminController
     nom = @member.last_name
 
     if @member.destroy
-      redirect_to admin_members_path, notice: "Membre \"#{nom}\" supprimé"
+      redirect_to admin_members_path, alert: "Membre \"#{nom}\" supprimé"
     else
       redirect_to admin_members_path,
                   alert: "Erreur lors de la suppression du membre"

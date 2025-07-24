@@ -7,7 +7,6 @@
     z-index: 1030;
     align-items: flex-start;
     transition: transform 0.3s;
-    overflow-y: scroll;
     padding: 0;
     box-shadow: inset calc(-1 * var(--tblr-navbar-border-width)) 0 0 0
         var(--tblr-navbar-border-color);
@@ -18,7 +17,7 @@
     }
 
     & ~ .page-wrapper {
-      padding: 0 2rem;
+        padding: 0 2rem;
     }
 
     > [class^='container'] {
@@ -44,6 +43,14 @@
                     padding-bottom: 0;
                 }
             }
+        }
+    }
+
+    .navbar-nav {
+        .dropdown-menu {
+            border: none;
+            background: none;
+            padding-left: 20px;
         }
     }
 }

@@ -46,6 +46,11 @@ class Admin::OrganizationsController < Admin::AdminController
     end
   end
 
+  def show
+    @organization = Organization.includes("members").find(params[:id])
+    @pagy, @records = pagy(@organization.members)
+  end
+
   private
 
   def sort_column
