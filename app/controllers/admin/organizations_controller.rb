@@ -5,7 +5,7 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def show
-    @organization = Organization.includes("members").find(params[:id])
+    @organization = Organization.includes(:members).find(params[:id])
     @pagy, @records = pagy(@organization.members)
   end
 
