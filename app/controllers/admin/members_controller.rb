@@ -12,6 +12,12 @@ class Admin::MembersController < Admin::AdminController
     @organizations = Organization.ordered
   end
 
+  def edit
+    @member = Member.find(params[:id])
+    @organizations = Organization.ordered
+    @member_types = MemberType.ordered
+  end
+
   def create
     @member = Member.new(member_params)
 
@@ -23,12 +29,6 @@ class Admin::MembersController < Admin::AdminController
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @member = Member.find(params[:id])
-    @organizations = Organization.ordered
-    @member_types = MemberType.ordered
   end
 
   def update
