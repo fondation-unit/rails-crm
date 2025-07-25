@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+#
+Faker::Config.locale = "fr"
 User.create!(
   first_name: "User",
   last_name: "Dummy",
@@ -37,7 +39,7 @@ end
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       position: Faker::Job.position,
-      phone_number: Faker::PhoneNumber.cell_phone,
+      phone_number: Faker::PhoneNumber,
       email_address: "dummy#{i}@example.com",
       copil: Faker::Boolean,
       comex: Faker::Boolean,
