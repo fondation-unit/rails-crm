@@ -354,6 +354,7 @@ GEM
     stringio (3.1.7)
     syntax_tree (6.3.0)
       prettier_print (>= 1.2.0)
+    telephone_number (1.4.23)
     thor (1.4.0)
     thruster (0.1.14-arm64-darwin)
     thruster (0.1.14-x86_64-linux)
@@ -414,6 +415,7 @@ DEPENDENCIES
   sqlite3 (>= 2.1)
   stimulus-rails
   syntax_tree
+  telephone_number
   thruster
   turbo-rails
   tzinfo-data

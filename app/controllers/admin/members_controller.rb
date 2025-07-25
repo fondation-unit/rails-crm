@@ -1,4 +1,6 @@
 class Admin::MembersController < Admin::AdminController
+  before_action :set_organizations, only: %i[new create edit update]
+
   def index
     members =
       Member.all.includes(:organizations).order(sort_column => sort_direction)
@@ -9,12 +11,10 @@ class Admin::MembersController < Admin::AdminController
   def new
     @member = Member.new
     @member_types = MemberType.ordered
-    @organizations = Organization.ordered
   end
 
   def edit
     @member = Member.find(params[:id])
-    @organizations = Organization.ordered
     @member_types = MemberType.ordered
   end
 
@@ -57,6 +57,10 @@ class Admin::MembersController < Admin::AdminController
   end
 
   private
+
+  def set_organizations
+    @organizations = Organization.ordered
+  end
 
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])

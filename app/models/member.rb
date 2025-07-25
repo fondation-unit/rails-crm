@@ -7,18 +7,13 @@ class Member < ApplicationRecord
   has_rich_text :notes
 
   validates :first_name, :last_name, presence: true
-  validates :gender,
-            :position,
-            :phone_number,
-            :copil,
-            :comex,
-            :notes,
-            presence: false
   validates :email_address,
             uniqueness: true,
             format: {
               with: URI::MailTo::EMAIL_REGEXP
             }
+
+  validates :phone_number, telephone_number: { country: "FR" }
 
   normalize_user_names :first_name, :last_name
 
