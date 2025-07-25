@@ -4,8 +4,17 @@ class Admin::OrganizationsController < Admin::AdminController
     @pagy, @records = pagy(organizations)
   end
 
+  def show
+    @organization = Organization.includes(:members).find(params[:id])
+    @pagy, @records = pagy(@organization.members)
+  end
+
   def new
     @organization = Organization.new
+  end
+
+  def edit
+    @organization = Organization.find(params[:id])
   end
 
   def create
@@ -15,10 +24,6 @@ class Admin::OrganizationsController < Admin::AdminController
       flash[:alert] = @organization.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @organization = Organization.find(params[:id])
   end
 
   def update
@@ -44,11 +49,6 @@ class Admin::OrganizationsController < Admin::AdminController
       redirect_to admin_organizations_path,
                   alert: "Erreur lors de la suppression de l'institution"
     end
-  end
-
-  def show
-    @organization = Organization.includes("members").find(params[:id])
-    @pagy, @records = pagy(@organization.members)
   end
 
   private

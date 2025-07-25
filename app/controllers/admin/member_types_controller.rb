@@ -3,8 +3,13 @@ class Admin::MemberTypesController < Admin::AdminController
     member_types = MemberType.ordered.order(sort_column => sort_direction)
     @pagy, @records = pagy(member_types)
   end
+
   def new
     @member_type = MemberType.new
+  end
+
+  def edit
+    @member_type = MemberType.find(params[:id])
   end
 
   def create
@@ -14,10 +19,6 @@ class Admin::MemberTypesController < Admin::AdminController
       flash[:alert] = @member_type.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @member_type = MemberType.find(params[:id])
   end
 
   def update
