@@ -39,7 +39,7 @@ end
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       position: Faker::Job.position,
-      phone_number: Faker::PhoneNumber,
+      phone_number: Faker::PhoneNumber.phone_number_with_country_code,
       email_address: "dummy#{i}@example.com",
       copil: Faker::Boolean,
       comex: Faker::Boolean,

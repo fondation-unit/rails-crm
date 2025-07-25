@@ -13,11 +13,15 @@ class Member < ApplicationRecord
               with: URI::MailTo::EMAIL_REGEXP
             }
 
-  validates :phone_number, telephone_number: { country: "FR" }
+  validates :phone_number,
+            telephone_number: {
+              country: "FR",
+              message: "Numéro de téléphone invalide"
+            }
 
   normalize_user_names :first_name, :last_name
 
-  #before_save :set_phone_number
+  before_save :set_phone_number
 
   default_scope { includes([:member_types]) }
 
@@ -25,17 +29,12 @@ class Member < ApplicationRecord
     organizations.collect { |org| { name: org.name, id: org.id } }
   end
 
-  #private
-  #
-  #def set_phone_number
-  #  self.phone_number =
-  #    number_to_phone(
-  #      phone_number,
-  #      delimiter: " ",
-  #      country_code: 33,
-  #      area_code: true
-  #    )
-  #end
+  private
+
+  def set_phone_number
+    phone_object = TelephoneNumber.parse(phone_number, :fr)
+    self.phone_number = phone_object.international_number
+  end
 end
 
 # == Schema Information
