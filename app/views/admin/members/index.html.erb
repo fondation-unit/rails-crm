@@ -27,6 +27,7 @@
                        turbo_confirm: 'Etes-vous sur de vouloir effacer ce membre ?',
                      }
            },
+           email_address: ->(member) { mail_to member.email_address, member.email_address },
            organizations_names: ->(member) { raw member.organizations_names.map{|wl| link_to wl[:name], admin_organization_path(wl[:id])}.join(', ') },
          }
 %>
