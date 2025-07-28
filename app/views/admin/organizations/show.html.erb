@@ -27,6 +27,8 @@
          columns: %w[id first_name last_name email_address phone_number edit],
          formatters: {
            edit: ->(member) { link_to 'Editer', edit_admin_member_path(member) },
+           email_address: -> (member) { mail_to member.email_address, member.email_address} 
          }
+
 %>
 </div>
