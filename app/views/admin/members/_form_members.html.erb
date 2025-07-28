@@ -19,13 +19,25 @@
     <%= f.label :phone_number %>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 </div>
-<div class="field">
-    <%= f.label :notes %>
-    <%= f.rich_textarea :notes %>
-</div>
-<%= f.label 'Institution' %>
-<div class="form_group my-4">
-    <%=
+<div class="d-flex flex-row">
+    <div class="col-md-4">
+        <div class="form_group my-4">
+            <div class="form-check">
+                <%= f.label :copil %>
+                <%= f.check_box :copil, as: :boolean %>
+            </div>
+        </div>
+        <div class="form_group my-4">
+            <div class="form-check">
+                <%= f.label :comex %>
+                <%= f.check_box :comex, as: :boolean %>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <%= f.label 'Institution' %>
+        <div class="form_group my-4">
+            <%=
       f.collection_select(
         :organization_ids,
         @organizations,
@@ -35,23 +47,26 @@
         { multiple: true },
       )
     %>
-</div>
-
-<% if member_types %>
-<%= f.label 'Type de membre' %>
-<div class="form_group my-4">
-    <%=
+        </div>
+    </div>
+    <div class="col-md-4">
+        <% if member_types %>
+        <%= f.label 'Type de membre' %>
+        <div class="form_group my-4">
+            <%=
         f.collection_check_boxes :member_type_ids, member_types,
           :id,
           :name,
           {} do |b| %>
-    <div class="form-check">
-        <%= b.check_box(class: 'form-check-input') %>
-        <%= b.label(class: 'form-check-label') { b.object.name } %>
+            <div class="form-check">
+                <%= b.check_box(class: 'form-check-input') %>
+                <%= b.label(class: 'form-check-label') { b.object.name } %>
+            </div>
+            <% end %>
+        </div>
+        <% end %>
     </div>
-    <% end %>
 </div>
-<% end %>
 <button type="submit" class="btn btn-primary">
     <% if member.persisted? %>
     Mettre à jour

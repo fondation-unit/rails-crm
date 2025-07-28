@@ -42,8 +42,7 @@ end
       phone_number: Faker::PhoneNumber.phone_number_with_country_code,
       email_address: "dummy#{i}@example.com",
       copil: Faker::Boolean,
-      comex: Faker::Boolean,
-      notes: Faker::Lorem.paragraph
+      comex: Faker::Boolean
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
