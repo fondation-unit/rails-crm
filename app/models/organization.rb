@@ -4,11 +4,6 @@ class Organization < ApplicationRecord
   has_one_attached :logo
 
   validates :name, presence: true
-  validates :address, presence: false
-  validates :zip_code, presence: false
-  validates :city, presence: false
-  validates :lat, presence: false
-  validates :lng, presence: false
 
   scope :ordered, -> { order(name: "asc") }
 end
