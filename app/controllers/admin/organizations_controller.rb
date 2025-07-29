@@ -32,8 +32,6 @@ class Admin::OrganizationsController < Admin::AdminController
     if @organization.update(post_params)
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
-
-      #I18n.translate("activerecord.errors.messages.content_type")
     else
       @organization.reload # Reload the object to get the existing attachment
 
