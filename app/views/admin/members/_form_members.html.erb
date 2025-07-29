@@ -23,14 +23,14 @@
     <div class="col-md-4">
         <div class="form_group my-4">
             <div class="form-check">
-                <%= f.label :copil %>
-                <%= f.check_box :copil, as: :boolean %>
+                <%= f.check_box :copil,class: "form-check-input", as: :boolean %>
+                <%= f.label :copil,class: "form-check-label" %>
             </div>
         </div>
         <div class="form_group my-4">
             <div class="form-check">
-                <%= f.label :comex %>
-                <%= f.check_box :comex, as: :boolean %>
+                <%= f.check_box :comex,class: "form-check-input", as: :boolean %>
+                <%= f.label :comex,class: "form-check-label" %>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
         <% end %>
     </div>
 </div>
-<button type="submit" class="btn btn-primary">
+<button type="submit" class="btn btn-primary mb-5">
     <% if member.persisted? %>
     Mettre à jour
     <% else %>

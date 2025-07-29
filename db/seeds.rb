@@ -24,7 +24,7 @@ User.create!(
 5.times do |o|
   Organization.create!(
     name: Faker::Company.name,
-    address: Faker::Address.full_address,
+    address: Faker::Address.street_address,
     zip_code: Faker::Address.zip_code,
     city: Faker::Address.city,
     lat: Faker::Address.latitude,

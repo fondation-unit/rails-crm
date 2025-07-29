@@ -1,39 +1,34 @@
 <!-- stimulus controller "sortable" -->
 <div class="table-responsive">
-  <!-- stimulus controller "sortable" -->
-  <table class="table" data-controller="sortable">
-    <thead>
-      <tr>
-        <% headers.each_with_index do |(header, name), index| %>
-          <% is_last = index == headers.size - 1 %>
-          <th
-            scope="col"
-            data-action="click->sortable#sort"
-            data-sortable-column-value="<%= header %>"
-            class="<%= 'text-end' if is_last %>"
-          >
-            <%= name %>
-          </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% objects.each do |obj| %>
-        <tr>
-          <% columns.each_with_index do |col, index| %>
-            <% is_last = index == columns.size - 1 %>
-            <td class="<%= 'text-end' if is_last %>">
-              <% if defined?(formatters) && formatters&.key?(col.to_sym) %>
-                <%= formatters[col.to_sym].call(obj) %>
-              <% else %>
-                <%= obj.send(col) %>
-              <% end %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <!-- stimulus controller "sortable" -->
+    <table class="table" data-controller="sortable">
+        <thead>
+            <tr>
+                <% headers.each_with_index do |(header, name), index| %>
+                <% is_last = index == headers.size - 1 %>
+                <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= header %>" class="<%= 'text-end' if is_last %>">
+                    <%= name %>
+                </th>
+                <% end %>
+            </tr>
+        </thead>
+        <tbody>
+            <% objects.each do |obj| %>
+            <tr>
+                <% columns.each_with_index do |col, index| %>
+                <% is_last = index == columns.size - 1 %>
+                <td class="align-middle <%= 'text-end' if is_last %>">
+                    <% if defined?(formatters) && formatters&.key?(col.to_sym) %>
+                    <%= formatters[col.to_sym].call(obj) %>
+                    <% else %>
+                    <%= obj.send(col) %>
+                    <% end %>
+                </td>
+                <% end %>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
 
-  <%= raw(pagy_bootstrap_nav_with_first_last(pagy)) if pagy.pages > 1 %>
+    <%= raw(pagy_bootstrap_nav_with_first_last(pagy)) if pagy.pages > 1 %>
 </div>

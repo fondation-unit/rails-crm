@@ -28,6 +28,10 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def update
     @organization = Organization.find(params[:id])
+    if post_params[:remove_logo].present? && post_params[:remove_logo] === true
+      @organization.logo.purge
+    end
+    post_params.delete(:remove_logo)
 
     if @organization.update(post_params)
       redirect_to admin_organizations_path,
@@ -62,6 +66,6 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def post_params
-    params.expect(organization: [:name])
+    params.expect(organization: %i[name address zip_code city lat lng logo])
   end
 end
