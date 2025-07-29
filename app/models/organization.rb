@@ -1,7 +1,10 @@
 class Organization < ApplicationRecord
+  include FileAttachable
+
   has_and_belongs_to_many :members, join_table: "members_organizations"
 
   has_one_attached :logo
+  attaches_one :logo # Validate the file through FileAttachable
 
   attr_accessor :remove_logo
 
