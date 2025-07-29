@@ -10,7 +10,6 @@ class Member < ApplicationRecord
             format: {
               with: URI::MailTo::EMAIL_REGEXP
             }
-
   validates :phone_number,
             telephone_number: {
               country: "FR",

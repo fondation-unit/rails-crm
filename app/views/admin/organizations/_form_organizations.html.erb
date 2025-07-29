@@ -1,47 +1,49 @@
 <%= form_with url: url, model: organization do |f| %>
-<div class="form_group my-4">
+  <div class="form_group my-4">
     <%= f.label :logo %>
-    <%= f.file_field :logo, class: "form-control-file" %>
-</div>
-<% if @organization.logo.attached? %>
-<%= image_tag(@organization.logo, {style: "max-width: 200px"}) %>
-<div class="form_group my-4">
-    <div class="form-check">
-        <%= f.check_box "remove_logo",class: "form-check-input", as: :boolean %>
-        <%= f.label "remove_logo",class: "form-check-label" %>
+    <% unless @organization.new_record? %>
+      <%= f.file_field :logo, class: 'form-control-file' %>
+    <% end %>
+  </div>
+  <% if @organization.persisted? && @organization.logo.attached? %>
+    <%= image_tag(@organization.logo, style: 'max-width: 200px') %>
+
+    <div class="form_group my-4">
+      <div class="form-check">
+        <%= f.check_box :remove_logo, class: 'form-check-input' %>
+        <%= f.label :remove_logo, class: 'form-check-label' %>
+      </div>
     </div>
-</div>
-<%end%>
-<div class="form-group">
+  <% end %>
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :address %>
     <%= f.text_field :address, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :zip_code %>
     <%= f.text_field :zip_code, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :city %>
     <%= f.text_field :city, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :lat %>
     <%= f.text_field :lat, class: 'form-control' %>
-</div>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :lng %>
     <%= f.text_field :lng, class: 'form-control' %>
-</div>
-<button type="submit" class="btn btn-primary mb-5">
+  </div>
+  <button type="submit" class="btn btn-primary mb-5">
     <% if @organization.persisted? %>
-    Mettre à jour
+      Mettre à jour
     <% else %>
-    Créer
+      Créer
     <% end %>
-</button>
+  </button>
 <% end %>
