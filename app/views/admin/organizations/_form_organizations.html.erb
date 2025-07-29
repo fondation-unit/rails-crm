@@ -10,40 +10,40 @@
 <div class="form_group my-4">
     <div class="form-check">
         <%= f.check_box :remove_logo, class: 'form-check-input' %>
-        <%= f.label :remove_logo, class: 'form-check-label' %>
+        <%= f.label :remove_logo, I18n.t('members.organizations.remove_logo'), class: 'form-check-label' %>
     </div>
 </div>
 <% end %>
 
 <div class="form-group">
-    <%= f.label :name %>
+    <%= f.label :name, I18n.t('name') %>
     <%= f.text_field :name, required: true, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
-    <%= f.label :address %>
+    <%= f.label :address, I18n.t('address') %>
     <%= f.text_field :address, required: true, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
-    <%= f.label :zip_code %>
+    <%= f.label :zip_code, I18n.t('zip_code') %>
     <%= f.text_field :zip_code, required: true, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
-    <%= f.label :city %>
+    <%= f.label :city, I18n.t('city') %>
     <%= f.text_field :city, required: true, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
-    <%= f.label :lat %>
+    <%= f.label :lat, I18n.t('members.organizations.lat') %>
     <%= f.text_field :lat, class: 'form-control' %>
 </div>
 <div class="form-group my-4">
-    <%= f.label :lng %>
+    <%= f.label :lng, I18n.t('members.organizations.lng') %>
     <%= f.text_field :lng, class: 'form-control' %>
 </div>
 <button type="submit" class="btn btn-primary mb-5">
     <% if @organization.persisted? %>
-    Mettre à jour
+    <%= I18n.t('update') %>
     <% else %>
-    Créer
+    <%= I18n.t('create') %>
     <% end %>
 </button>
 <% end %>

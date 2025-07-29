@@ -1,5 +1,5 @@
 <div class="d-flex w-100 flex-column justify-content-between">
-    <h1>Fiche membre</h1>
+    <h1><%= I18n.t('members.show_title') %></h1>
     <div class="card-content">
         <div class="identity ">
             <div class="d-flex flex-row align-items-center">
@@ -17,11 +17,11 @@
         </div>
     </div>
     <div class="d-flex flex-row align-items-center">
-        Membre du Copil : <%= @member.copil ? 'Oui': 'Non' %><br>
-        Membre du ComEx : <%= @member.comex ? 'Oui': 'Non' %><br>
+        <%= I18n.t('members.copil_member') %> : <%= @member.copil ? I18n.t('Yes'): I18n.t('No') %><br>
+        <%= I18n.t('members.comex_member') %> : <%= @member.comex ? I18n.t('Yes'): I18n.t('No') %><br>
     </div>
     <% if Current&.session&.user %>
-    <%= link_to 'Editer', edit_admin_member_path(@member), {class: "btn btn-primary"} %>
+    <%= link_to I18n.t('edit'), edit_admin_member_path(@member), {class: "btn btn-primary"} %>
     <% end %>
 </div>
 </div>
