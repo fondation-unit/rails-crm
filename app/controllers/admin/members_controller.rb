@@ -8,6 +8,10 @@ class Admin::MembersController < Admin::AdminController
     @pagy, @records = pagy(members)
   end
 
+  def show
+    @member = Member.find(params[:id])
+  end
+
   def new
     @member = Member.new
     @member_types = MemberType.ordered

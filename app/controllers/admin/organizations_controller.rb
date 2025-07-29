@@ -33,6 +33,8 @@ class Admin::OrganizationsController < Admin::AdminController
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
     else
+      @organization.reload # Reload the object to get the existing attachment
+
       flash[:alert] = @organization.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
@@ -62,6 +64,8 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def post_params
-    params.expect(organization: [:name])
+    params.expect(
+      organization: %i[name address zip_code city lat lng logo remove_logo]
+    )
   end
 end

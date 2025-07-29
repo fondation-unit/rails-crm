@@ -1,13 +1,49 @@
 <%= form_with url: url, model: organization do |f| %>
-  <div class="form-group">
+<div class="form_group my-4">
+    <%= f.label :logo %>
+    <%= f.file_field :logo, class: 'form-control-file' %>
+</div>
+
+<% if @organization.logo.attached? && @organization.logo.blob.persisted? %>
+<%= image_tag(url_for(@organization.logo.variant(:thumb))) %>
+
+<div class="form_group my-4">
+    <div class="form-check">
+        <%= f.check_box :remove_logo, class: 'form-check-input' %>
+        <%= f.label :remove_logo, class: 'form-check-label' %>
+    </div>
+</div>
+<% end %>
+
+<div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, required: true, class: 'form-control' %>
-  </div>
-  <button type="submit" class="btn btn-primary">
+</div>
+<div class="form-group my-4">
+    <%= f.label :address %>
+    <%= f.text_field :address, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :zip_code %>
+    <%= f.text_field :zip_code, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :city %>
+    <%= f.text_field :city, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :lat %>
+    <%= f.text_field :lat, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :lng %>
+    <%= f.text_field :lng, class: 'form-control' %>
+</div>
+<button type="submit" class="btn btn-primary mb-5">
     <% if @organization.persisted? %>
-      Mettre à jour
+    Mettre à jour
     <% else %>
-      Créer
+    Créer
     <% end %>
-  </button>
+</button>
 <% end %>
