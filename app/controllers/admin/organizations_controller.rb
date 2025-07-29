@@ -35,6 +35,8 @@ class Admin::OrganizationsController < Admin::AdminController
 
       #I18n.translate("activerecord.errors.messages.content_type")
     else
+      @organization.reload # Reload the object to get the existing attachment
+
       flash[:alert] = @organization.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end

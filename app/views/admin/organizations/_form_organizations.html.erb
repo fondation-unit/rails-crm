@@ -1,12 +1,11 @@
 <%= form_with url: url, model: organization do |f| %>
 <div class="form_group my-4">
     <%= f.label :logo %>
-    <% unless @organization.new_record? %>
     <%= f.file_field :logo, class: 'form-control-file' %>
-    <% end %>
 </div>
-<% if @organization.persisted? && @organization.logo.attached? %>
-<%= image_tag(@organization.logo.variant(:thumb)) %>
+
+<% if @organization.logo.attached? && @organization.logo.blob.persisted? %>
+<%= image_tag(url_for(@organization.logo), style: 'max-width: 200px') %>
 
 <div class="form_group my-4">
     <div class="form-check">
@@ -15,6 +14,7 @@
     </div>
 </div>
 <% end %>
+
 <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, required: true, class: 'form-control' %>
