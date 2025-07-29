@@ -66,6 +66,8 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def post_params
-    params.expect(organization: %i[name address zip_code city lat lng logo])
+    params.expect(
+      organization: %i[name address zip_code city lat lng logo remove_logo]
+    )
   end
 end
