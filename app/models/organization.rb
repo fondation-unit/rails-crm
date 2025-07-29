@@ -3,9 +3,19 @@ class Organization < ApplicationRecord
 
   has_one_attached :logo
 
+  attr_accessor :remove_logo
+
   validates :name, presence: true
 
+  before_save :purge_logo_if_wanted
+
   scope :ordered, -> { order(name: "asc") }
+
+  private
+
+  def purge_logo_if_wanted
+    logo.purge if ActiveModel::Type::Boolean.new.cast(remove_logo)
+  end
 end
 
 # == Schema Information
