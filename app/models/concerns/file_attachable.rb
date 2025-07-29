@@ -32,6 +32,7 @@ module FileAttachable
   end
 
   def delete_attached_file
-    file.purge
+    attachment = send(self.class.attached_file_name)
+    attachment.purge if attachment.attached?
   end
 end
