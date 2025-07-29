@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+#
+Faker::Config.locale = "fr"
 User.create!(
   first_name: "User",
   last_name: "Dummy",
@@ -22,7 +24,7 @@ User.create!(
 5.times do |o|
   Organization.create!(
     name: Faker::Company.name,
-    address: Faker::Address.full_address,
+    address: Faker::Address.street_address,
     zip_code: Faker::Address.zip_code,
     city: Faker::Address.city,
     lat: Faker::Address.latitude,
@@ -37,11 +39,10 @@ end
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       position: Faker::Job.position,
-      phone_number: Faker::PhoneNumber.cell_phone,
+      phone_number: Faker::PhoneNumber.phone_number_with_country_code,
       email_address: "dummy#{i}@example.com",
       copil: Faker::Boolean,
-      comex: Faker::Boolean,
-      notes: Faker::Lorem.paragraph
+      comex: Faker::Boolean
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
