@@ -33,6 +33,8 @@ class Admin::OrganizationsController < Admin::AdminController
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
     else
+      @organization.reload # Reload the object to get the existing attachment
+
       flash[:alert] = @organization.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
