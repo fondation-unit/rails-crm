@@ -4,7 +4,7 @@
     <div class="d-flex flex-md-row flex-column">
         <div class="col-md-6">
             <% if @organization.logo.attached? %>
-            <%= image_tag(@organization.logo, {style: "max-width: 200px"}) %>
+            <%= image_tag(@organization.logo.variant(:medium)) %>
             <%end%>
         </div>
         <div class="card coords col-md-6 p-4">
@@ -39,6 +39,5 @@
            first_name: ->(member) { link_to member.first_name, admin_member_path(member.id) },
            last_name: ->(member) { link_to member.last_name, admin_member_path(member.id) },
          }
-
 %>
 </div>

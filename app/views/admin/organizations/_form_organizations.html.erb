@@ -5,7 +5,7 @@
 </div>
 
 <% if @organization.logo.attached? && @organization.logo.blob.persisted? %>
-<%= image_tag(url_for(@organization.logo), style: 'max-width: 200px') %>
+<%= image_tag(url_for(@organization.logo.variant(:thumb))) %>
 
 <div class="form_group my-4">
     <div class="form-check">
