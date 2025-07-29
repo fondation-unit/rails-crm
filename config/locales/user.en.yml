@@ -1,0 +1,16 @@
+fr:
+  'Forgot your password?': 'Forgot your password?'
+  'Password change': 'Password change'
+  'Sign in': 'Sign in for %{site_name}'
+  'Sign up': 'Sign up'
+  'Password': 'Password'
+  'Enter your password': 'Enter your password'
+  'Remember me': 'Remember me'
+  'Not an account yet ? Suscribe': 'Not an account yet ? Suscribe'
+  'here': 'here'
+  'Enter your email': 'Enter your email'
+  "Your're connected": "Your're connected"
+  "Your account is not validated": "Your account is not validated"
+  'Try another email address or password.': 'Try another email address or password.'
+  "You're disconnected": "You're disconnected"
+  "Welcome": "Welcome on %{site_name}'s dashboard"
