@@ -19,6 +19,6 @@
                        turbo_confirm: 'Etes-vous sur de vouloir effacer cette institution ?',
                      }
            },
-         logo_image: ->(organization){ organization.logo.attached? ? image_tag(organization.logo, {style: "max-width: 60px"}) : nil },
+         logo_image: ->(organization){ organization.logo.attached? ? image_tag(organization.logo.variant(:thumb), {style: "max-width: 60px"}) : nil },
          }
 %>
