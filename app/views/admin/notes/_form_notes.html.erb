@@ -1,0 +1,35 @@
+<%= form_with url: url, method: method, model: note do |f| %>
+<div class="form-group my-4">
+    <%= f.label :first_name, I18n.t('first_name') %>
+    <%= f.text_field :first_name, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.select :contact_type, options_for_select(Note.contact_types) %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :email_address, I18n.t('email_address') %>
+    <%= f.email_field :email_address, required: true, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :position, I18n.t('members.position') %>
+    <%= f.text_field :position, class: 'form-control' %>
+</div>
+<div class="form-group my-4">
+    <%= f.label :phone_number, I18n.t('phone_number') %>
+    <%= f.telephone_field :phone_number, class: 'form-control' %>
+</div>
+
+<div class="form_group my-4">
+    <div class="form-check">
+        <%= f.check_box :public,class: "form-check-input", as: :boolean %>
+        <%= f.label I18n.t('notes.public'),class: "form-check-label" %>
+    </div>
+</div>
+<button type="submit" class="btn btn-primary mb-5">
+    <% if note.persisted? %>
+    <%= I18n.t('update') %>
+    <% else %>
+    <%= I18n.t('create') %>
+    <% end %>
+</button>
+<% end %>

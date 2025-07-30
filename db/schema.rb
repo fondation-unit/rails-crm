@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -80,6 +80,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
     t.integer "organization_id", null: false
     t.index ["member_id", "organization_id"], name: "index_members_organizations_on_member_id_and_organization_id"
     t.index ["organization_id", "member_id"], name: "index_members_organizations_on_organization_id_and_member_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text "content"
+    t.boolean "public", default: false
+    t.string "contact_type"
+    t.integer "user_id"
+    t.integer "member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_notes_on_member_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|

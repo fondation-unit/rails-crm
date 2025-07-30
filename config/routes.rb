@@ -24,5 +24,6 @@ Rails.application.routes.draw do
     resources :member_types
     resources :members
     resources :organizations
+    resources :notes
   end
 end

@@ -3,7 +3,10 @@ class Admin::MembersController < Admin::AdminController
 
   def index
     members =
-      Member.all.includes(:organizations).order(sort_column => sort_direction)
+      Member
+        .all
+        .includes(:organizations, :notes)
+        .order(sort_column => sort_direction)
 
     @pagy, @records = pagy(members)
   end
@@ -20,6 +23,9 @@ class Admin::MembersController < Admin::AdminController
   def edit
     @member = Member.find(params[:id])
     @member_types = MemberType.ordered
+
+    notes = Note.getNotesForUsers(member_id: @member.id)
+    @pagy, @notes = pagy(notes)
   end
 
   def create

@@ -18,6 +18,15 @@ User.create!(
   confirmation_sent_at: Time.current,
   confirmed_at: Time.current
 )
+User.create!(
+  first_name: "User",
+  last_name: "Dummy",
+  email_address: "dummy2@example.com",
+  password: ENV["DUMMY_USER_PASSWORD"],
+  password_confirmation: ENV["DUMMY_USER_PASSWORD"],
+  confirmation_sent_at: Time.current,
+  confirmed_at: Time.current
+)
 
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
@@ -48,3 +57,25 @@ end
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
   member.organizations << Organization.all.to_a.sample(rand(1..2))
 end
+
+Note.create!(
+  content: Faker::Lorem.sentence,
+  public: false,
+  member_id: 2,
+  user_id: 1,
+  contact_type: "Email"
+)
+Note.create!(
+  content: Faker::Lorem.sentence,
+  public: false,
+  member_id: 2,
+  user_id: 1,
+  contact_type: "Telephone"
+)
+Note.create!(
+  content: Faker::Lorem.sentence,
+  public: true,
+  member_id: 2,
+  user_id: 2,
+  contact_type: "Discussion"
+)

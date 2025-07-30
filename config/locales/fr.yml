@@ -1,20 +1,23 @@
 fr:
-  'update': 'Mettre à jour'
-  'create': 'Créer'
-  'edit': 'Editer'
-  'delete': 'Supprimer'
-  'first_name': 'Prénom'
-  'last_name': 'Nom'
-  'email_address': 'Adresse email'
-  'phone_number': 'Téléphone'
-  'Yes': 'Oui'
-  'No': 'Non'
-  'name': 'Nom'
-  'address': 'Adresse'
-  'zip_code': 'Code postal'
-  'city': 'Ville'
-  menu:
-    'CRM': 'CRM'
-    'members': 'Les membres'
-    'member_types': 'Les types de membres'
-    'organizations': 'Les institutions'
+  "update": "Mettre à jour"
+  "create": "Créer"
+  "edit": "Editer"
+  "delete": "Supprimer"
+  "first_name": "Prénom"
+  "last_name": "Nom"
+  "email_address": "Adresse email"
+  "phone_number": "Téléphone"
+  "Yes": "Oui"
+  "No": "Non"
+  "name": "Nom"
+  "address": "Adresse"
+  "zip_code": "Code postal"
+  "city": "Ville"
+  activerecord:
+    attributes:
+      note/contact_type:
+        email: 'email'
+        phone: 'Téléphone'
+        chat: 'Discussion'
+        show: 'Salon'
+        other: 'Autre'

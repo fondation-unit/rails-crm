@@ -1,0 +1,10 @@
+en:
+  notes:
+    'contact_type': 'Contact type'
+    'public': 'Public note ?'
+    'content': 'Content'
+    'created_at': 'Created at'
+    'created_by': 'Created by'
+    'moi': 'Me'
+    'add': 'Add a note'
+    'validation_delete': 'Are you sure you want to delete this note?'
