@@ -4,8 +4,6 @@ class Note < ApplicationRecord
 
   has_rich_text :content
 
-  enum :contact_type, %i[email phone chat show other]
-
   validates_associated :user, :member
 
   scope :ordered, -> { order(created_at: "desc") }
@@ -33,7 +31,6 @@ end
 #
 #  id           :integer          not null, primary key
 #  contact_type :string
-#  content      :text
 #  public       :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

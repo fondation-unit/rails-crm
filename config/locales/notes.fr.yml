@@ -8,3 +8,8 @@ fr:
     'moi': 'Moi'
     'add': 'Créer une note'
     'validation_delete': 'Êtes-vous sûr de vouloir supprimer cette note ?'
+    'email': 'Email'
+    'phone': 'Téléphone'
+    'chat': 'Discussion'
+    'show': 'Salon'
+    'other': 'Autre'

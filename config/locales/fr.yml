@@ -13,11 +13,4 @@ fr:
   "address": "Adresse"
   "zip_code": "Code postal"
   "city": "Ville"
-  activerecord:
-    attributes:
-      note/contact_type:
-        email: 'email'
-        phone: 'Téléphone'
-        chat: 'Discussion'
-        show: 'Salon'
-        other: 'Autre'
+        

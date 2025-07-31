@@ -83,7 +83,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.text "content"
     t.boolean "public", default: false
     t.string "contact_type"
     t.integer "user_id"

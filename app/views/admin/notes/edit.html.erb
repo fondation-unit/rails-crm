@@ -1,4 +1,4 @@
 <h1><%= I18n.t('notes.add') %></h1>
 <%=
-  render 'form_notes', note: @note, url: admin_note_path(@note), method: 'patch'
+  render 'form_notes', note: @note,member_id: @note.member_id, url: admin_note_path(@note), method: 'patch'
 %>

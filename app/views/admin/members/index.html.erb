@@ -11,12 +11,13 @@
            [:last_name, I18n.t('last_name')],
            [:email_address, I18n.t('email_address')],
            [:phone_number, I18n.t('phone_number')],
+           [:notes, ''],
            [:edit, ''],
            [:delete, ''],
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id organizations_names first_name last_name email_address phone_number edit delete],
+         columns: %w[id organizations_names first_name last_name email_address phone_number notes edit delete],
          formatters: {
            edit: ->(member) { link_to I18n.t('edit'), edit_admin_member_path(member) },
            delete: ->(member) {
@@ -31,5 +32,6 @@
            first_name: ->(member) { link_to member.first_name, admin_member_path(member.id) },
            last_name: ->(member) { link_to member.last_name, admin_member_path(member.id) },
            organizations_names: ->(member) { raw member.organizations_names.map{|wl| link_to wl[:name], admin_organization_path(wl[:id])}.join(', ') },
+           notes: ->(member) { link_to I18n.t('notes.add'), admin_new_note_path(member.id), {class: "btn btn-info"} },
          }
 %>
