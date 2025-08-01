@@ -63,19 +63,19 @@ Note.create!(
   public: false,
   member_id: 2,
   user_id: 1,
-  contact_type: "Email"
+  contact_type: "email"
 )
 Note.create!(
   content: Faker::Lorem.sentence,
   public: false,
   member_id: 2,
   user_id: 1,
-  contact_type: "Telephone"
+  contact_type: "phone"
 )
 Note.create!(
   content: Faker::Lorem.sentence,
   public: true,
   member_id: 2,
   user_id: 2,
-  contact_type: "Discussion"
+  contact_type: "chat"
 )
