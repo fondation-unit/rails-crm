@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :sessions, dependent: :destroy
+  has_many :notes
   generates_token_for :user_confirmation,
                       expires_in: ACCESS_BEFORE_CONFIRMATION_IN_HOURS
 
@@ -53,6 +54,10 @@ class User < ApplicationRecord
       UsersMailer.account_confirmation(self).deliver_now
       update!(confirmation_sent_at: Time.current)
     end
+  end
+
+  def self.isCurrent(params)
+    params[:user_id] == Current.user.id
   end
 end
 
