@@ -11,9 +11,13 @@ class Admin::NotesController < Admin::AdminController
     @note = Note.new(note_params)
     @member = Member.find(note_params[:member_id])
     if @note.save
-      redirect_to admin_members_path,
+      redirect_to admin_member_path(note_params[:member_id]),
                   notice:
-                    "Note pour le membre #{@member.first_name} #{@member.last_name} créé"
+                    I18n.t(
+                      "notes.created",
+                      first_name: @member.first_name,
+                      last_name: @member.last_name
+                    )
     else
       flash[:alert] = @note.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -25,13 +29,16 @@ class Admin::NotesController < Admin::AdminController
   end
 
   def update
-    @note = Note.find(params[:id])
-    @member = Member.find(@note.member_id)
+    @note = Note.includes("member").find(params[:id])
 
     if @note.update(note_params)
-      redirect_to admin_members_path,
+      redirect_to admin_member_path(@note.member.id),
                   notice:
-                    "note pour le membre \"#{@member.first_name} #{@member.last_name}\" mis à jour"
+                    I18n.t(
+                      "notes.updated",
+                      first_name: @note.member.first_name,
+                      last_name: @note.member.last_name
+                    )
     else
       flash[:alert] = @note.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -39,6 +46,19 @@ class Admin::NotesController < Admin::AdminController
   end
 
   def destroy
+    @note = Note.includes("member").find(params[:id])
+    if @note.destroy
+      redirect_to admin_member_path(@note.member.id),
+                  alert:
+                    I18n.t(
+                      "notes.deleted",
+                      first_name: @note.member.first_name,
+                      last_name: @note.member.last_name
+                    )
+    else
+      redirect_to admin_member_path(@note.member.id),
+                  alert: I18n.t("notes.error_update")
+    end
   end
 
   def note_params

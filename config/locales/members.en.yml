@@ -10,6 +10,10 @@ en:
     'copil_member': 'Copil member'
     'comex_member': 'Comex member'
     'validation_delete': 'Are you sure you want to delete this member?'
+    'created': 'Member %{first_name} %{last_name} created'
+    'updated': 'Member %{first_name} %{last_name} updated'
+    'deleted': 'Member %{name} deleted'
+    'error_update': 'An error occured while deleting a member'
     member_type:
       'created': 'Member type created'
       'updated': 'Member type "%{name}" updated'

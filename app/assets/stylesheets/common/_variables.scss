@@ -1,0 +1,57 @@
+$spacer: 1rem;
+$spacers: ();
+//stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+    (
+        0: 0,
+        1: (
+            $spacer * 0.25,
+        ),
+        2: (
+            $spacer * 0.5,
+        ),
+        3: $spacer,
+        4: (
+            $spacer * 1.5,
+        ),
+        5: (
+            $spacer * 3,
+        ),
+        '5-5': (
+            $spacer * 4,
+        ),
+        6: (
+            $spacer * 6,
+        ),
+        7: (
+            $spacer * 7,
+        ),
+        8: (
+            $spacer * 8,
+        ),
+        9: (
+            $spacer * 9,
+        ),
+        10: (
+            $spacer * 10,
+        ),
+        15: (
+            $spacer * 15,
+        ),
+        20: (
+            $spacer * 20,
+        ),
+        25: (
+            $spacer * 25,
+        ),
+        '10p': 10%,
+        '15p': 15%,
+        '20p': 20%,
+        '25p': 25%,
+        '30p': 30%,
+        '40p': 40%,
+        '50p': 50%,
+        '60p': 60%,
+    ),
+    $spacers
+);
