@@ -18,7 +18,9 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def create
-    if @organization = Organization.create(post_params)
+    @organization = Organization.new(organization_params)
+
+    if @organization.save
       redirect_to admin_organizations_path, notice: "Institution créée"
     else
       flash[:alert] = @organization.errors.full_messages.join(", ")
@@ -29,7 +31,7 @@ class Admin::OrganizationsController < Admin::AdminController
   def update
     @organization = Organization.find(params[:id])
 
-    if @organization.update(post_params)
+    if @organization.update(organization_params)
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
     else
@@ -63,7 +65,7 @@ class Admin::OrganizationsController < Admin::AdminController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
-  def post_params
+  def organization_params
     params.expect(
       organization: %i[name address zip_code city lat lng logo remove_logo]
     )
