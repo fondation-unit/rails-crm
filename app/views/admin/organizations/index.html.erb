@@ -19,6 +19,12 @@
                        turbo_confirm: I18n.t('members.organizations.validation_delete'),
                      }
            },
-         logo_image: ->(organization){ organization.logo.attached? ? image_tag(organization.logo.variant(:thumb), {style: "max-width: 60px"}) : nil },
+           logo_image: ->(organization) {
+             if organization.logo.attached?
+               image_tag(organization.logo.variant(:thumb), { style: 'max-width: 60px' })
+             else
+               nil
+             end
+           },
          }
 %>

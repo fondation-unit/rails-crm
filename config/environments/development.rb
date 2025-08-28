@@ -73,4 +73,7 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
   config.action_mailer.delivery_method = :test
   config.action_mailer.perform_deliveries = true
+
+  # Active Job adapter
+  config.active_job.queue_adapter = :sidekiq
 end
