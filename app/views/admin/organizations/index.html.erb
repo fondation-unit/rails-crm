@@ -1,10 +1,19 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1>Les types de institutions</h1>
-    <%= link_to 'Ajouter une institution', new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
+  <h1>Les types de institutions</h1>
+  <%= link_to 'Ajouter une institution', new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
   render 'shared/tables/sortable_table',
-         headers: [[:id, '#'], [:logo, 'Logo'], [:name, 'Nom'], [:address, 'Adresse'], [:zip_code, 'Code postal'], [:city, 'Ville'], [:edit, ''], [:delete, '']],
+         headers: [
+           [:id, '#'],
+           [:logo, 'Logo'],
+           [:name, 'Nom'],
+           [:address, 'Adresse'],
+           [:zip_code, 'Code postal'],
+           [:city, 'Ville'],
+           [:edit, ''],
+           [:delete, ''],
+         ],
          objects: @records,
          pagy: @pagy,
          columns: %w[id logo_image name address zip_code city edit delete],
@@ -19,6 +28,12 @@
                        turbo_confirm: 'Etes-vous sur de vouloir effacer cette institution ?',
                      }
            },
-         logo_image: ->(organization){ organization.logo.attached? ? image_tag(organization.logo.variant(:thumb), {style: "max-width: 60px"}) : nil },
+           logo_image: ->(organization) {
+             if organization.logo.attached?
+               image_tag(organization.logo.variant(:thumb), { style: 'max-width: 60px' })
+             else
+               nil
+             end
+           },
          }
 %>
