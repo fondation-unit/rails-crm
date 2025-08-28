@@ -66,10 +66,9 @@ end
 
 gem "jsbundling-rails", "~> 1.3.1"
 gem "annotaterb"
-
 gem "pundit", "~> 2.5"
-
 gem "pwned", "~> 2.4"
 gem "pagy", "~> 9.3.4"
-
 gem "telephone_number"
+
+gem "sidekiq", "~> 8.0"
