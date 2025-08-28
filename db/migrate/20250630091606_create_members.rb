@@ -1,12 +1,14 @@
 class CreateMembers < ActiveRecord::Migration[8.0]
   def change
     create_table :members do |t|
+      t.string :gender, null: true
       t.string :first_name, null: false
       t.string :last_name, null: false
-      t.string :email_address, null: true
-      t.string :address
-      t.string :zip_code
-      t.string :city
+      t.string :email_address, null: false
+      t.string :position, null: true
+      t.string :phone_number, null: true
+      t.boolean :copil, null: true
+      t.boolean :comex, null: true
 
       t.timestamps
     end

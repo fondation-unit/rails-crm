@@ -19,6 +19,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
   </head>
 
   <body>
@@ -41,8 +42,13 @@
         <h2 class="auth-heading text-center mb-5"><%= content_for(:title) %></h2>
 
         <div class="auth-form-container text-start">
-          <%= tag.div(flash[:alert], style: 'color:red') if flash[:alert] %>
-          <%= tag.div(flash[:notice], style: 'color:green') if flash[:notice] %>
+          <% flash.each do |key, value| %>
+            <div class="<%= flash_class(key) %> alert-dismissible" role="alert">
+              <%= value %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+
           <%= yield %>
         </div>
       </div>

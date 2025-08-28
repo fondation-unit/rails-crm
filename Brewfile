@@ -1,0 +1,2 @@
+brew "vips"
+brew "redis"

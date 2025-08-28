@@ -1,7 +1,15 @@
 class Admin::MembersController < Admin::AdminController
+  before_action :set_organizations, only: %i[new create edit update]
+
   def index
-    members = Member.all.order(sort_column => sort_direction)
+    members =
+      Member.all.includes(:organizations).order(sort_column => sort_direction)
+
     @pagy, @records = pagy(members)
+  end
+
+  def show
+    @member = Member.find(params[:id])
   end
 
   def new
@@ -9,20 +17,22 @@ class Admin::MembersController < Admin::AdminController
     @member_types = MemberType.ordered
   end
 
+  def edit
+    @member = Member.find(params[:id])
+    @member_types = MemberType.ordered
+  end
+
   def create
     @member = Member.new(member_params)
 
     if @member.save
-      redirect_to admin_members_path, notice: "Membre #{@member.last_name} créé"
+      redirect_to admin_members_path,
+                  notice:
+                    "Membre #{@member.first_name} #{@member.last_name} créé"
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @member = Member.find(params[:id])
-    @member_types = MemberType.ordered
   end
 
   def update
@@ -30,7 +40,8 @@ class Admin::MembersController < Admin::AdminController
 
     if @member.update(member_params)
       redirect_to admin_members_path,
-                  notice: "Membre \"#{@member.name}\" mis à jour"
+                  notice:
+                    "Membre \"#{@member.first_name} #{@member.last_name}\" mis à jour"
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -42,7 +53,7 @@ class Admin::MembersController < Admin::AdminController
     nom = @member.last_name
 
     if @member.destroy
-      redirect_to admin_members_path, notice: "Membre \"#{nom}\" supprimé"
+      redirect_to admin_members_path, alert: "Membre \"#{nom}\" supprimé"
     else
       redirect_to admin_members_path,
                   alert: "Erreur lors de la suppression du membre"
@@ -50,6 +61,10 @@ class Admin::MembersController < Admin::AdminController
   end
 
   private
+
+  def set_organizations
+    @organizations = Organization.ordered
+  end
 
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])
@@ -69,11 +84,13 @@ class Admin::MembersController < Admin::AdminController
         :first_name,
         :last_name,
         :email_address,
-        :address,
-        :zip_code,
-        :city,
-        :logo,
-        member_type_ids: []
+        :position,
+        :phone_number,
+        :copil,
+        :comex,
+        :notes,
+        member_type_ids: [],
+        organization_ids: []
       ]
     )
   end
