@@ -7,22 +7,17 @@ class Note < ApplicationRecord
   validates_associated :user, :member
 
   scope :ordered, -> { order(created_at: "desc") }
-
-  def self.getNotesForUsers(params)
-    Note
-      .includes("user")
-      .where(user_id: Current.user.id, member_id: params[:member_id])
-      .or(
-        Note
-          .where(member_id: params[:member_id], public: true)
-          .where.not(user_id: Current.user.id)
-      )
-      .ordered
-  end
-
-  def showDate
-    self.created_at.strftime("%d-%m-%Y %H:%M")
-  end
+  scope :for_user,
+        ->(current_user, member) do
+          where(user: current_user, member: member)
+            .or(
+              where(member: member)
+                .where(member: member, public: true)
+                .where.not(user: current_user)
+            )
+            .includes(:user)
+            .ordered
+        end
 end
 
 # == Schema Information
