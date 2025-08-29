@@ -24,11 +24,9 @@
          pagy: @pagy,
          columns: %w[contact_type public content created_at user_id edit delete],
          formatters: {
-           edit: ->(note) {
-             link_to I18n.t('edit'), edit_admin_note_path(note) if User.isCurrent(user_id: note.user.id)
-           },
+           edit: ->(note) { link_to I18n.t('edit'), edit_admin_note_path(note) if is_current_user?(note.user&.id) },
            delete: ->(note) {
-             if User.isCurrent(user_id: note.user.id)
+             if is_current_user?(note.user&.id)
                link_to I18n.t('delete'),
                        admin_note_path(note),
                        data: {
@@ -49,11 +47,7 @@
            created_at: ->(note) { date_readable(note.created_at) },
            content: ->(note) { note.content.to_plain_text.truncate(100) },
            user_id: ->(note) {
-             if User.isCurrent(user_id: note.user.id)
-               I18n.t('notes.moi')
-             else
-               note.user.first_name + ' ' + note.user.last_name
-             end
+             is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
            },
            contact_type: ->(note) { I18n.t("notes.#{note.contact_type}") },
          }
