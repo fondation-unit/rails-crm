@@ -5,8 +5,8 @@
 %>
 
 <div class="d-flex flex-md-row justify-content-between align-items-center">
-  <h2 class="mb-4">Les notes</h2>
-  <%= link_to I18n.t('notes.add'), admin_new_note_path(@member.id), class: 'btn btn-primary align-self-center' %>
+    <h2 class="mb-4">Les notes</h2>
+    <%= link_to I18n.t('notes.add'), admin_new_note_path(@member.id), class: 'btn btn-primary align-self-center' %>
 </div>
 
 <%=
@@ -45,10 +45,10 @@
              )
            },
            created_at: ->(note) { date_readable(note.created_at) },
-           content: ->(note) { note.content.to_plain_text.truncate(100) },
+           content: ->(note) { note_excerpt?(note.content) },
            user_id: ->(note) {
              is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
            },
-           contact_type: ->(note) { I18n.t("notes.#{note.contact_type}") },
+           contact_type: ->(note) { note.contact_type.present? ? I18n.t("notes.#{note.contact_type}") : "" },
          }
 %>
