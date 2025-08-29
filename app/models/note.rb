@@ -10,12 +10,9 @@ class Note < ApplicationRecord
   scope :for_member,
         ->(current_user, member) do
           where(user: current_user, member: member)
-            .or(
-              where(member: member)
-                .where(member: member, public: true)
-                .where.not(user: current_user)
-            )
+            .or(Note.where(member: member, public: true))
             .includes(:user)
+            .distinct
             .ordered
         end
 end
