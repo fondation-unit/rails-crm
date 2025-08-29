@@ -37,7 +37,7 @@ class Admin::NotesController < Admin::AdminController
                   notice:
                     I18n.t(
                       "notes.updated",
-                      MemberHelper.full_name(@note.member)
+                      name: MemberHelper.full_name(@note.member)
                     )
     else
       flash[:alert] = @note.errors.full_messages.join(", ")
@@ -47,12 +47,13 @@ class Admin::NotesController < Admin::AdminController
 
   def destroy
     @note = Note.includes("member").find(params[:id])
+
     if @note.destroy
       redirect_to admin_member_path(@note.member),
                   alert:
                     I18n.t(
                       "notes.deleted",
-                      MemberHelper.full_name(@note.member)
+                      name: MemberHelper.full_name(@note.member)
                     )
     else
       redirect_to admin_member_path(@note.member),
