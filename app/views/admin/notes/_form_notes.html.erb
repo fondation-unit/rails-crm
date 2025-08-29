@@ -1,24 +1,34 @@
 <%= form_with url: url, method: method, model: note do |f| %>
-<%= f.hidden_field :member_id, :value => member_id %>
-<%= f.hidden_field :user_id, :value => Current.user.id %>
-<div class="form-group my-4">
+  <%= f.hidden_field :member_id, value: member_id %>
+  <%= f.hidden_field :user_id, value: Current.user.id %>
+
+  <div class="form-group my-4">
     <%= f.label :content, I18n.t('notes.content') %>
     <%= f.rich_textarea :content, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
-    <%= f.select :contact_type, [[I18n.t('notes.email'), 'email'], [I18n.t('notes.phone'), 'phone'], [I18n.t('notes.chat'), 'chat'], [I18n.t('notes.show'), 'show'], [I18n.t('notes.other'), 'other']] %>
-</div>
-<div class="form_group my-4">
+  </div>
+  <div class="form-group my-4">
+    <%=
+      f.select :contact_type,
+               [
+                 [I18n.t('notes.email'), 'email'],
+                 [I18n.t('notes.phone'), 'phone'],
+                 [I18n.t('notes.chat'), 'chat'],
+                 [I18n.t('notes.show'), 'show'],
+                 [I18n.t('notes.other'), 'other'],
+               ]
+    %>
+  </div>
+  <div class="form_group my-4">
     <div class="form-check">
-        <%= f.check_box :public,class: "form-check-input", as: :boolean %>
-        <%= f.label I18n.t('notes.public'),class: "form-check-label" %>
+      <%= f.check_box :public, class: 'form-check-input', as: :boolean %>
+      <%= f.label I18n.t('notes.public'), class: 'form-check-label' %>
     </div>
-</div>
-<button type="submit" class="btn btn-primary mb-5">
+  </div>
+  <button type="submit" class="btn btn-primary mb-5">
     <% if note.persisted? %>
-    <%= I18n.t('update') %>
+      <%= I18n.t('update') %>
     <% else %>
-    <%= I18n.t('create') %>
+      <%= I18n.t('create') %>
     <% end %>
-</button>
+  </button>
 <% end %>
