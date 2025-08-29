@@ -10,8 +10,8 @@ fr:
     'copil_member': 'Membre du Copil'
     'comex_member': 'Membre du Comex'
     'validation_delete': 'Etes-vous sur de vouloir effacer ce membre ?'
-    'created': 'Membre %{first_name} %{last_name} créé'
-    'updated': 'Membre %{first_name} %{last_name} mis à jour'
+    'created': 'Membre %{name} créé'
+    'updated': 'Membre %{name} mis à jour'
     'deleted': 'Membre %{name} supprimé'
     'error_update': 'Erreur lors de la suppression du membre'
     member_type:

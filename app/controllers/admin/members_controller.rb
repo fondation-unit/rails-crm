@@ -1,4 +1,6 @@
 class Admin::MembersController < Admin::AdminController
+  include MemberHelper
+
   before_action :set_organizations, only: %i[new create edit update]
 
   def index
@@ -38,8 +40,7 @@ class Admin::MembersController < Admin::AdminController
                   notice:
                     I18n.t(
                       "members.created",
-                      first_name: @member.first_name,
-                      last_name: @member.last_name
+                      name: MemberHelper.full_name(@member)
                     )
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
@@ -55,8 +56,7 @@ class Admin::MembersController < Admin::AdminController
                   notice:
                     I18n.t(
                       "members.updated",
-                      first_name: @member.first_name,
-                      last_name: @member.last_name
+                      name: MemberHelper.full_name(@member)
                     )
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
@@ -66,11 +66,14 @@ class Admin::MembersController < Admin::AdminController
 
   def destroy
     @member = Member.find(params[:id])
-    nom = @member.first_name + " " + @member.last_name
 
     if @member.destroy
       redirect_to admin_members_path,
-                  alert: I18n.t("members.deleted", name: nom)
+                  alert:
+                    I18n.t(
+                      "members.deleted",
+                      name: MemberHelper.full_name(@member)
+                    )
     else
       redirect_to admin_members_path, alert: I18n.t("members.error_update")
     end
