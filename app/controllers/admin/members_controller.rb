@@ -15,7 +15,7 @@ class Admin::MembersController < Admin::AdminController
 
   def show
     @member = Member.find(params[:id])
-    notes = Note.getNotesForUsers(member_id: @member.id)
+    notes = Note.for_user(current_user, @member.id)
     @pagy, @notes = pagy(notes)
   end
 
@@ -28,7 +28,7 @@ class Admin::MembersController < Admin::AdminController
     @member = Member.find(params[:id])
     @member_types = MemberType.ordered
 
-    notes = Note.getNotesForUsers(member_id: @member.id)
+    notes = Note.for_user(current_user, @member.id)
     @pagy, @notes = pagy(notes)
   end
 
