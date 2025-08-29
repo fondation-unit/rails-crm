@@ -1,5 +1,16 @@
 fr:
   'Forgot your password?': 'Mot de passe oublié ?'
   'Password change': 'Changer de mot de passe'
-  'Sign in': 'Connexion à PLAPIMA'
+  'Sign in': 'Connexion à %{site_name}'
   'Sign up': 'Créer un compte'
+  'Password': 'Mot de passe'
+  'Enter your password': 'Saisissez votre mot de passe'
+  'Remember me': 'Se souvenir de moi'
+  'Not an account yet ? Suscribe': 'Pas encore de compte ? Inscrivez-vous'
+  'here': 'ici'
+  'Enter your email': 'Saisissez votre email'
+  "Your're connected": 'Vous êtes connecté(e)'
+  "Your account is not validated": "Votre compte n'est pas validé."
+  'Try another email address or password.': 'Essayez avec un autre email ou mot de passe.'
+  "You're disconnected": 'Vous avez été déconnecté'
+  "Welcome": 'Bienvenue sur le tableau de bord de %{site_name}'

@@ -3,6 +3,7 @@ class Member < ApplicationRecord
 
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
+  has_many :notes
 
   validates :first_name, :last_name, presence: true
   validates :email_address,

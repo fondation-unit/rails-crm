@@ -15,20 +15,21 @@ class Users::SessionsController < ApplicationController
     if user = User.authenticate_by(params.permit(:email_address, :password))
       if user.confirmed?
         start_new_session_for user
-        redirect_to after_authentication_url, notice: "Vous êtes connecté"
+        redirect_to after_authentication_url,
+                    notice: I18n.t("Your're connected")
       else
         redirect_to new_users_session_path,
-                    notice: "Votre compte n'est pas validé."
+                    notice: I18n.t("Your account is not validated")
       end
     else
       redirect_to new_users_session_path,
-                  alert: "Try another email address or password."
+                  alert: I18n.t("Try another email address or password.")
     end
   end
 
   def destroy
     terminate_session
-    flash[:notice] = "Vous avez été déconnecté"
+    flash[:notice] = I18n.t("You're disconnected")
     redirect_to new_users_session_path
   end
 end
