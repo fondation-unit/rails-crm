@@ -7,7 +7,7 @@ class Note < ApplicationRecord
   validates_associated :user, :member
 
   scope :ordered, -> { order(created_at: "desc") }
-  scope :for_user,
+  scope :for_member,
         ->(current_user, member) do
           where(user: current_user, member: member)
             .or(
