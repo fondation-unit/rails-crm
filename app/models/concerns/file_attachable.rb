@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require "vips"
-
 module FileAttachable
   extend ActiveSupport::Concern
 
   ALLOWED_MIME_TYPES = %w[image/jpeg image/pjpeg image/png]
-  MAX_FILE_SIZE = 1.megabyte
 
   included { class_attribute :attached_file_name }
 
@@ -37,10 +34,10 @@ module FileAttachable
 
   def validate_file_size
     file = send(self.class.attached_file_name)
-    return unless file.attached?
+    return unless file.attached? && file.blob.present?
 
-    if file.blob.byte_size > MAX_FILE_SIZE
-      errors.add(self.class.attached_file_name, "size too large")
+    unless file.blob.byte_size < 3.megabytes
+      errors.add(self.class.attached_file_name, "must be less than 3Mo")
     end
   end
 

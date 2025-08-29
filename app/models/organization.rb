@@ -4,9 +4,10 @@ class Organization < ApplicationRecord
   has_and_belongs_to_many :members, join_table: "members_organizations"
 
   has_one_attached :logo do |attachable|
+    attachable.variant :thumb, resize_to_limit: [200, 200]
     attachable.variant :medium,
                        resize_to_limit: [600, 400],
-                       convert: :webp,
+                       format: :webp,
                        saver: {
                          subsample_mode: "on",
                          strip: true,
@@ -14,7 +15,6 @@ class Organization < ApplicationRecord
                          quality: 85
                        }
   end
-
   attaches_one :logo # Validate the file through FileAttachable
 
   attr_accessor :remove_logo

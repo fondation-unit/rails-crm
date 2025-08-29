@@ -4,7 +4,7 @@
   <div class="d-flex flex-md-row flex-column">
     <div class="col-md-6">
       <% if @organization.logo.attached? %>
-        <%= image_tag url_for(@organization.logo.variant(:medium)) %>
+        <%= image_tag(@organization.logo.variant(:medium)) %>
       <%end%>
     </div>
     <div class="card coords col-md-6 p-4">
