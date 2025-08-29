@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :sessions, dependent: :destroy
+  has_many :notes
   generates_token_for :user_confirmation,
                       expires_in: ACCESS_BEFORE_CONFIRMATION_IN_HOURS
 

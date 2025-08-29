@@ -1,0 +1,34 @@
+en:
+  members:
+    'members': 'Members'
+    "Modify a member's type": "Edit a member's type"
+    'position': 'Position'
+    'institution': 'Organization'
+    'select_institution': 'Select an organization'
+    'add': 'Add a member'
+    'show_title': 'member details'
+    'copil_member': 'Copil member'
+    'comex_member': 'Comex member'
+    'validation_delete': 'Are you sure you want to delete this member?'
+    'created': 'Member %{name} created'
+    'updated': 'Member %{name} updated'
+    'deleted': 'Member %{name} deleted'
+    'error_update': 'An error occured while deleting a member'
+    member_type:
+      'created': 'Member type created'
+      'updated': 'Member type "%{name}" updated'
+      'deleted': 'Member type "%{name}" deleted'
+      'error_update': 'Error on member type update'
+      'type_members': 'Member types'
+      'add': 'Add a member type'
+      'name': "Member type's name"
+      'member_type': 'Member type'
+      'validation_delete': 'Are you sure you want to delete this member type?'
+    organizations:
+      'lat': 'Latitude'
+      'lng': 'Longitude'
+      'remove_logo': 'Delete the logo'
+      'modify': 'Edit an organization'
+      'add': 'Add an organization'
+      'title': 'Organizations'
+      'validation_delete': 'Are you sure you want to delete this organization?'

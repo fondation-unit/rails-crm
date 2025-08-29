@@ -1,0 +1,2 @@
+<h1><%= I18n.t('notes.add') %></h1>
+<%= render 'form_notes', note: @note, member_id: @member_id, url: admin_notes_path, method: 'post' %>

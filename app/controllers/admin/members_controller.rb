@@ -1,15 +1,22 @@
 class Admin::MembersController < Admin::AdminController
+  include MemberHelper
+
   before_action :set_organizations, only: %i[new create edit update]
 
   def index
     members =
-      Member.all.includes(:organizations).order(sort_column => sort_direction)
+      Member
+        .all
+        .includes(:organizations, :notes)
+        .order(sort_column => sort_direction)
 
     @pagy, @records = pagy(members)
   end
 
   def show
     @member = Member.find(params[:id])
+    notes = Note.for_member(current_user, @member.id)
+    @pagy, @notes = pagy(notes)
   end
 
   def new
@@ -20,6 +27,9 @@ class Admin::MembersController < Admin::AdminController
   def edit
     @member = Member.find(params[:id])
     @member_types = MemberType.ordered
+
+    notes = Note.for_member(current_user, @member.id)
+    @pagy, @notes = pagy(notes)
   end
 
   def create
@@ -28,7 +38,10 @@ class Admin::MembersController < Admin::AdminController
     if @member.save
       redirect_to admin_members_path,
                   notice:
-                    "Membre #{@member.first_name} #{@member.last_name} créé"
+                    I18n.t(
+                      "members.created",
+                      name: MemberHelper.full_name(@member)
+                    )
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -41,7 +54,10 @@ class Admin::MembersController < Admin::AdminController
     if @member.update(member_params)
       redirect_to admin_members_path,
                   notice:
-                    "Membre \"#{@member.first_name} #{@member.last_name}\" mis à jour"
+                    I18n.t(
+                      "members.updated",
+                      name: MemberHelper.full_name(@member)
+                    )
     else
       flash[:alert] = @member.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -50,13 +66,16 @@ class Admin::MembersController < Admin::AdminController
 
   def destroy
     @member = Member.find(params[:id])
-    nom = @member.last_name
 
     if @member.destroy
-      redirect_to admin_members_path, alert: "Membre \"#{nom}\" supprimé"
-    else
       redirect_to admin_members_path,
-                  alert: "Erreur lors de la suppression du membre"
+                  alert:
+                    I18n.t(
+                      "members.deleted",
+                      name: MemberHelper.full_name(@member)
+                    )
+    else
+      redirect_to admin_members_path, alert: I18n.t("members.error_update")
     end
   end
 
