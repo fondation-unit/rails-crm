@@ -47,7 +47,7 @@ class Admin::NotesController < Admin::AdminController
 
   def destroy
     @note = Note.includes("member").find(params[:id])
-    puts @note.member
+
     if @note.destroy
       redirect_to admin_member_path(@note.member),
                   alert:

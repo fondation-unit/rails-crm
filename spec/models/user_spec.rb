@@ -5,9 +5,6 @@ RSpec.describe User, type: :model do
 
   describe "validation" do
     it "must have email address" do
-      puts user.inspect
-      puts user.email_address
-      puts user.password
       expect(user).to be_valid
     end
 
