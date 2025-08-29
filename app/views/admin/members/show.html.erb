@@ -83,6 +83,6 @@
            user_id: ->(note) {
              is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
            },
-           contact_type: ->(note) { note.contact_type.present? ? I18n.t("notes.#{note.contact_type}") : '' },
+           contact_type: ->(note) { note_contact_type(note) },
          }
 %>
