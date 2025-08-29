@@ -18,10 +18,6 @@ class Note < ApplicationRecord
             .includes(:user)
             .ordered
         end
-
-  def showDate
-    self.created_at.strftime("%d-%m-%Y %H:%M")
-  end
 end
 
 # == Schema Information
