@@ -55,10 +55,6 @@ class User < ApplicationRecord
       update!(confirmation_sent_at: Time.current)
     end
   end
-
-  def self.isCurrent(params)
-    params[:user_id] == Current.user.id
-  end
 end
 
 # == Schema Information
