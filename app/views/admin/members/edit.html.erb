@@ -24,9 +24,9 @@
          pagy: @pagy,
          columns: %w[contact_type public content created_at user_id edit delete],
          formatters: {
-           edit: ->(note) { link_to I18n.t('edit'), edit_admin_note_path(note) if is_current_user?(note.user&.id) },
+           edit: ->(note) { link_to I18n.t('edit'), edit_admin_note_path(note) if policy(note).update? },
            delete: ->(note) {
-             if is_current_user?(note.user&.id)
+             if policy(note).destroy?
                link_to I18n.t('delete'),
                        admin_note_path(note),
                        data: {
