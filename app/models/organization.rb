@@ -17,6 +17,8 @@ class Organization < ApplicationRecord
   end
   attaches_one :logo # Validate the file through FileAttachable
 
+  enum :status, { a_contacter: 0, contacte: 1, rappel: 2, refus: 3, inconnu: 4 }
+
   attr_accessor :remove_logo
 
   validates :name, presence: true
@@ -25,24 +27,38 @@ class Organization < ApplicationRecord
 
   scope :ordered, -> { order(name: "asc") }
 
+  @table_array = [
+    a_contacter: "table-info", contacte: "table-success", rappel: "table-secondary", refus: "table-danger", inconnu: "table-warning"
+  ]
+
+  def table_class
+    @table_array[self.status]
+  end
+
   private
 
   def purge_logo_if_wanted
     logo.purge if ActiveModel::Type::Boolean.new.cast(remove_logo)
   end
+
+
 end
 
 # == Schema Information
 #
 # Table name: organizations
 #
-#  id         :integer          not null, primary key
-#  address    :string
-#  city       :string
-#  lat        :float
-#  lng        :float
-#  name       :string           not null
-#  zip_code   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                 :integer          not null, primary key
+#  address            :string
+#  city               :string
+#  lat                :float
+#  linkedin           :string
+#  linkedin_connected :boolean
+#  lng                :float
+#  name               :string           not null
+#  status             :integer
+#  type_orga          :string
+#  zip_code           :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #

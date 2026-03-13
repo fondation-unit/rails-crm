@@ -9,6 +9,10 @@ class CreateMembers < ActiveRecord::Migration[8.0]
       t.string :phone_number, null: true
       t.boolean :copil, null: true
       t.boolean :comex, null: true
+      t.boolean :decisionnaire, null: true
+      t.boolean :principal, null: true
+      t.string :linkedin, null: true
+      t.boolean :linkedin_connected, null: true
 
       t.timestamps
     end

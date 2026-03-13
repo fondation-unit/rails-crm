@@ -37,7 +37,11 @@ User.create!(
     zip_code: Faker::Address.zip_code,
     city: Faker::Address.city,
     lat: Faker::Address.latitude,
-    lng: Faker::Address.longitude
+    lng: Faker::Address.longitude,
+    linkedin: "https://www.linkedin.com/company-#{o}",
+    linkedin_connected: Faker::Boolean,
+    status: rand(0..4),
+    type_orga: rand(0..3),
   )
 end
 
@@ -51,7 +55,9 @@ end
       phone_number: Faker::PhoneNumber.phone_number_with_country_code,
       email_address: "dummy#{i}@example.com",
       copil: Faker::Boolean,
-      comex: Faker::Boolean
+      comex: Faker::Boolean,
+      linkedin: "https://www.linkedin.com/person-#{i}",
+      linkedin_connected: Faker::Boolean
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
