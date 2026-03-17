@@ -28,7 +28,11 @@ class Organization < ApplicationRecord
   scope :ordered, -> { order(name: "asc") }
 
   @table_array = [
-    a_contacter: "table-info", contacte: "table-success", rappel: "table-secondary", refus: "table-danger", inconnu: "table-warning"
+    a_contacter: "table-info",
+    contacte: "table-success",
+    rappel: "table-secondary",
+    refus: "table-danger",
+    inconnu: "table-warning"
   ]
 
   def table_class
@@ -40,8 +44,6 @@ class Organization < ApplicationRecord
   def purge_logo_if_wanted
     logo.purge if ActiveModel::Type::Boolean.new.cast(remove_logo)
   end
-
-
 end
 
 # == Schema Information
