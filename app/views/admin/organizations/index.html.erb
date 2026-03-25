@@ -4,10 +4,10 @@
 </div>
 <%=
   render 'admin/organizations/tables/sortable_table',
-         headers: [[:id, '#'], [:logo, 'Logo'], [:name, I18n.t('name')], [:address, I18n.t('address')], [:zip_code, I18n.t('zip_code')], [:city, I18n.t('city')], [:edit, ''], [:delete, '']],
+         headers: [[:id, '#'], [:logo, 'Logo'], [:name, I18n.t('name')], [:address, I18n.t('address')], [:status, "Statut"], [:city, I18n.t('city')], [:edit, ''], [:delete, '']],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id logo_image name address zip_code city edit delete],
+         columns: %w[id logo_image name address status city edit delete],
          formatters: {
            name: ->(organization) { link_to organization.name, admin_organization_path(organization) },
            edit: ->(organization) { link_to I18n.t('edit'), edit_admin_organization_path(organization) },

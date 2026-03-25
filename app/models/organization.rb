@@ -1,6 +1,14 @@
 class Organization < ApplicationRecord
   include FileAttachable
 
+  STATUS_TABLE_CLASSES = {
+    a_contacter: "table-info",
+    contacte: "table-success",
+    rappel: "table-secondary",
+    refus: "table-danger",
+    inconnu: "table-warning"
+  }
+
   has_and_belongs_to_many :members, join_table: "members_organizations"
 
   has_one_attached :logo do |attachable|
@@ -17,7 +25,7 @@ class Organization < ApplicationRecord
   end
   attaches_one :logo # Validate the file through FileAttachable
 
-  enum :status, { a_contacter: 0, contacte: 1, rappel: 2, refus: 3, inconnu: 4 }
+  enum :status, self::STATUS_TABLE_CLASSES.keys
 
   attr_accessor :remove_logo
 
@@ -27,20 +35,11 @@ class Organization < ApplicationRecord
 
   scope :ordered, -> { order(name: "asc") }
 
-  @table_array = [
-    a_contacter: "table-info", contacte: "table-success", rappel: "table-secondary", refus: "table-danger", inconnu: "table-warning"
-  ]
-
-  def table_class
-    @table_array[self.status]
-  end
-
   private
 
   def purge_logo_if_wanted
     logo.purge if ActiveModel::Type::Boolean.new.cast(remove_logo)
   end
-
 
 end
 

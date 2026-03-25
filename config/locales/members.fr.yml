@@ -33,3 +33,6 @@ fr:
       'add': 'Ajouter une institution'
       'title': 'Les institutions'
       'validation_delete': 'Etes-vous sur de vouloir effacer cette institution ?'
+      'linkedin': 'Compte Linkedin'
+      'linkedin_connected': 'Compte Linkedin connecté ?'
+      'status': 'Statut'
