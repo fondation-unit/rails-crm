@@ -31,11 +31,6 @@ class Admin::OrganizationsController < Admin::AdminController
   def update
     @organization = Organization.find(params[:id])
 
-    p "*" * 90
-    p @organization.valid?
-    p params
-    p @organization.errors
-    p "*" * 90
     if @organization.update(organization_params)
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
