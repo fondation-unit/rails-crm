@@ -8,7 +8,7 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
       t.float :lat, null: true
       t.float :lng, null: true
       t.string :linkedin, null: true
-      t.boolean :linkedin_connected, null: true
+      t.boolean :linkedin_connected, null: false, default: false
       t.integer :status, null: true
       t.string :type_orga, null: true
 
