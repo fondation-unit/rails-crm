@@ -31,6 +31,11 @@ class Admin::OrganizationsController < Admin::AdminController
   def update
     @organization = Organization.find(params[:id])
 
+    p "*" * 90
+    p @organization.valid?
+    p params
+    p @organization.errors
+    p "*" * 90
     if @organization.update(organization_params)
       redirect_to admin_organizations_path,
                   notice: "Institution \"#{@organization.name}\" mise à jour"
@@ -67,7 +72,20 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def organization_params
     params.expect(
-      organization: %i[name address zip_code city lat lng logo linkedin linkedin_connect status type_orga remove_logo]
+      organization: %i[
+        name
+        address
+        zip_code
+        city
+        lat
+        lng
+        logo
+        linkedin
+        linkedin_connected
+        status
+        type_orga
+        remove_logo
+      ]
     )
   end
 end
