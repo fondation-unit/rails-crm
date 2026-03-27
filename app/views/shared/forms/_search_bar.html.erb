@@ -1,0 +1,26 @@
+<%# stimulus controller "search-bar" %>
+<div data-controller="search-bar">
+  <%= form_with url: search_admin_users_path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+    <div class="d-flex">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="searched_param">
+          <i class="bi bi-search position-relative"></i>
+        </span>
+        <%=
+          f.search_field :searched_param,
+                         data: {
+                           action: 'input->search-bar#search',
+                         },
+                         class: 'form-control search-field',
+                         placeholder: t(:search).capitalize,
+                         value: params['searched_param'],
+                         autocomplete: 'off',
+                         aria: {
+                           label: t(:search),
+                           describedby: 'searched_param',
+                         }
+        %>
+      </div>
+    </div>
+  <% end %>
+</div>

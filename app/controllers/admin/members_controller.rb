@@ -1,8 +1,14 @@
 class Admin::MembersController < Admin::AdminController
   include MemberHelper
+  include Searchable
 
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
+  before_action(only: %i[search]) do |action|
+    action.searched_attrs = %i[first_name last_name email_address]
+    action.search(template: "admin/members/table", klass: policy_scope(Member))
+  end
+
 
   def index
     members =

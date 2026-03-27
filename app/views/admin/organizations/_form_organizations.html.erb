@@ -51,7 +51,8 @@
   </div>
   <div class="form-group my-4">
     <%= f.label :status, I18n.t('members.organizations.status') %>
-    <%= f.select :status, Organization.statuses.keys %>
+    <% options = options_for_select(Organization.statuses.map {|key, value| [I18n.t("members.organizations.statuses.#{key}"), key]}, f.object.status) %>
+    <%= f.select(:status, options) %>
   </div>
   <button type="submit" class="btn btn-primary mb-5">
     <% if @organization.persisted? %>

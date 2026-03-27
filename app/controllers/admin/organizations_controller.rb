@@ -1,6 +1,6 @@
 class Admin::OrganizationsController < Admin::AdminController
   def index
-    organizations = Organization.ordered.order(sort_column => sort_direction)
+    organizations = Organization.all.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
   end
 

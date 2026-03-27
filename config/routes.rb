@@ -13,7 +13,17 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "admin/dashboard#index"
+  # Déclaration du concern de routes avec ses méthodes attenantes
+  concern :searchable do
+    collection do
+      post :search, defaults: { format: :turbo_stream }
+      get :search, defaults: { format: :turbo_stream }
+    end
+  end
 
+  # Utilisation sur une ressource
+  resources :members, concerns: %i[searchable]
+  resources :organizations, concerns: %i[searchable]
   namespace :users do
     resource :session
     resources :passwords, param: :token

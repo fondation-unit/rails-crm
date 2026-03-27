@@ -36,3 +36,9 @@ fr:
       'linkedin': 'Compte Linkedin'
       'linkedin_connected': 'Compte Linkedin connecté ?'
       'status': 'Statut'
+      'statuses':
+        "a_contacter": "À contacter"
+        "contacte": "Contacté"
+        "rappel": "Rappel"
+        "refus": "Refus"
+        "inconnu": "Inconnu"

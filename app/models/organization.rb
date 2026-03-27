@@ -2,11 +2,11 @@ class Organization < ApplicationRecord
   include FileAttachable
 
   STATUS_TABLE_CLASSES = {
-    a_contacter: "table-info",
-    contacte: "table-success",
-    rappel: "table-secondary",
-    refus: "table-danger",
-    inconnu: "table-warning"
+    "a_contacter": "table-info",
+    "contacte": "table-success",
+    "rappel": "table-secondary",
+    "refus": "table-danger",
+    "inconnu": "table-warning"
   }
 
   has_and_belongs_to_many :members, join_table: "members_organizations"
