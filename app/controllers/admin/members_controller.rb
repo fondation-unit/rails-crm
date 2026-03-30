@@ -4,10 +4,6 @@ class Admin::MembersController < Admin::AdminController
 
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
-  before_action(only: %i[search]) do |action|
-    action.searched_attrs = %i[first_name last_name email_address]
-    action.search(template: "admin/members/table", klass: policy_scope(Member))
-  end
 
 
   def index
@@ -84,6 +80,10 @@ class Admin::MembersController < Admin::AdminController
     else
       redirect_to admin_members_path, alert: I18n.t("members.error_update")
     end
+  end
+
+  def search
+    search_records(model: Member, template: "members/list")
   end
 
   private

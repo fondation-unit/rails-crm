@@ -46,17 +46,23 @@ end
 #
 # Table name: organizations
 #
-#  id                 :integer          not null, primary key
+#  id                 :bigint           not null, primary key
 #  address            :string
 #  city               :string
 #  lat                :float
 #  linkedin           :string
-#  linkedin_connected :boolean
+#  linkedin_connected :boolean          default(FALSE), not null
 #  lng                :float
 #  name               :string           not null
+#  search_vector      :tsvector
 #  status             :integer
 #  type_orga          :string
 #  zip_code           :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_organizations_on_name           (name) UNIQUE
+#  index_organizations_on_search_vector  (search_vector) USING gin
 #

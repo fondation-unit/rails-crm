@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import loader from "../components/loader";
+import loader from "../components/_loader";
 
 export default class extends Controller {
   static targets = ["form"];

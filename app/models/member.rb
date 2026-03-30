@@ -1,5 +1,6 @@
 class Member < ApplicationRecord
   include NameNormalization
+  include FullTextSearchable
 
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
@@ -47,7 +48,7 @@ end
 #
 # Table name: members
 #
-#  id                 :integer          not null, primary key
+#  id                 :bigint           not null, primary key
 #  comex              :boolean
 #  copil              :boolean
 #  decisionnaire      :boolean
@@ -60,6 +61,12 @@ end
 #  phone_number       :string
 #  position           :string
 #  principal          :boolean
+#  search_vector      :tsvector
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_email_address  (email_address) UNIQUE
+#  index_members_on_search_vector  (search_vector) USING gin
 #

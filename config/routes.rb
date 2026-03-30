@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   # Utilisation sur une ressource
   resources :members, concerns: %i[searchable]
   resources :organizations, concerns: %i[searchable]
+
   namespace :users do
     resource :session
     resources :passwords, param: :token

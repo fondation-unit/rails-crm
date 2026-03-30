@@ -1,6 +1,6 @@
 <%# stimulus controller "search-bar" %>
 <div data-controller="search-bar">
-  <%= form_with url: search_admin_users_path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+  <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
     <div class="d-flex">
       <div class="input-group mb-3">
         <span class="input-group-text" id="searched_param">

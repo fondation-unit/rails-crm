@@ -12,7 +12,7 @@ end
 #
 # Table name: members
 #
-#  id                 :integer          not null, primary key
+#  id                 :bigint           not null, primary key
 #  comex              :boolean
 #  copil              :boolean
 #  decisionnaire      :boolean
@@ -25,6 +25,12 @@ end
 #  phone_number       :string
 #  position           :string
 #  principal          :boolean
+#  search_vector      :tsvector
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_email_address  (email_address) UNIQUE
+#  index_members_on_search_vector  (search_vector) USING gin
 #
