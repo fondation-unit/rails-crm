@@ -15,7 +15,6 @@ end
 #  first_name    :string           not null
 #  gender        :string
 #  last_name     :string           not null
-#  notes         :text
 #  phone_number  :string
 #  position      :string
 #  created_at    :datetime         not null

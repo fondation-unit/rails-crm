@@ -1,9 +1,10 @@
 class Member < ApplicationRecord
   include NameNormalization
 
+  has_many :notes, as: :notable
+
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
-  has_many :notes
 
   validates :first_name, :last_name, presence: true
   validates :email_address,
@@ -51,7 +52,6 @@ end
 #  first_name    :string           not null
 #  gender        :string
 #  last_name     :string           not null
-#  notes         :text
 #  phone_number  :string
 #  position      :string
 #  created_at    :datetime         not null

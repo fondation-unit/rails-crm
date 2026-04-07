@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -71,7 +71,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
     t.string "phone_number"
     t.boolean "copil"
     t.boolean "comex"
-    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -87,10 +86,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
     t.boolean "public", default: false
     t.string "contact_type"
     t.integer "user_id"
-    t.integer "member_id"
+    t.string "notable_type", null: false
+    t.integer "notable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["member_id"], name: "index_notes_on_member_id"
+    t.index ["notable_type", "notable_id"], name: "index_notes_on_notable"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 

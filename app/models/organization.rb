@@ -1,6 +1,8 @@
 class Organization < ApplicationRecord
   include FileAttachable
 
+  has_many :notes, as: :notable
+
   has_and_belongs_to_many :members, join_table: "members_organizations"
 
   has_one_attached :logo do |attachable|
@@ -15,6 +17,7 @@ class Organization < ApplicationRecord
                          quality: 85
                        }
   end
+
   attaches_one :logo # Validate the file through FileAttachable
 
   attr_accessor :remove_logo

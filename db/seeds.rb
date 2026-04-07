@@ -8,25 +8,29 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 #
+#
 Faker::Config.locale = "fr"
-User.create!(
-  first_name: "User",
-  last_name: "Dummy",
-  email_address: "dummy@example.com",
-  password: ENV["DUMMY_USER_PASSWORD"],
-  password_confirmation: ENV["DUMMY_USER_PASSWORD"],
-  confirmation_sent_at: Time.current,
-  confirmed_at: Time.current
-)
-User.create!(
-  first_name: "User",
-  last_name: "Dummy",
-  email_address: "dummy2@example.com",
-  password: ENV["DUMMY_USER_PASSWORD"],
-  password_confirmation: ENV["DUMMY_USER_PASSWORD"],
-  confirmation_sent_at: Time.current,
-  confirmed_at: Time.current
-)
+
+user1 =
+  User.create!(
+    first_name: "User",
+    last_name: "Dummy",
+    email_address: "dummy@example.com",
+    password: ENV["DUMMY_USER_PASSWORD"],
+    password_confirmation: ENV["DUMMY_USER_PASSWORD"],
+    confirmation_sent_at: Time.current,
+    confirmed_at: Time.current
+  )
+user2 =
+  User.create!(
+    first_name: "User",
+    last_name: "Dummy",
+    email_address: "dummy2@example.com",
+    password: ENV["DUMMY_USER_PASSWORD"],
+    password_confirmation: ENV["DUMMY_USER_PASSWORD"],
+    confirmation_sent_at: Time.current,
+    confirmed_at: Time.current
+  )
 
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
@@ -61,21 +65,21 @@ end
 Note.create!(
   content: Faker::Lorem.sentence,
   public: false,
-  member_id: 2,
-  user_id: 1,
+  notable: Organization.all.sample,
+  user: user1,
   contact_type: "email"
 )
 Note.create!(
   content: Faker::Lorem.sentence,
   public: false,
-  member_id: 2,
-  user_id: 1,
+  notable: Member.all.sample,
+  user: user1,
   contact_type: "phone"
 )
 Note.create!(
   content: Faker::Lorem.sentence,
   public: true,
-  member_id: 2,
-  user_id: 2,
+  notable: Member.all.sample,
+  user: user2,
   contact_type: "chat"
 )

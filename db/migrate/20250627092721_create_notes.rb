@@ -4,7 +4,7 @@ class CreateNotes < ActiveRecord::Migration[8.0]
       t.boolean :public, default: false
       t.string :contact_type
       t.references :user
-      t.references :member
+      t.references :notable, polymorphic: true, null: false
 
       t.timestamps
     end
