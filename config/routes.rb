@@ -13,6 +13,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "admin/dashboard#index"
+  # Déclaration du concern de routes avec ses méthodes attenantes
+  concern :searchable do
+    collection do
+      post :search, defaults: { format: :turbo_stream }
+      get :search, defaults: { format: :turbo_stream }
+    end
+  end
+
+  # Utilisation sur une ressource
 
   namespace :users do
     resource :session
@@ -22,10 +31,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :members, concerns: %i[searchable]
+    resources :organizations, concerns: %i[searchable]
     resource :dashboard
     resources :member_types
-    resources :members
-    resources :organizations
     resources :notes, only: %i[show create update edit destroy]
     get "/notes/new/:member_id", to: "notes#new", as: :new_note
   end

@@ -21,13 +21,13 @@ end
 #
 # Table name: notes
 #
-#  id           :integer          not null, primary key
+#  id           :bigint           not null, primary key
 #  contact_type :string
 #  public       :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  member_id    :integer
-#  user_id      :integer
+#  member_id    :bigint
+#  user_id      :bigint
 #
 # Indexes
 #

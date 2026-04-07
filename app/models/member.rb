@@ -1,5 +1,6 @@
 class Member < ApplicationRecord
   include NameNormalization
+  include FullTextSearchable
 
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
@@ -23,8 +24,12 @@ class Member < ApplicationRecord
 
   default_scope { includes([:member_types]) }
 
+
   def organizations_names
     organizations.collect { |org| { name: org.name, id: org.id } }
+  end
+  def member_types_names
+    member_types.collect { |type| { name: type.name, id: type.id } }
   end
 
   def set_phone_link
@@ -44,16 +49,25 @@ end
 #
 # Table name: members
 #
-#  id            :integer          not null, primary key
-#  comex         :boolean
-#  copil         :boolean
-#  email_address :string           not null
-#  first_name    :string           not null
-#  gender        :string
-#  last_name     :string           not null
-#  notes         :text
-#  phone_number  :string
-#  position      :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                 :bigint           not null, primary key
+#  comex              :boolean
+#  copil              :boolean
+#  decisionnaire      :boolean
+#  email_address      :string           not null
+#  first_name         :string           not null
+#  gender             :string
+#  last_name          :string           not null
+#  linkedin           :string
+#  linkedin_connected :boolean
+#  phone_number       :string
+#  position           :string
+#  principal          :boolean
+#  search_vector      :tsvector
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_email_address  (email_address) UNIQUE
+#  index_members_on_search_vector  (search_vector) USING gin
 #

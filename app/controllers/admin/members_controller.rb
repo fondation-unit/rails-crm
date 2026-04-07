@@ -1,13 +1,16 @@
 class Admin::MembersController < Admin::AdminController
   include MemberHelper
+  include Searchable
 
   before_action :set_organizations, only: %i[new create edit update]
+  before_action :set_member_types, only: %i[new create edit update]
+
 
   def index
     members =
       Member
         .all
-        .includes(:organizations, :notes)
+        .includes(:organizations, :member_types, :notes)
         .order(sort_column => sort_direction)
 
     @pagy, @records = pagy(members)
@@ -79,10 +82,17 @@ class Admin::MembersController < Admin::AdminController
     end
   end
 
+  def search
+    search_records(model: Member, template: "admin/members/list")
+  end
+
   private
 
   def set_organizations
     @organizations = Organization.ordered
+  end
+  def set_member_types
+    @member_types = MemberType.ordered
   end
 
   def sort_column
@@ -108,6 +118,10 @@ class Admin::MembersController < Admin::AdminController
         :copil,
         :comex,
         :notes,
+        :decisionnaire,
+        :principal,
+        :linkedin,
+        :linkedin_connected,
         member_type_ids: [],
         organization_ids: []
       ]

@@ -4,6 +4,7 @@ fr:
     "Modify a member's type": 'Modifier un type de membre'
     'position': 'Poste occupé'
     'institution': 'Institution'
+    'type': 'Type de membre'
     'select_institution': 'Sélectionnez une institution'
     'add': 'Ajouter un membre'
     'show_title': 'Fiche membre'
@@ -32,3 +33,12 @@ fr:
       'add': 'Ajouter une institution'
       'title': 'Les institutions'
       'validation_delete': 'Etes-vous sur de vouloir effacer cette institution ?'
+      'linkedin': 'Compte Linkedin'
+      'linkedin_connected': 'Compte Linkedin connecté ?'
+      'status': 'Statut'
+      'statuses':
+        "a_contacter": "À contacter"
+        "contacte": "Contacté"
+        "rappel": "Rappel"
+        "refus": "Refus"
+        "inconnu": "Inconnu"
