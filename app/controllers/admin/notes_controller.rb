@@ -61,6 +61,8 @@ class Admin::NotesController < Admin::AdminController
     end
   end
 
+  private
+
   def note_params
     params.expect(note: %i[content user_id member_id contact_type public])
   end
