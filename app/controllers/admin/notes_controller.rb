@@ -7,19 +7,17 @@ class Admin::NotesController < Admin::AdminController
 
   def new
     @note = Note.new
-    @member_id = params[:member_id]
+    @notable = find_notable
   end
 
   def create
+    notable = find_notable
     @note = Note.new(note_params)
+    @note.notable = notable
 
     if @note.save
-      redirect_to admin_member_path(note_params[:member_id]),
-                  notice:
-                    I18n.t(
-                      "notes.created",
-                      name: MemberHelper.full_name(@note.member)
-                    )
+      redirect_to polymorphic_path([:admin, @note.notable]),
+                  notice: I18n.t("notes.created")
     else
       flash[:alert] = @note.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
@@ -31,15 +29,12 @@ class Admin::NotesController < Admin::AdminController
   end
 
   def update
-    @note = Note.includes("member").find(params[:id])
+    @note = Note.includes(:notable).find(params[:id])
+    notable = @note.notable
 
     if @note.update(note_params)
-      redirect_to admin_member_path(@note.member),
-                  notice:
-                    I18n.t(
-                      "notes.updated",
-                      name: MemberHelper.full_name(@note.member)
-                    )
+      redirect_to polymorphic_path([:admin, notable]),
+                  notice: I18n.t("notes.updated")
     else
       flash[:alert] = @note.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
@@ -47,22 +42,29 @@ class Admin::NotesController < Admin::AdminController
   end
 
   def destroy
-    @note = Note.includes("member").find(params[:id])
+    @note = Note.includes(:notable).find(params[:id])
+    notable = @note.notable
 
     if @note.destroy
-      redirect_to admin_member_path(@note.member),
-                  alert:
-                    I18n.t(
-                      "notes.deleted",
-                      name: MemberHelper.full_name(@note.member)
-                    )
+      redirect_to polymorphic_path([:admin, notable]),
+                  alert: I18n.t("notes.deleted")
     else
-      redirect_to admin_member_path(@note.member),
+      redirect_to polymorphic_path([:admin, notable]),
                   alert: I18n.t("notes.error_update")
     end
   end
 
+  private
+
+  def find_notable
+    if params[:member_id]
+      Member.find(params[:member_id])
+    elsif params[:institution_id]
+      Institution.find(params[:institution_id])
+    end
+  end
+
   def note_params
-    params.expect(note: %i[content user_id member_id contact_type public])
+    params.expect(note: %i[content user_id contact_type public])
   end
 end

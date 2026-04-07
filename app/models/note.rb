@@ -1,16 +1,16 @@
 class Note < ApplicationRecord
+  belongs_to :notable, polymorphic: true
   belongs_to :user
-  belongs_to :member
 
   has_rich_text :content
 
-  validates_associated :user, :member
+  validates_associated :user
 
   scope :ordered, -> { order(created_at: "desc") }
-  scope :for_member,
+  scope :for_notable,
         ->(current_user, member) do
-          where(user: current_user, member: member)
-            .or(Note.where(member: member, public: true))
+          where(user: current_user, notable: member)
+            .or(Note.where(notable: member, public: true))
             .includes(:user)
             .distinct
             .ordered
@@ -23,14 +23,15 @@ end
 #
 #  id           :bigint           not null, primary key
 #  contact_type :string
+#  notable_type :string           not null
 #  public       :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  member_id    :bigint
+#  notable_id   :bigint           not null
 #  user_id      :bigint
 #
 # Indexes
 #
-#  index_notes_on_member_id  (member_id)
-#  index_notes_on_user_id    (user_id)
+#  index_notes_on_notable  (notable_type,notable_id)
+#  index_notes_on_user_id  (user_id)
 #

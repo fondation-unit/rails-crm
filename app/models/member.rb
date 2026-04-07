@@ -2,9 +2,10 @@ class Member < ApplicationRecord
   include NameNormalization
   include FullTextSearchable
 
+  has_many :notes, as: :notable
+
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
-  has_many :notes
 
   validates :first_name, :last_name, presence: true
   validates :email_address,
@@ -24,10 +25,10 @@ class Member < ApplicationRecord
 
   default_scope { includes([:member_types]) }
 
-
   def organizations_names
     organizations.collect { |org| { name: org.name, id: org.id } }
   end
+
   def member_types_names
     member_types.collect { |type| { name: type.name, id: type.id } }
   end

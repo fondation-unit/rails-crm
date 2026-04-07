@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -96,10 +96,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
     t.boolean "public", default: false
     t.string "contact_type"
     t.bigint "user_id"
-    t.bigint "member_id"
+    t.string "notable_type", null: false
+    t.bigint "notable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["member_id"], name: "index_notes_on_member_id"
+    t.index ["notable_type", "notable_id"], name: "index_notes_on_notable"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 

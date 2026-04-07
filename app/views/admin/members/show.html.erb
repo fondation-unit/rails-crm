@@ -38,7 +38,7 @@
       <% end %>
     </div>
     <div>
-      <%= link_to I18n.t('notes.add'), admin_new_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
+      <%= link_to I18n.t('notes.add'), admin_new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
     </div>
   </div>
 </div>
@@ -83,6 +83,6 @@
            user_id: ->(note) {
              is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
            },
-           contact_type: ->(note) { note_contact_type(note) },
+           contact_type: ->(note) { note.contact_type.present? ? I18n.t("notes.#{note.contact_type}") : '' },
          }
 %>
