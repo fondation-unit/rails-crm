@@ -79,7 +79,7 @@
              )
            },
            created_at: ->(note) { date_readable(note.created_at) },
-           content: ->(note) { note_excerpt?(note.content) },
+           content: ->(note) { note_excerpt(note.content) },
            user_id: ->(note) {
              is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
            },

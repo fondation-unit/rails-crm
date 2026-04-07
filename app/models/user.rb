@@ -61,7 +61,7 @@ end
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
+#  id                   :bigint           not null, primary key
 #  confirmation_sent_at :datetime
 #  confirmed_at         :datetime
 #  email_address        :string           not null

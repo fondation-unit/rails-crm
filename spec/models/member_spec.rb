@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Member, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
@@ -8,15 +8,25 @@ end
 #
 # Table name: members
 #
-#  id            :integer          not null, primary key
-#  comex         :boolean
-#  copil         :boolean
-#  email_address :string           not null
-#  first_name    :string           not null
-#  gender        :string
-#  last_name     :string           not null
-#  phone_number  :string
-#  position      :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                 :bigint           not null, primary key
+#  comex              :boolean
+#  copil              :boolean
+#  decisionnaire      :boolean
+#  email_address      :string           not null
+#  first_name         :string           not null
+#  gender             :string
+#  last_name          :string           not null
+#  linkedin           :string
+#  linkedin_connected :boolean
+#  phone_number       :string
+#  position           :string
+#  principal          :boolean
+#  search_vector      :tsvector
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_members_on_email_address  (email_address) UNIQUE
+#  index_members_on_search_vector  (search_vector) USING gin
 #

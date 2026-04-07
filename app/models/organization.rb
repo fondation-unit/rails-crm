@@ -1,5 +1,14 @@
 class Organization < ApplicationRecord
   include FileAttachable
+  include FullTextSearchable
+
+  STATUS_TABLE_CLASSES = {
+    "a_contacter": "table-info",
+    "contacte": "table-success",
+    "rappel": "table-secondary",
+    "refus": "table-danger",
+    "inconnu": "table-warning"
+  }
 
   has_many :notes, as: :notable
 
@@ -20,6 +29,8 @@ class Organization < ApplicationRecord
 
   attaches_one :logo # Validate the file through FileAttachable
 
+  enum :status, self::STATUS_TABLE_CLASSES.keys
+
   attr_accessor :remove_logo
 
   validates :name, presence: true
@@ -39,13 +50,23 @@ end
 #
 # Table name: organizations
 #
-#  id         :integer          not null, primary key
-#  address    :string
-#  city       :string
-#  lat        :float
-#  lng        :float
-#  name       :string           not null
-#  zip_code   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                 :bigint           not null, primary key
+#  address            :string
+#  city               :string
+#  lat                :float
+#  linkedin           :string
+#  linkedin_connected :boolean          default(FALSE), not null
+#  lng                :float
+#  name               :string           not null
+#  search_vector      :tsvector
+#  status             :integer
+#  type_orga          :string
+#  zip_code           :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+# Indexes
+#
+#  index_organizations_on_name           (name) UNIQUE
+#  index_organizations_on_search_vector  (search_vector) USING gin
 #

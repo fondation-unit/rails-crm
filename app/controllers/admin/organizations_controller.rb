@@ -1,6 +1,8 @@
 class Admin::OrganizationsController < Admin::AdminController
+  include Searchable
+
   def index
-    organizations = Organization.ordered.order(sort_column => sort_direction)
+    organizations = Organization.all.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
   end
 
@@ -55,6 +57,10 @@ class Admin::OrganizationsController < Admin::AdminController
     end
   end
 
+  def search
+    search_records(model: Organization, template: "admin/organizations/list")
+  end
+
   private
 
   def sort_column
@@ -67,7 +73,20 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def organization_params
     params.expect(
-      organization: %i[name address zip_code city lat lng logo remove_logo]
+      organization: %i[
+        name
+        address
+        zip_code
+        city
+        lat
+        lng
+        logo
+        linkedin
+        linkedin_connected
+        status
+        type_orga
+        remove_logo
+      ]
     )
   end
 end

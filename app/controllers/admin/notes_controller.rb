@@ -1,5 +1,6 @@
 class Admin::NotesController < Admin::AdminController
   include MemberHelper
+  include Pundit
 
   def index
   end

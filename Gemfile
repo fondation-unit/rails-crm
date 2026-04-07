@@ -5,7 +5,8 @@ gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+# gem "sqlite3", ">= 2.1"
+gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -68,7 +69,7 @@ gem "jsbundling-rails", "~> 1.3.1"
 gem "annotaterb"
 gem "pundit", "~> 2.5"
 gem "pwned", "~> 2.4"
-gem "pagy", "~> 9.3.4"
+gem "pagy", "~> 43.4"
 gem "telephone_number"
 
 gem "sidekiq", "~> 8.0"

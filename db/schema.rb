@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -56,8 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
   end
 
   create_table "member_types_members", id: false, force: :cascade do |t|
-    t.integer "member_id", null: false
-    t.integer "member_type_id", null: false
+    t.bigint "member_id", null: false
+    t.bigint "member_type_id", null: false
     t.index ["member_id", "member_type_id"], name: "index_member_types_members_on_member_id_and_member_type_id"
     t.index ["member_type_id", "member_id"], name: "index_member_types_members_on_member_type_id_and_member_id"
   end
@@ -71,13 +74,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
     t.string "phone_number"
     t.boolean "copil"
     t.boolean "comex"
+    t.boolean "decisionnaire"
+    t.boolean "principal"
+    t.string "linkedin"
+    t.boolean "linkedin_connected"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(\"position\", ''::character varying))::text) || ' '::text) || (COALESCE(email_address, ''::character varying))::text))", stored: true
+    t.index ["email_address"], name: "index_members_on_email_address", unique: true
+    t.index ["search_vector"], name: "index_members_on_search_vector", using: :gin
   end
 
   create_table "members_organizations", id: false, force: :cascade do |t|
-    t.integer "member_id", null: false
-    t.integer "organization_id", null: false
+    t.bigint "member_id", null: false
+    t.bigint "organization_id", null: false
     t.index ["member_id", "organization_id"], name: "index_members_organizations_on_member_id_and_organization_id"
     t.index ["organization_id", "member_id"], name: "index_members_organizations_on_organization_id_and_member_id"
   end
@@ -85,9 +95,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
   create_table "notes", force: :cascade do |t|
     t.boolean "public", default: false
     t.string "contact_type"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "notable_type", null: false
-    t.integer "notable_id", null: false
+    t.bigint "notable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notable_type", "notable_id"], name: "index_notes_on_notable"
@@ -101,12 +111,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
     t.string "city"
     t.float "lat"
     t.float "lng"
+    t.string "linkedin"
+    t.boolean "linkedin_connected", default: false, null: false
+    t.integer "status"
+    t.string "type_orga"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((COALESCE(name, ''::character varying))::text || ' '::text) || (COALESCE(city, ''::character varying))::text) || ' '::text) || (COALESCE(address, ''::character varying))::text))", stored: true
+    t.index ["name"], name: "index_organizations_on_name", unique: true
+    t.index ["search_vector"], name: "index_organizations_on_search_vector", using: :gin
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
