@@ -1,6 +1,6 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
-    <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
+  <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
+  <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
   render 'shared/tables/sortable_table',
@@ -31,7 +31,11 @@
            email_address: ->(member) { mail_to member.email_address, member.email_address },
            first_name: ->(member) { link_to member.first_name, admin_member_path(member.id) },
            last_name: ->(member) { link_to member.last_name, admin_member_path(member.id) },
-           organizations_names: ->(member) { raw member.organizations_names.map{|wl| link_to wl[:name], admin_organization_path(wl[:id])}.join(', ') },
-           notes: ->(member) { link_to I18n.t('notes.add'), admin_new_note_path(member.id), {class: "btn btn-info"} },
+           organizations_names: ->(member) {
+             raw member.organizations_names.map { |wl| link_to wl[:name], admin_organization_path(wl[:id]) }.join(', ')
+           },
+           notes: ->(member) {
+             link_to I18n.t('notes.add'), admin_new_member_note_path(member.id), { class: 'btn btn-info' }
+           },
          }
 %>

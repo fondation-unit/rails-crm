@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     resources :members
     resources :organizations
     resources :notes, only: %i[show create update edit destroy]
-    get "/notes/new/:member_id", to: "notes#new", as: :new_note
+    get "/notes/new/member/:member_id", to: "notes#new", as: :new_member_note
+    get "/notes/new/institution/:institution_id",
+        to: "notes#new",
+        as: :new_institution_note
   end
 end
