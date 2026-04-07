@@ -83,7 +83,7 @@ class Admin::MembersController < Admin::AdminController
   end
 
   def search
-    search_records(model: Member, template: "members/list")
+    search_records(model: Member, template: "admin/members/list")
   end
 
   private

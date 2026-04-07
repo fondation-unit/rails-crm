@@ -1,5 +1,6 @@
 class Organization < ApplicationRecord
   include FileAttachable
+  include FullTextSearchable
 
   STATUS_TABLE_CLASSES = {
     "a_contacter": "table-info",

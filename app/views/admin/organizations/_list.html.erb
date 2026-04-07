@@ -1,0 +1,53 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">
+        <%= 'Logo' %>
+      </th>
+      <th scope="col">
+        <%= I18n.t('members.institution') %>
+      </th>
+      <th scope="col">
+        <%= I18n.t('name') %>
+      </th>
+      <th scope="col">
+        <%= I18n.t('zip_code') %>
+      </th>
+      <th scope="col">
+        <%= I18n.t('city') %>
+      </th>
+      <th scope="col"
+          data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'status' %>">
+        <%= I18n.t('members.organizations.status') %>
+      </th>
+      <th scope="col">
+      </th>
+      <th scope="col">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% records.each_with_index do |c| %>
+      <tr class="<%= OrganizationHelper.status_class(c) %>">
+        <td><%= c.id %></td>
+        <td><%=
+          if c.logo.attached?
+            image_tag(c.logo.variant(:thumb), { style: 'max-width: 60px' })
+          else
+            nil
+          end
+
+        %></td>
+            <td><%= link_to c.name, admin_organization_path(c) %></td>
+            <td><%= c.address %></td>
+            <td><%= c.zip_code %></td>
+            <td><%= c.city %></td>
+            <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
+            <td><%= link_to I18n.t('edit'), edit_admin_organization_path(c) %></td>
+            <td><%= link_to I18n.t('delete'),admin_organization_path(c),data: {turbo_method: :delete,turbo_confirm: I18n.t('members.organizations.validation_delete'),} %></td>
+            </tr>
+            <% end %>
+            </tbody>
+            </table>

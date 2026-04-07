@@ -1,35 +1,23 @@
-import { Controller } from "@hotwired/stimulus";
-import loader from "../components/_loader";
-
+import { Controller } from '@hotwired/stimulus';
+import loader from '../components/_loader';
 export default class extends Controller {
-  static targets = ["form"];
-
-  declare timeout: any;
-  declare formTarget: HTMLFormElement;
-
-  initialize(): void {
+  static targets = ['form'];
+  initialize() {
     // Clear the input on page load
     // const input = this.formTarget.querySelector('.search-field') as HTMLInputElement
     // input.value = ''
   }
-
   search() {
     clearTimeout(this.timeout);
-
-    const filter = document.querySelector("#filter") as HTMLInputElement;
-    const searchResults = document.querySelector(
-      "#search_results"
-    ) as HTMLDivElement;
-
+    const filter = document.querySelector('#filter');
+    const searchResults = document.querySelector('#search_results');
     // Clear the filter selected value
     if (filter) {
-      filter.value = "";
+      filter.value = '';
     }
-
     if (searchResults) {
       searchResults.innerHTML = loader;
     }
-
     this.timeout = setTimeout(() => {
       this.formTarget.requestSubmit();
     }, 500);

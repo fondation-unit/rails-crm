@@ -10,7 +10,7 @@ class CreateJoinTableMembersOrganizations < ActiveRecord::Migration[8.0]
       ALTER TABLE members
       ADD COLUMN search_vector tsvector
       GENERATED ALWAYS AS (
-        to_tsvector('simple',
+        to_tsvector('member.simple',
           coalesce(first_name, '') || ' ' ||
           coalesce(last_name, '') || ' ' ||
           coalesce(position, '') || ' ' ||
@@ -26,7 +26,7 @@ class CreateJoinTableMembersOrganizations < ActiveRecord::Migration[8.0]
       ALTER TABLE organizations
       ADD COLUMN search_vector tsvector
       GENERATED ALWAYS AS (
-        to_tsvector('simple',
+        to_tsvector('organizations.simple',
           coalesce(name, '') || ' ' ||
           coalesce(city, '') || ' ' ||
           coalesce(address, '')

@@ -1,4 +1,6 @@
 class Admin::OrganizationsController < Admin::AdminController
+  include Searchable
+
   def index
     organizations = Organization.all.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
@@ -53,6 +55,10 @@ class Admin::OrganizationsController < Admin::AdminController
       redirect_to admin_organizations_path,
                   alert: "Erreur lors de la suppression de l'institution"
     end
+  end
+
+  def search
+    search_records(model: Organization, template: "admin/organizations/list")
   end
 
   private

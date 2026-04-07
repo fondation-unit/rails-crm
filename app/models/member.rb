@@ -24,6 +24,7 @@ class Member < ApplicationRecord
 
   default_scope { includes([:member_types]) }
 
+
   def organizations_names
     organizations.collect { |org| { name: org.name, id: org.id } }
   end

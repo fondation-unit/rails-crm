@@ -22,8 +22,6 @@ Rails.application.routes.draw do
   end
 
   # Utilisation sur une ressource
-  resources :members, concerns: %i[searchable]
-  resources :organizations, concerns: %i[searchable]
 
   namespace :users do
     resource :session
@@ -33,10 +31,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :members, concerns: %i[searchable]
+    resources :organizations, concerns: %i[searchable]
     resource :dashboard
     resources :member_types
-    resources :members
-    resources :organizations
     resources :notes, only: %i[show create update edit destroy]
     get "/notes/new/:member_id", to: "notes#new", as: :new_note
   end

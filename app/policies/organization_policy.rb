@@ -1,4 +1,4 @@
-class MemberPolicy < ApplicationPolicy
+class OrganizationPolicy < ApplicationPolicy
 
 
   def search?
