@@ -1,6 +1,6 @@
 class Admin::NotesController < Admin::AdminController
   include MemberHelper
-  include Pundit
+  include Pundit::Authorization
 
   def index
   end
@@ -14,6 +14,7 @@ class Admin::NotesController < Admin::AdminController
     notable = find_notable
     @note = Note.new(note_params)
     @note.notable = notable
+    puts YAML::dump(notable)
 
     if @note.save
       redirect_to polymorphic_path([:admin, @note.notable]),
@@ -59,8 +60,8 @@ class Admin::NotesController < Admin::AdminController
   def find_notable
     if params[:member_id]
       Member.find(params[:member_id])
-    elsif params[:institution_id]
-      Institution.find(params[:institution_id])
+    elsif params[:organization_id]
+      Organization.find(params[:organization_id])
     end
   end
 

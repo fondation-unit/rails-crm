@@ -2,13 +2,15 @@ class Admin::OrganizationsController < Admin::AdminController
   include Searchable
 
   def index
-    organizations = Organization.all.order(sort_column => sort_direction)
+    organizations = Organization.all.includes(:notes).order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
   end
 
   def show
-    @organization = Organization.includes(:members).find(params[:id])
+    @organization = Organization.includes(:members, :notes).find(params[:id])
     @pagy, @records = pagy(@organization.members)
+    notes = @organization.notes
+    @pagy2, @notes = pagy(notes)
   end
 
   def new
@@ -17,6 +19,8 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def edit
     @organization = Organization.find(params[:id])
+    notes = @organization.notes
+    @pagy, @notes = pagy(notes)
   end
 
   def create
@@ -86,6 +90,7 @@ class Admin::OrganizationsController < Admin::AdminController
         status
         type_orga
         remove_logo
+        notes
       ]
     )
   end

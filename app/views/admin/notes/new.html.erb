@@ -2,6 +2,6 @@
 <%=
   render 'form_notes',
          note: @note,
-         url: admin_notes_path(member_id: params[:member_id], institution_id: params[:institution_id]),
+         url: admin_notes_path(member_id: params[:member_id], organization_id: params[:organization_id]),
          method: 'post'
 %>

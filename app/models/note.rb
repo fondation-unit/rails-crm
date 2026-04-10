@@ -7,14 +7,7 @@ class Note < ApplicationRecord
   validates_associated :user
 
   scope :ordered, -> { order(created_at: "desc") }
-  scope :for_notable,
-        ->(current_user, member) do
-          where(user: current_user, notable: member)
-            .or(Note.where(notable: member, public: true))
-            .includes(:user)
-            .distinct
-            .ordered
-        end
+
 end
 
 # == Schema Information
