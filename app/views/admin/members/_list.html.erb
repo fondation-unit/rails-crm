@@ -1,17 +1,21 @@
-<table class="table">
+<table class="table" data-controller="sortable">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col" data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'id' %>">#</th>
       <th scope="col">
-        <%= 'Logo' %>
+        <%= I18n.t('members.institution') %>
       </th>
-      <th scope="col">
+      <th scope="col" data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'first_name' %>">
         <%= I18n.t('first_name') %>
       </th>
-      <th scope="col">
+      <th scope="col" data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'last_name' %>">
         <%= I18n.t('last_name') %>
       </th>
-      <th scope="col">
+      <th scope="col" data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'email_address' %>">
         <%= I18n.t('email_address') %>
       </th>
       <th scope="col">
