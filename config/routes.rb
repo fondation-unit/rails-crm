@@ -44,5 +44,8 @@ Rails.application.routes.draw do
     get "/notes/edit/organization/:organization_id/note/:id",
         to: "notes#edit",
         as: :edit_organization_note
+    post "/organizations",
+        to: "organizations#search_filters",
+        as: :organization_filters
   end
 end

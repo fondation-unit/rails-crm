@@ -65,6 +65,13 @@ class Admin::OrganizationsController < Admin::AdminController
     search_records(model: Organization, template: "admin/organizations/list")
   end
 
+  def search_filters
+    puts params
+    organizations = Organization.where(["status = :status", { status: params[:status] }]).includes(:notes).order(sort_column => sort_direction)
+    @pagy, @records = pagy(organizations)
+    render "index", :locals => { :records => @records , :pagy => @pagy}
+  end
+
   private
 
   def sort_column
