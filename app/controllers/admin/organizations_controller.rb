@@ -68,7 +68,7 @@ class Admin::OrganizationsController < Admin::AdminController
   private
 
   def sort_column
-    %w[id name].include?(params[:sort]) ? params[:sort] : "created_at"
+    %w[id name city status].include?(params[:sort]) ? params[:sort] : "created_at"
   end
 
   def sort_direction

@@ -3,9 +3,6 @@
     <tr>
       <th scope="col" data-action="click->sortable#sort"
           data-sortable-column-value="<%= 'id' %>">#</th>
-      <th scope="col">
-        <%= I18n.t('members.institution') %>
-      </th>
       <th scope="col" data-action="click->sortable#sort"
           data-sortable-column-value="<%= 'first_name' %>">
         <%= I18n.t('first_name') %>
@@ -21,6 +18,9 @@
       <th scope="col">
         <%= I18n.t('phone_number') %>
       </th>
+      <th scope="col">
+        <%= I18n.t('members.institution') %>
+      </th>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
@@ -30,13 +30,13 @@
     <% records.each_with_index do |c, i| %>
       <tr>
         <td><%= c.id %></td>
-        <td>
-          <%= raw c.organizations_names.map { |wl| link_to wl[:name], admin_organization_path(wl[:id]) }.join(', ') %>
-        </td>
         <td><%= c.first_name %></td>
         <td><%= c.last_name %></td>
         <td><%= c.email_address %></td>
         <td><%= c.phone_number %></td>
+        <td>
+          <%= raw c.organizations_names.map { |wl| link_to wl[:name], admin_organization_path(wl[:id]) }.join(', ') %>
+        </td>
         <td><%= link_to I18n.t('notes.add'), admin_new_member_note_path(c), { class: 'btn btn-info' } %></td>
         <td><%= link_to I18n.t('edit'), edit_admin_member_path(c) %></td>
         <td>
