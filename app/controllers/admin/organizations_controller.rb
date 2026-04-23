@@ -3,9 +3,19 @@ class Admin::OrganizationsController < Admin::AdminController
   include Searchable
 
   def index
-    organizations =
-      Organization.all.includes(:notes).order(sort_column => sort_direction)
+    # Requête initiale
+    organizations = Organization.all.includes(:notes)
+    # Application des filtres (s'il y en a en session)
+    organizations = apply_filters(organizations)
+    # Complément de Requête (!= Elise Lucet)
+    organizations = organizations.order(sort_column => sort_direction)
+
     @pagy, @records = pagy(organizations)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show
@@ -68,11 +78,35 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def filter
-    @organizations =
-      apply_filters(
-        scope: Organization.all,
-        template: "admin/organizations/list"
-      )
+    # Utilisation de la méthode du concern Filterable
+    organizations = apply_filters(Organization.all)
+    # Application de paramètres supplémentaires à la requête
+    organizations = organizations.order(sort_column => sort_direction)
+
+    @pagy, @records = pagy(organizations)
+
+    # Remplacement des données dans la vue
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.update(
+                   "search_results",
+                   partial: "admin/organizations/list",
+                   locals: {
+                     records: @records,
+                     pagy: @pagy
+                   }
+                 ),
+                 turbo_stream.update(
+                   "search_pagination",
+                   partial: "shared/ui/pagy",
+                   locals: {
+                     pagy: @pagy
+                   }
+                 )
+               ]
+      end
+    end
   end
 
   private
