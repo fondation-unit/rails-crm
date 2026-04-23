@@ -1,8 +1,21 @@
 <div class="d-flex w-100 justify-content-between">
   <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
-  <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
+  <%=
+    link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center'
+  %>
 </div>
+
 <%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_organizations_path } %>
+<%=
+  render partial: 'shared/forms/filter_bar',
+         locals: {
+           path: filter_admin_organizations_path,
+           filters: {
+             status: Organization.statuses,
+           },
+         }
+%>
+
 <div id="search_results">
   <%= render 'list', records: @records %>
 </div>
@@ -11,28 +24,28 @@
   <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>
 <%#=
-<!--  render 'admin/organizations/tables/sortable_table',-->
-<!--         headers: [[:id, '#'], [:logo, 'Logo'], [:name, I18n.t('name')], [:address, I18n.t('address')], [:status, "Statut"], [:city, I18n.t('city')], [:edit, ''], [:delete, '']],-->
-<!--         objects: @records,-->
-<!--         pagy: @pagy,-->
-<!--         columns: %w[id logo_image name address status city edit delete],-->
-<!--         formatters: {-->
-<!--           name: ->(organization) { link_to organization.name, admin_organization_path(organization) },-->
-<!--           edit: ->(organization) { link_to I18n.t('edit'), edit_admin_organization_path(organization) },-->
-<!--           delete: ->(organization) {-->
-<!--             link_to I18n.t('delete'),-->
-<!--                     admin_organization_path(organization),-->
-<!--                     data: {-->
-<!--                       turbo_method: :delete,-->
-<!--                       turbo_confirm: I18n.t('members.organizations.validation_delete'),-->
-<!--                     }-->
-<!--           },-->
-<!--           logo_image: ->(organization) {-->
-<!--             if organization.logo.attached?-->
-<!--               image_tag(organization.logo.variant(:thumb), { style: 'max-width: 60px' })-->
-<!--             else-->
-<!--               nil-->
-<!--             end-->
-<!--           },-->
-<!--         }-->
+  <!--  render 'admin/organizations/tables/sortable_table',-->
+  <!--         headers: [[:id, '#'], [:logo, 'Logo'], [:name, I18n.t('name')], [:address, I18n.t('address')], [:status, "Statut"], [:city, I18n.t('city')], [:edit, ''], [:delete, '']],-->
+  <!--         objects: @records,-->
+  <!--         pagy: @pagy,-->
+  <!--         columns: %w[id logo_image name address status city edit delete],-->
+  <!--         formatters: {-->
+  <!--           name: ->(organization) { link_to organization.name, admin_organization_path(organization) },-->
+  <!--           edit: ->(organization) { link_to I18n.t('edit'), edit_admin_organization_path(organization) },-->
+  <!--           delete: ->(organization) {-->
+  <!--             link_to I18n.t('delete'),-->
+  <!--                     admin_organization_path(organization),-->
+  <!--                     data: {-->
+  <!--                       turbo_method: :delete,-->
+  <!--                       turbo_confirm: I18n.t('members.organizations.validation_delete'),-->
+  <!--                     }-->
+  <!--           },-->
+  <!--           logo_image: ->(organization) {-->
+  <!--             if organization.logo.attached?-->
+  <!--               image_tag(organization.logo.variant(:thumb), { style: 'max-width: 60px' })-->
+  <!--             else-->
+  <!--               nil-->
+  <!--             end-->
+  <!--           },-->
+  <!--         }-->
 %>

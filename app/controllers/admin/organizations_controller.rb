@@ -1,8 +1,10 @@
 class Admin::OrganizationsController < Admin::AdminController
+  include Filterable
   include Searchable
 
   def index
-    organizations = Organization.all.includes(:notes).order(sort_column => sort_direction)
+    organizations =
+      Organization.all.includes(:notes).order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
   end
 
@@ -65,10 +67,22 @@ class Admin::OrganizationsController < Admin::AdminController
     search_records(model: Organization, template: "admin/organizations/list")
   end
 
+  def filter
+    @organizations =
+      apply_filters(
+        scope: Organization.all,
+        template: "admin/organizations/list"
+      )
+  end
+
   private
 
   def sort_column
-    %w[id name city status].include?(params[:sort]) ? params[:sort] : "created_at"
+    if %w[id name city status].include?(params[:sort])
+      params[:sort]
+    else
+      "created_at"
+    end
   end
 
   def sort_direction
