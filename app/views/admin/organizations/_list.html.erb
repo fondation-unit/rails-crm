@@ -25,6 +25,11 @@
           data-sortable-column-value="<%= 'status' %>">
         <%= I18n.t('members.organizations.status') %>
       </th>
+      <th scope="col"
+          data-action="click->sortable#sort"
+          data-sortable-column-value="<%= 'user_id' %>">
+        <%= I18n.t('members.organizations.user_id') %>
+      </th>
       <th scope="col">
       </th>
       <th scope="col">
@@ -50,6 +55,7 @@
         <td><%= c.zip_code %></td>
         <td><%= c.city %></td>
         <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
+        <td><%= UserHelper.full_name(c.user) %></td>
         <td><%= link_to I18n.t('notes.add'), admin_new_organization_note_path(c), { class: 'btn btn-info' } %></td>
         <td><%= link_to I18n.t('edit'), edit_admin_organization_path(c) %></td>
         <td><%= link_to I18n.t('delete'), admin_organization_path(c), data: { turbo_method: :delete, turbo_confirm: I18n.t('members.organizations.validation_delete'), } %></td>

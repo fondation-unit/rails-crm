@@ -2,7 +2,7 @@ class Admin::OrganizationsController < Admin::AdminController
   include Searchable
 
   def index
-    organizations = Organization.all.includes(:notes).order(sort_column => sort_direction)
+    organizations = Organization.all.includes(:notes, :user).order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
   end
 
@@ -68,7 +68,7 @@ class Admin::OrganizationsController < Admin::AdminController
   private
 
   def sort_column
-    %w[id name city status].include?(params[:sort]) ? params[:sort] : "created_at"
+    %w[id name city status user_id].include?(params[:sort]) ? params[:sort] : "created_at"
   end
 
   def sort_direction
@@ -90,6 +90,7 @@ class Admin::OrganizationsController < Admin::AdminController
         status
         type_orga
         remove_logo
+        user_id
         notes
       ]
     )

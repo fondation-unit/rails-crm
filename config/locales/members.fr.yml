@@ -36,6 +36,7 @@ fr:
       'linkedin': 'Compte Linkedin'
       'linkedin_connected': 'Compte Linkedin connecté ?'
       'status': 'Statut'
+      'user_id': 'Créé par'
       'statuses':
         "a_contacter": "À contacter"
         "contacte": "Contacté"

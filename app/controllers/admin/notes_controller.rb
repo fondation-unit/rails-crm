@@ -14,7 +14,6 @@ class Admin::NotesController < Admin::AdminController
     notable = find_notable
     @note = Note.new(note_params)
     @note.notable = notable
-    puts YAML::dump(notable)
 
     if @note.save
       redirect_to polymorphic_path([:admin, @note.notable]),

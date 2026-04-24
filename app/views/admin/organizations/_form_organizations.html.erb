@@ -1,4 +1,8 @@
 <%= form_with url: url, model: organization do |f| %>
+  <%= f.hidden_field :user_id, value: Current.user.id %>
+  <% if @organization.persisted? %>
+    <h3><%= I18n.t('members.organizations.user_id') + " "+UserHelper.full_name(@organization.user) %></h3>
+  <% end %>
   <div class="form_group my-4">
     <%= f.label :logo %>
     <%= f.file_field :logo, class: 'form-control-file' %>

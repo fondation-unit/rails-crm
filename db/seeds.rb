@@ -46,6 +46,7 @@ user2 =
     linkedin_connected: Faker::Boolean,
     status: rand(0..4),
     type_orga: rand(0..3),
+    user_id: rand(1..2)
   )
 end
 
