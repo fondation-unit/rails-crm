@@ -35,6 +35,7 @@ fr:
       'validation_delete': 'Etes-vous sur de vouloir effacer cette institution ?'
       'linkedin': 'Compte Linkedin'
       'linkedin_connected': 'Compte Linkedin connecté ?'
+      'linkedin_connected_single': 'Compte Linkedin connecté :'
       'status': 'Statut'
       'user_id': 'Créé par'
       'statuses':
