@@ -9,12 +9,7 @@
         <% values.each do |key, value| %>
           <li class="list-group-item">
             <label class="d-flex align-items-center">
-              <%=
-                check_box_tag "filters[#{filter_name}][]",
-                              value,
-                              Array(current_filters[filter_name]).map(&:to_s).include?(value.to_s),
-                              class: 'me-2'
-              %>
+              <%= check_box_tag "filters[#{filter_name}][]", value, active_filter?(filter_name, value), class: 'me-2' %>
               <span>
                 <%= key.humanize %>
               </span>
