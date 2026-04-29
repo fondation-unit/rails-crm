@@ -137,11 +137,7 @@ class Admin::OrganizationsController < Admin::AdminController
   private
 
   def sort_column
-    if %w[id name city status].include?(params[:sort])
-      params[:sort]
-    else
-      "created_at"
-    end
+    %w[id name city status user_id].include?(params[:sort]) ? params[:sort] : "created_at"
   end
 
   def sort_direction
@@ -163,6 +159,7 @@ class Admin::OrganizationsController < Admin::AdminController
         status
         type_orga
         remove_logo
+        user_id
         notes
       ]
     )
