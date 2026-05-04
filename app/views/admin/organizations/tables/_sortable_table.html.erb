@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <% objects.each do |obj| %>
-        <tr>
+        <tr class="<%= obj.table_class %>">
           <% columns.each_with_index do |col, index| %>
             <% is_last = index == columns.size - 1 %>
             <td class="align-middle <%= 'text-end' if is_last %>">

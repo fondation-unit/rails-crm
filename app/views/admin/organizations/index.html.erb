@@ -1,9 +1,9 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
-    <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
+  <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
+  <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
-  render 'shared/tables/sortable_table',
+  render 'admin/organizations/tables/sortable_table',
          headers: [[:id, '#'], [:logo, 'Logo'], [:name, I18n.t('name')], [:address, I18n.t('address')], [:zip_code, I18n.t('zip_code')], [:city, I18n.t('city')], [:edit, ''], [:delete, '']],
          objects: @records,
          pagy: @pagy,

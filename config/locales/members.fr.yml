@@ -4,6 +4,7 @@ fr:
     "Modify a member's type": 'Modifier un type de membre'
     'position': 'Poste occupé'
     'institution': 'Institution'
+    'type': 'Type de membre'
     'select_institution': 'Sélectionnez une institution'
     'add': 'Ajouter un membre'
     'show_title': 'Fiche membre'

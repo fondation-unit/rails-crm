@@ -7,6 +7,7 @@
          headers: [
            [:id, '#'],
            [:organizations, I18n.t('members.institution')],
+           [:member_types, I18n.t('members.type')],
            [:first_name, I18n.t('first_name')],
            [:last_name, I18n.t('last_name')],
            [:email_address, I18n.t('email_address')],
@@ -17,7 +18,7 @@
          ],
          objects: @records,
          pagy: @pagy,
-         columns: %w[id organizations_names first_name last_name email_address phone_number notes edit delete],
+         columns: %w[id organizations_names member_types_names first_name last_name email_address phone_number notes edit delete],
          formatters: {
            edit: ->(member) { link_to I18n.t('edit'), edit_admin_member_path(member) },
            delete: ->(member) {
@@ -32,6 +33,7 @@
            first_name: ->(member) { link_to member.first_name, admin_member_path(member.id) },
            last_name: ->(member) { link_to member.last_name, admin_member_path(member.id) },
            organizations_names: ->(member) { raw member.organizations_names.map{|wl| link_to wl[:name], admin_organization_path(wl[:id])}.join(', ') },
+           member_types_names: ->(member) { raw member.member_types_names.map{|wl| wl[:name]}.join(', ') },
            notes: ->(member) { link_to I18n.t('notes.add'), admin_new_note_path(member.id), {class: "btn btn-info"} },
          }
 %>

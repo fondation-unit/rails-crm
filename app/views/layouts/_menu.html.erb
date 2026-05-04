@@ -3,14 +3,14 @@
         <li class="nav-item dropdown">
             <%= link_to I18n.t('menu.CRM'), admin_members_path, class: 'nav-link  dropdown-toggle', data: { 'bs-toggle': 'dropdown' } %>
             <ul class="dropdown-menu show">
+                <li>
+                    <%= link_to I18n.t('menu.organizations'), admin_organizations_path, class: 'nav-link dropdown-item' %>
+                </li>
                 <li class="nav-item ">
                     <%= link_to I18n.t('menu.members'), admin_members_path, class: 'nav-link dropdown-item' %>
                 </li>
                 <li>
                     <%= link_to I18n.t('menu.member_types'), admin_member_types_path, class: 'nav-link dropdown-item' %>
-                </li>
-                <li>
-                    <%= link_to I18n.t('menu.organizations'), admin_organizations_path, class: 'nav-link dropdown-item' %>
                 </li>
             </ul>
         </li>

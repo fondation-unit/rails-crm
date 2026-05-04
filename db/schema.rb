@@ -71,7 +71,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
     t.string "phone_number"
     t.boolean "copil"
     t.boolean "comex"
-    t.text "notes"
+    t.boolean "decisionnaire"
+    t.boolean "principal"
+    t.string "linkedin"
+    t.boolean "linkedin_connected"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -101,6 +104,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_074208) do
     t.string "city"
     t.float "lat"
     t.float "lng"
+    t.string "linkedin"
+    t.boolean "linkedin_connected"
+    t.integer "status"
+    t.string "type_orga"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
