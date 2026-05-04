@@ -11,6 +11,7 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
       t.boolean :linkedin_connected, null: false, default: false
       t.integer :status, null: true
       t.string :type_orga, null: true
+      t.references :user
 
       t.timestamps
     end

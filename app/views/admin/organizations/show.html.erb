@@ -16,6 +16,12 @@
             <%= @organization.zip_code %>
             <br />
             <%= @organization.city %>
+            <br />
+            <%= I18n.t('members.organizations.linkedin') %> :
+            <a href="<%= @organization.linkedin %>" target="_blank"><%= @organization.linkedin %></a>
+            <br />
+            <%= I18n.t('members.organizations.linkedin_connected_single') %>
+            <%= @organization.linkedin_connected ? I18n.t('Yes') : I18n.t('No') %>
           </p>
         </div>
       </div>

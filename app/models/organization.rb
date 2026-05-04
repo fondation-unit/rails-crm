@@ -10,6 +10,10 @@ class Organization < ApplicationRecord
     "inconnu": "table-warning"
   }
 
+  belongs_to :user
+
+  validates_associated :user
+
   has_many :notes, as: :notable
 
   has_and_belongs_to_many :members, join_table: "members_organizations"
@@ -66,9 +70,11 @@ end
 #  zip_code           :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  user_id            :bigint
 #
 # Indexes
 #
 #  index_organizations_on_name           (name) UNIQUE
 #  index_organizations_on_search_vector  (search_vector) USING gin
+#  index_organizations_on_user_id        (user_id)
 #

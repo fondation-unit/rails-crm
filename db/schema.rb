@@ -115,11 +115,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
     t.boolean "linkedin_connected", default: false, null: false
     t.integer "status"
     t.string "type_orga"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((COALESCE(name, ''::character varying))::text || ' '::text) || (COALESCE(city, ''::character varying))::text) || ' '::text) || (COALESCE(address, ''::character varying))::text))", stored: true
     t.index ["name"], name: "index_organizations_on_name", unique: true
     t.index ["search_vector"], name: "index_organizations_on_search_vector", using: :gin
+    t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
