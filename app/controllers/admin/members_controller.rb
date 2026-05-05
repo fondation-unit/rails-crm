@@ -12,6 +12,7 @@ class Admin::MembersController < Admin::AdminController
         .all
         .includes(:organizations, :member_types, :notes)
         .order(sort_column => sort_direction)
+    @organizations = Organization.all.order(:name)
 
     @pagy, @records = pagy(members)
   end

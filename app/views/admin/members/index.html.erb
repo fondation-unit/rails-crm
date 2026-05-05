@@ -4,7 +4,14 @@
 </div>
 
 <%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_members_path } %>
+<label for="organization">Choisissez une institution :</label>
+<input list="organizations" id="organization" name="organization"/>
 
+<datalist id="organizations">
+  <%= @organizations.each do |organization| %>
+    <option value="<%= organization.name %>"></option>
+  <% end %>
+</datalist>
 <div id="search_results">
   <%= render 'list', records: @records %>
 </div>

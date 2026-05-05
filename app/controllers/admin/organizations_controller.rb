@@ -1,9 +1,20 @@
 class Admin::OrganizationsController < Admin::AdminController
+  include Filterable
   include Searchable
 
   def index
-    organizations = Organization.all.includes(:notes, :user).order(sort_column => sort_direction)
+    # Requête initiale
+    organizations = Organization.all.includes(:notes)
+    # Application des filtres (s'il y en a en session)
+    organizations = apply_filters(organizations)
+    # Complément de Requête (!= Elise Lucet)
+    organizations = organizations.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show
@@ -62,7 +73,65 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def search
-    search_records(model: Organization, template: "admin/organizations/list")
+    records = search_records(Organization)
+    records = apply_filters(records)
+
+    @pagy, @records = pagy(records)
+
+    respond_to do |format|
+      format.html { render "admin/organizations/list" }
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.update(
+                   "search_results",
+                   partial: "admin/organizations/list",
+                   locals: {
+                     records: @records,
+                     pagy: @pagy
+                   }
+                 ),
+                 turbo_stream.update(
+                   "search_pagination",
+                   partial: "shared/ui/pagy",
+                   locals: {
+                     pagy: @pagy
+                   }
+                 )
+               ]
+      end
+    end
+  end
+
+  def filter
+    # Utilisation de la méthode du concern Filterable
+    organizations = apply_filters(Organization.all)
+    # Application de paramètres supplémentaires à la requête
+    organizations = organizations.order(sort_column => sort_direction)
+
+    @pagy, @records = pagy(organizations)
+
+    # Remplacement des données dans la vue
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.update(
+                   "search_results",
+                   partial: "admin/organizations/list",
+                   locals: {
+                     records: @records,
+                     pagy: @pagy
+                   }
+                 ),
+                 turbo_stream.update(
+                   "search_pagination",
+                   partial: "shared/ui/pagy",
+                   locals: {
+                     pagy: @pagy
+                   }
+                 )
+               ]
+      end
+    end
   end
 
   private
