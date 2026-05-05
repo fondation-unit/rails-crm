@@ -21,6 +21,13 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :filterable do
+    collection do
+      post :filter, defaults: { format: :turbo_stream }
+      get :filter, defaults: { format: :turbo_stream }
+    end
+  end
+
   # Utilisation sur une ressource
 
   namespace :users do
@@ -31,8 +38,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :members, concerns: %i[searchable]
-    resources :organizations, concerns: %i[searchable]
+    resources :members, concerns: %i[searchable filterable]
+    resources :organizations, concerns: %i[searchable filterable]
     resource :dashboard
     resources :member_types
     resources :notes, only: %i[show create update edit destroy]
@@ -40,12 +47,11 @@ Rails.application.routes.draw do
     get "/notes/new/organization/:organization_id",
         to: "notes#new",
         as: :new_organization_note
-    get "/notes/edit/member/:member_id/note/:id", to: "notes#edit", as: :edit_member_note
+    get "/notes/edit/member/:member_id/note/:id",
+        to: "notes#edit",
+        as: :edit_member_note
     get "/notes/edit/organization/:organization_id/note/:id",
         to: "notes#edit",
         as: :edit_organization_note
-    post "/organizations",
-        to: "organizations#search_filters",
-        as: :organization_filters
   end
 end

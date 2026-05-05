@@ -4,6 +4,7 @@
 </div>
 
 <%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_members_path } %>
+<%= render partial: 'filters', locals: { path: filter_admin_members_path } %>
 
 <div id="search_results">
   <%= render 'list', records: @records %>

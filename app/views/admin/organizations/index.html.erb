@@ -3,7 +3,17 @@
   <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_organizations_path } %>
-<%= render partial: 'admin/organizations/filters', locals: {path: admin_organization_filters_path } %>
+<%=
+  render partial: 'shared/forms/filter_bar',
+         locals: {
+           path: filter_admin_organizations_path,
+           translate: "organizations",
+           translate_list: "organizations.statuses",
+           filters: {
+             status: Organization.statuses,
+           },
+         }
+%>
 <div id="search_results">
   <%= render 'list', records: @records %>
 </div>
