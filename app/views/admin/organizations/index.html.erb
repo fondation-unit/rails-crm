@@ -1,12 +1,12 @@
 <div class="d-flex w-100 justify-content-between">
-  <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
-  <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
+    <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
+    <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_organizations_path } %>
 <%=
   render partial: 'shared/forms/filter_bar',
          locals: {
-           path: filter_admin_organizations_path,
+           path: search_admin_organizations_path,
            translate: "organizations",
            translate_list: "organizations.statuses",
            filters: {
@@ -15,11 +15,11 @@
          }
 %>
 <div id="search_results">
-  <%= render 'list', records: @records %>
+    <%= render 'list', records: @records %>
 </div>
 
 <div id="search_pagination" data-turbo-prefetch="false">
-  <%= render 'shared/ui/pagy', pagy: @pagy %>
+    <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>
 <%#=
 <!--  render 'admin/organizations/tables/sortable_table',-->

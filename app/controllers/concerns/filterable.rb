@@ -14,6 +14,7 @@ module Filterable
     filters.each_pair do |key, value|
 
       scope = scope.where("#{key} IN (#{value.join(',')})") if key.present?
+      
     end
     # À améliorer ou compléter en fonction de la nature des filtres vidés...
     # scope = scope.where(status: filters[:status]) if filters[:status].present?

@@ -7,8 +7,9 @@ export default class extends Controller {
         // const input = this.formTarget.querySelector('.search-field') as HTMLInputElement
         // input.value = ''
     }
-    search() {
+    filter() {
         clearTimeout(this.timeout);
+        alert("ok");
         const filter = document.querySelector("#filter");
         const searchResults = document.querySelector("#search_results");
         // Clear the filter selected value

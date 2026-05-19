@@ -17,7 +17,7 @@ class Admin::MembersController < Admin::AdminController
                       .includes(:organizations, :member_types, :notes)
                       .order(sort_column => sort_direction)
     # Application des filtres (s'il y en a en session)
-    # members = apply_filters(members)
+    members = apply_filters(members)
     # Complément de Requête (!= Elise Lucet)
     members = members.order(sort_column => sort_direction)
 
@@ -129,17 +129,15 @@ class Admin::MembersController < Admin::AdminController
 
   def filter
     # Utilisation de la méthode du concern Filterable
-    members = apply_filters(Member.all)
-    p "*" * 90
-    p params
-    p "*" * 90
     # Application de paramètres supplémentaires à la requête
     members = Member
-               .all
-               .includes(:organizations, :member_types, :notes)
-                .references(:organizations)
-               .where('organizations.name = ?', params[:organization])
-               .order(sort_column => sort_direction) if params[:organization].present?
+    .all
+    .includes(:organizations, :member_types, :notes)
+    .references(:organizations)
+    .where('organizations.name = ?', params[:organization])
+    .order(sort_column => sort_direction) if params[:organization].present?
+    
+    members = apply_filters(Member.all)
 
     @pagy, @records = pagy(members)
 
@@ -165,19 +163,6 @@ class Admin::MembersController < Admin::AdminController
         ]
       end
     end
-  end
-
-  def search_filters
-    p "*" * 90
-    p params
-    p "*" * 90
-    member = Member
-               .all
-               .includes(:organizations, :member_types, :notes)
-               .where('organization.name = ?', "%#{params[:organization]}%" )
-               .order(sort_column => sort_direction)
-    @pagy, @records = pagy(member)
-    render "index"
   end
 
   private
