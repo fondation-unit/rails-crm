@@ -1,6 +1,5 @@
 <%# stimulus controller "search-bar" %>
 <div data-controller="search-bar">
-    <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
 
     <div class="d-flex">
         <ul class="list-group">
@@ -12,7 +11,7 @@
             <% values.each do |key, value| %>
             <li class="list-group-item">
                 <label class="d-flex align-items-center">
-                    <%= check_box_tag "filters[#{filter_name}][]", value, active_filter?(filter_name, value), class: 'me-2',data: { "action" => "input->filters[#{filter_name}][]#filter" } %>
+                    <%= check_box_tag "filters[#{filter_name}][]", value, active_filter?(filter_name, value), class: 'me-2',data: { action: 'change->search-bar#search' } %>
                     <span>
                         <%= I18n.t("members.#{translate_list}.#{key}") %>
                     </span>
@@ -22,6 +21,4 @@
             <% end %>
         </ul>
     </div>
-
-    <% end %>
 </div>

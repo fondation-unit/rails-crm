@@ -9,9 +9,9 @@ export default class extends Controller {
     }
     filter() {
         clearTimeout(this.timeout);
-        alert("ok");
         const filter = document.querySelector("#filter");
         const searchResults = document.querySelector("#search_results");
+        const formFilter = document.querySelector("#form-filters");
         // Clear the filter selected value
         if (filter) {
             filter.value = "";
@@ -20,7 +20,7 @@ export default class extends Controller {
             searchResults.innerHTML = loader;
         }
         this.timeout = setTimeout(() => {
-            this.formTarget.requestSubmit();
+            formFilter.requestSubmit();
         }, 500);
     }
 }

@@ -1,0 +1,43 @@
+<%# stimulus controller "search-bar" %>
+<div data-controller="search-bar">
+    <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+    <div class="d-flex">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="q">
+                <!--          <i class="bi bi-search position-relative"></i>-->
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <%=
+          f.search_field :q,
+                         data: {
+                           action: 'input->search-bar#search',
+                         },
+                         class: 'form-control search-field',
+                         placeholder: t(:search).capitalize,
+                         value: params['q'],
+                         autocomplete: 'off',
+                         aria: {
+                           label: t(:search),
+                           describedby: 'q',
+                         }
+        %>
+        </div>
+    </div>
+    <div class="d-flex align-items-center">
+        <% filters.each do |filter_name, values| %>
+        <h3><%= I18n.t("members.#{translate}.#{filter_name}") %></h3>
+
+        <% i = 0 %>
+        <% values.each do |key, value| %>
+        <div class="form-check form-check-inline">
+            <%= check_box_tag "filters[#{filter_name}][]", value, active_filter?(filter_name, value), id: "filterCheckbox_"+i.to_s , class: 'mx-2 form-check-input',data: { action: 'change->search-bar#search' } %>
+            <label class="form-check-label" for="filterCheckbox_<%= i %>"><%= I18n.t("members.#{translate_list}.#{key}") %></label>
+            <% i += 1 %>
+        </div>
+
+        <% end %>
+        <% end %>
+    </div>
+
+    <% end %>
+</div>
