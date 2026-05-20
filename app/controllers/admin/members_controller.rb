@@ -8,9 +8,6 @@ class Admin::MembersController < Admin::AdminController
 
 
   def index
-    p "*" * 90
-    p params
-    p "*" * 90
     # Requête initiale
     members = Member
                       .all
@@ -98,7 +95,7 @@ class Admin::MembersController < Admin::AdminController
   end
 
   def search
-    records = search_records(Member)
+    records = search_records(Member.all.includes(:organizations, :member_types, :notes))
     records = apply_filters(records)
 
     @pagy, @records = pagy(records)

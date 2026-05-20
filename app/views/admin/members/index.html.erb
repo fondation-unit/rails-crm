@@ -1,15 +1,14 @@
 <div class="d-flex w-100 justify-content-between">
-  <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
-  <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
+    <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
+    <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
 </div>
 
-<%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_members_path } %>
-<%= render partial: 'filters', locals: { path: filter_admin_members_path } %>
+<%= render partial: 'admin/members/parts/search_bar', locals: { path: search_admin_members_path } %>
 
 <div id="search_results">
-  <%= render 'list', records: @records %>
+    <%= render 'list', records: @records %>
 </div>
 
 <div id="search_pagination" data-turbo-prefetch="false">
-  <%= render 'shared/ui/pagy', pagy: @pagy %>
+    <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>

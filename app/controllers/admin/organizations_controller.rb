@@ -107,10 +107,7 @@ class Admin::OrganizationsController < Admin::AdminController
 
     records = search_records(Organization)
     records = apply_filters(records)
-  
-    #p "*" * 90
-    #p records
-    #p "*" * 90
+
     @pagy, @records = pagy(records)
 
     # Remplacement des données dans la vue
@@ -138,9 +135,6 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def search_filters
-    p "*" * 90
-    p params
-    p "*" * 90
     organizations = Organization.where(status: params[:status]).includes(:notes).order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
     render "index"

@@ -10,12 +10,15 @@ module Filterable
 
   def apply_filters(scope)
     filters = extract_filters
-    
+     
     if filters.any?
       filters.each_pair do |key, value|
-
-        scope = scope.where("#{key} IN (#{value.join(',')})") if key.present?
-        
+        if key = 'organization' && !value[0].empty?
+          scope = scope.references(:organizations).where('organizations.name = ?', value)
+        else
+          scope = scope.where("#{key} IN (#{value.join(',')})") if key.present?
+        end
+      
       end
     end
     # À améliorer ou compléter en fonction de la nature des filtres vidés...
@@ -29,7 +32,6 @@ module Filterable
 
   def extract_filters
 
-    
     # Formulaire soumis avec ou sans filtres cochés
     if params.key?(:filters)
       filters =
