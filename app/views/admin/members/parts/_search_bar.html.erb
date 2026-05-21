@@ -1,13 +1,13 @@
 <%# stimulus controller "search-bar" %>
 <div data-controller="search-bar">
-    <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+  <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
     <div class="d-flex">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="q">
-                <!--          <i class="bi bi-search position-relative"></i>-->
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
-            <%=
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="q">
+          <!--          <i class="bi bi-search position-relative"></i>-->
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <%=
           f.search_field :q,
                          data: {
                            action: 'input->search-bar#search',
@@ -21,13 +21,18 @@
                            describedby: 'q',
                          }
         %>
-        </div>
+      </div>
     </div>
     <div>
-        <%= f.label "Choisissez une institution :" %>
-        <%= f.text_field "filters[organization][]", list: 'organizations_list', data: {action: 'change->search-bar#search'} %>
-        <%= tag.datalist( options_for_select( @organizations.map { | item | [item.name, item.name] }), id: 'organizations_list') %>
+      <%= f.label 'Choisissez une institution :' %>
+      <%=
+        select_tag 'filters[organization_ids]',
+                   options_from_collection_for_select(@organizations, :id, :name),
+                   include_blank: true,
+                   data: {
+                     action: 'change->search-bar#search',
+                   }
+      %>
     </div>
-
-    <% end %>
+  <% end %>
 </div>

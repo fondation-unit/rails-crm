@@ -4,7 +4,7 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def index
     # Requête initiale
-    organizations = Organization.all.includes(:notes)
+    organizations = Organization.includes(:notes)
     # Application des filtres s'il y en a en session
     records = search_and_filter(organizations)
     # Complément de requête
@@ -92,7 +92,13 @@ class Admin::OrganizationsController < Admin::AdminController
     records = search_records(scope)
     filters = get_filters(records)
 
-    filters&.each { |key, values| records = records.where(key => values) }
+    filters&.each do |key, values|
+      # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
+      # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
+      next unless records.column_names.include?(key.to_s)
+
+      records = records.where(key => values)
+    end
 
     records = records.includes(:notes).order(sort_column => sort_direction)
     records
