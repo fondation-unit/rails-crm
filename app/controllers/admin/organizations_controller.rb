@@ -86,17 +86,6 @@ class Admin::OrganizationsController < Admin::AdminController
     search_and_filter_render(@pagy, @records)
   end
 
-  def search_filters
-    organizations =
-      Organization
-        .where(status: params[:status])
-        .includes(:notes)
-        .order(sort_column => sort_direction)
-
-    @pagy, @records = pagy(organizations)
-    render "index"
-  end
-
   private
 
   def search_and_filter(scope = Organization)
