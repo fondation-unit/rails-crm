@@ -8,51 +8,27 @@ module Filterable
     session[:filters].to_h.symbolize_keys
   end
 
-  def apply_filters(scope)
-    filters = extract_filters
-     
-    if filters.any?
-      filters.each_pair do |key, value|
-        if key = 'organization' && !value[0].empty?
-          scope = scope.references(:organizations).where('organizations.name = ?', value)
-        else
-          scope = scope.where("#{key} IN (#{value.join(',')})") if key.present?
-        end
-      
-      end
+  def get_filters(scope = nil)
+    raw_filters = params[:filters]
+
+    # Si aucun filtre envoyé, on se base sur la session
+    return current_filters if raw_filters.blank?
+
+    filters =
+      raw_filters
+        .permit!
+        .to_h
+        .symbolize_keys
+        .except(:__sent) # champ pour déterminer si tout a été décoché
+        .reject { |_, v| v.blank? }
+
+    # Si aucun filtre sélectionné, suppression dans la session
+    if filters.empty?
+      session.delete(:filters)
+      return {}
     end
-    # À améliorer ou compléter en fonction de la nature des filtres vidés...
-    # scope = scope.where(status: filters[:status]) if filters[:status].present?
 
-    # La fonction retourne la requête agrémentée par les filtres
-    scope
-  end
-
-  private
-
-  def extract_filters
-
-    # Formulaire soumis avec ou sans filtres cochés
-    if params.key?(:filters)
-      filters =
-        params
-          .fetch(:filters, {})
-          .permit!
-          .to_h
-          .symbolize_keys
-          .reject { |_, v| v.blank? }
-
-      end
-      # Si aucun filtre sélectionné, suppression dans la session
-      if filters.nil?
-        session.delete(:filters)
-        return {}
-      end
-
-      session[:filters] = filters
-      return filters
-
-    # Réutilisation de la session pour la pagination
-    current_filters
+    session[:filters] = filters
+    current_filters # réutilisation de la session pour la pagination
   end
 end

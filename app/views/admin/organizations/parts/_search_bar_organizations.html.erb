@@ -14,7 +14,7 @@
                          },
                          class: 'form-control search-field',
                          placeholder: t(:search).capitalize,
-                         value: params['q'],
+                         value: params['q'] || session[:search],
                          autocomplete: 'off',
                          aria: {
                            label: t(:search),
@@ -24,6 +24,8 @@
       </div>
     </div>
     <div class="d-flex align-items-center">
+      <%= hidden_field_tag 'filters[__sent]', '1' %>
+
       <% filters.each do |filter_name, values| %>
         <h3><%= I18n.t("members.#{translate}.#{filter_name}") %></h3>
 
@@ -33,13 +35,13 @@
               check_box_tag "filters[#{filter_name}][]",
                             value,
                             active_filter?(filter_name, value),
-                            id: "filterCheckbox_#{index}",
+                            id: "filterCheckbox_#{filter_name}_#{index}",
                             class: 'mx-2 form-check-input',
                             data: {
                               action: 'change->search-bar#search',
                             }
             %>
-            <label class="form-check-label" for="<%= "filterCheckbox_#{index}" %>">
+            <label class="form-check-label" for="<%= "filterCheckbox_#{filter_name}_#{index}" %>">
               <%= I18n.t("members.#{translate_list}.#{key}") %>
             </label>
           </div>
