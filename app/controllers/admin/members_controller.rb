@@ -6,24 +6,23 @@ class Admin::MembersController < Admin::AdminController
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
 
-
   def index
     # Requête initiale
-    members = Member
-                      .all
-                      .includes(:organizations, :member_types, :notes)
-                      .order(sort_column => sort_direction)
+    members =
+      Member.includes(:organizations, :member_types, :notes).order(
+        sort_column => sort_direction
+      )
     # Application des filtres (s'il y en a en session)
-    members = apply_filters(members)
+    records = search_and_filter(members)
     # Complément de Requête (!= Elise Lucet)
-    members = members.order(sort_column => sort_direction)
+    members = records.order(sort_column => sort_direction)
 
     respond_to do |format|
       format.html
       format.turbo_stream
     end
 
-    @organizations = Organization.all.order(:name)
+    @organizations = Organization.order(:name)
 
     @pagy, @records = pagy(members)
   end
@@ -95,78 +94,81 @@ class Admin::MembersController < Admin::AdminController
   end
 
   def search
-    records = search_records(Member.all.includes(:organizations, :member_types, :notes))
-    records = apply_filters(records)
+    scope = Member.includes(:notes)
+    records = search_and_filter(scope)
 
     @pagy, @records = pagy(records)
 
-    respond_to do |format|
-      format.html { render "admin/members/list" }
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.update(
-            "search_results",
-            partial: "admin/members/list",
-            locals: {
-              records: @records,
-              pagy: @pagy
-            }
-          ),
-          turbo_stream.update(
-            "search_pagination",
-            partial: "shared/ui/pagy",
-            locals: {
-              pagy: @pagy
-            }
-          )
-        ]
-      end
-    end
+    search_and_filter_render(@pagy, @records)
   end
 
   def filter
-    # Utilisation de la méthode du concern Filterable
-    # Application de paramètres supplémentaires à la requête
-    members = Member
-    .all
-    .includes(:organizations, :member_types, :notes)
-    .references(:organizations)
-    .where('organizations.name = ?', params[:organization])
-    .order(sort_column => sort_direction) if params[:organization].present?
-    
-    members = apply_filters(Member.all)
+    scope = Member.includes(:notes)
+    records = search_and_filter(scope)
 
-    @pagy, @records = pagy(members)
+    @pagy, @records = pagy(records)
 
-    # Remplacement des données dans la vue
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.update(
-            "search_results",
-            partial: "admin/members/list",
-            locals: {
-              records: @records,
-              pagy: @pagy
-            }
-          ),
-          turbo_stream.update(
-            "search_pagination",
-            partial: "shared/ui/pagy",
-            locals: {
-              pagy: @pagy
-            }
-          )
-        ]
-      end
-    end
+    search_and_filter_render(@pagy, @records)
   end
 
   private
 
+  def search_and_filter(scope = Member)
+    records = search_records(scope)
+    filters = get_filters(records)
+
+    filters&.each do |key, values|
+      key = key.to_s
+
+      case key
+      when "organization_ids"
+        records =
+          records.joins(:organizations).where(organizations: { id: values })
+      when "member_type_ids"
+        records =
+          records.joins(:member_types).where(member_types: { id: values })
+      else
+        # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
+        # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
+        next unless records.column_names.include?(key)
+
+        records = records.where(key => values)
+      end
+    end
+
+    records = records.order(sort_column => sort_direction)
+    records
+  end
+
+  def search_and_filter_render(pagy, records)
+    respond_to do |format|
+      format.html { render "admin/members/list" }
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.update(
+                   "search_results",
+                   partial: "admin/members/list",
+                   locals: {
+                     records: records,
+                     pagy: pagy
+                   }
+                 ),
+                 turbo_stream.update(
+                   "search_pagination",
+                   partial: "shared/ui/pagy",
+                   locals: {
+                     pagy: pagy
+                   }
+                 )
+               ]
+      end
+    end
+  end
+
   def set_organizations
     @organizations = Organization.ordered
   end
+
   def set_member_types
     @member_types = MemberType.ordered
   end
