@@ -23,6 +23,11 @@
         %>
         </div>
     </div>
+    <div>
+        <%= f.label "Choisissez une institution :" %>
+        <%= f.text_field "filters[organization][]", list: 'organizations_list', data: {action: 'change->search-bar#search'} %>
+        <%= tag.datalist( options_for_select( @organizations.map { | item | [item.name, item.name] }), id: 'organizations_list') %>
+    </div>
 
     <% end %>
 </div>

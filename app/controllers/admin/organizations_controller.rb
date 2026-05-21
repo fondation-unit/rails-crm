@@ -104,11 +104,11 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def filter
     # Utilisation de la méthode du concern Filterable
-    organizations = apply_filters(Organization.all)
-    # Application de paramètres supplémentaires à la requête
-    organizations = organizations.order(sort_column => sort_direction)
 
-    @pagy, @records = pagy(organizations)
+    records = search_records(Organization)
+    records = apply_filters(records)
+
+    @pagy, @records = pagy(records)
 
     # Remplacement des données dans la vue
     respond_to do |format|
@@ -132,6 +132,12 @@ class Admin::OrganizationsController < Admin::AdminController
                ]
       end
     end
+  end
+
+  def search_filters
+    organizations = Organization.where(status: params[:status]).includes(:notes).order(sort_column => sort_direction)
+    @pagy, @records = pagy(organizations)
+    render "index"
   end
 
   private

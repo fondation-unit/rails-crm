@@ -7,10 +7,11 @@ export default class extends Controller {
         // const input = this.formTarget.querySelector('.search-field') as HTMLInputElement
         // input.value = ''
     }
-    search() {
+    filter() {
         clearTimeout(this.timeout);
         const filter = document.querySelector("#filter");
         const searchResults = document.querySelector("#search_results");
+        const formFilter = document.querySelector("#form-filters");
         // Clear the filter selected value
         if (filter) {
             filter.value = "";
@@ -19,7 +20,7 @@ export default class extends Controller {
             searchResults.innerHTML = loader;
         }
         this.timeout = setTimeout(() => {
-            this.formTarget.requestSubmit();
+            formFilter.requestSubmit();
         }, 500);
     }
 }
