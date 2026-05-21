@@ -130,7 +130,7 @@ class Admin::MembersController < Admin::AdminController
       else
         # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
         # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
-        next unless records.column_names.include?(key)
+        next unless records.column_names.include?(key.to_s)
 
         records = records.where(key => values)
       end
