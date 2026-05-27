@@ -1,0 +1,12 @@
+<div>
+    <%= form_with url: path do |f| %>
+    <div class="form-group my-4">
+        <%= f.label 'status', I18n.t('members.organizations.status') %>
+        <% options = options_for_select(Organization.statuses.map {|key, value| [I18n.t("members.organizations.statuses.#{key}"), key]}) %>
+        <%= f.select('status', options) %>
+    </div>
+    <button type="submit" class="btn btn-primary mb-5">
+        <%= I18n.t('filter') %>
+    </button>
+    <% end %>
+</div>

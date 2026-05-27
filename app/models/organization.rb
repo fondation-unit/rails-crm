@@ -48,6 +48,8 @@ class Organization < ApplicationRecord
   def purge_logo_if_wanted
     logo.purge if ActiveModel::Type::Boolean.new.cast(remove_logo)
   end
+
+
 end
 
 # == Schema Information

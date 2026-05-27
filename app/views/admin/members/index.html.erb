@@ -3,15 +3,8 @@
   <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
 </div>
 
-<%= render partial: 'shared/forms/search_bar', locals: { path: search_admin_members_path } %>
-<label for="organization">Choisissez une institution :</label>
-<input list="organizations" id="organization" name="organization"/>
+<%= render partial: 'admin/members/parts/search_bar', locals: { path: search_admin_members_path } %>
 
-<datalist id="organizations">
-  <%= @organizations.each do |organization| %>
-    <option value="<%= organization.name %>"></option>
-  <% end %>
-</datalist>
 <div id="search_results">
   <%= render 'list', records: @records %>
 </div>

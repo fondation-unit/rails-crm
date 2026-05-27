@@ -78,6 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_24_081733) do
     t.boolean "principal"
     t.string "linkedin"
     t.boolean "linkedin_connected"
+    t.boolean "newsletter_ressources"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(\"position\", ''::character varying))::text) || ' '::text) || (COALESCE(email_address, ''::character varying))::text))", stored: true

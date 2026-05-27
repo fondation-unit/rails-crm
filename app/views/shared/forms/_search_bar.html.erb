@@ -1,13 +1,13 @@
 <%# stimulus controller "search-bar" %>
 <div data-controller="search-bar">
-  <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+    <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
     <div class="d-flex">
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="q">
-          <!--          <i class="bi bi-search position-relative"></i>-->
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span>
-        <%=
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="q">
+                <!--          <i class="bi bi-search position-relative"></i>-->
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <%=
           f.search_field :q,
                          data: {
                            action: 'input->search-bar#search',
@@ -21,7 +21,8 @@
                            describedby: 'q',
                          }
         %>
-      </div>
+        </div>
     </div>
-  <% end %>
+
+    <% end %>
 </div>

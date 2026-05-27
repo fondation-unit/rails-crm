@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :members, concerns: %i[searchable]
+    resources :members, concerns: %i[searchable filterable]
     resources :organizations, concerns: %i[searchable filterable]
     resource :dashboard
     resources :member_types

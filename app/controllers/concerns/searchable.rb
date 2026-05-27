@@ -2,15 +2,12 @@ module Searchable
   extend ActiveSupport::Concern
 
   def search_records(scope, policy = true)
-    session[:search] = params[:q].presence || ""
+    session[:search] = params[:q].to_s if params.key?(:q)
 
-    # p "*" * 90
-    # p session[:search]
-    # p "*" * 90
+    query = session[:search].to_s
 
-    records = params[:q].present? ? scope.search_ranked(params[:q]) : scope.all
-    authorize records if policy
+    return scope.all if query.blank?
 
-    records
+    scope.search_ranked(query)
   end
 end

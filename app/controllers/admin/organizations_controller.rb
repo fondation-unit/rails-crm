@@ -4,11 +4,11 @@ class Admin::OrganizationsController < Admin::AdminController
 
   def index
     # Requête initiale
-    organizations = Organization.all.includes(:notes)
-    # Application des filtres (s'il y en a en session)
-    organizations = apply_filters(organizations)
-    # Complément de Requête (!= Elise Lucet)
-    organizations = organizations.order(sort_column => sort_direction)
+    organizations = Organization.includes(:notes)
+    # Application des filtres s'il y en a en session
+    records = search_and_filter(organizations)
+    # Complément de requête
+    organizations = records.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
 
     respond_to do |format|
@@ -73,11 +73,38 @@ class Admin::OrganizationsController < Admin::AdminController
   end
 
   def search
-    records = search_records(Organization)
-    records = apply_filters(records)
-
+    records = search_and_filter
     @pagy, @records = pagy(records)
 
+    search_and_filter_render(@pagy, @records)
+  end
+
+  def filter
+    records = search_and_filter
+    @pagy, @records = pagy(records)
+
+    search_and_filter_render(@pagy, @records)
+  end
+
+  private
+
+  def search_and_filter(scope = Organization)
+    records = search_records(scope)
+    filters = get_filters(records)
+
+    filters&.each do |key, values|
+      # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
+      # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
+      next unless records.column_names.include?(key.to_s)
+
+      records = records.where(key => values)
+    end
+
+    records = records.includes(:notes).order(sort_column => sort_direction)
+    records
+  end
+
+  def search_and_filter_render(pagy, records)
     respond_to do |format|
       format.html { render "admin/organizations/list" }
       format.turbo_stream do
@@ -86,58 +113,28 @@ class Admin::OrganizationsController < Admin::AdminController
                    "search_results",
                    partial: "admin/organizations/list",
                    locals: {
-                     records: @records,
-                     pagy: @pagy
+                     records: records,
+                     pagy: pagy
                    }
                  ),
                  turbo_stream.update(
                    "search_pagination",
                    partial: "shared/ui/pagy",
                    locals: {
-                     pagy: @pagy
+                     pagy: pagy
                    }
                  )
                ]
       end
     end
   end
-
-  def filter
-    # Utilisation de la méthode du concern Filterable
-    organizations = apply_filters(Organization.all)
-    # Application de paramètres supplémentaires à la requête
-    organizations = organizations.order(sort_column => sort_direction)
-
-    @pagy, @records = pagy(organizations)
-
-    # Remplacement des données dans la vue
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-                 turbo_stream.update(
-                   "search_results",
-                   partial: "admin/organizations/list",
-                   locals: {
-                     records: @records,
-                     pagy: @pagy
-                   }
-                 ),
-                 turbo_stream.update(
-                   "search_pagination",
-                   partial: "shared/ui/pagy",
-                   locals: {
-                     pagy: @pagy
-                   }
-                 )
-               ]
-      end
-    end
-  end
-
-  private
 
   def sort_column
-    %w[id name city status user_id].include?(params[:sort]) ? params[:sort] : "created_at"
+    if %w[id name city status user_id].include?(params[:sort])
+      params[:sort]
+    else
+      "created_at"
+    end
   end
 
   def sort_direction

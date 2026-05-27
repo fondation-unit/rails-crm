@@ -30,10 +30,10 @@ module FullTextSearchable
             tsquery = build_tsquery(query)
             rank_expr =
               sanitize_sql_array(
-                ["ts_rank(search_vector, to_tsquery('simple', ?))", tsquery]
+                ["ts_rank(#{table_name}.search_vector, to_tsquery('simple', ?))", tsquery]
               )
 
-            where("search_vector @@ to_tsquery('simple', ?)", tsquery).select(
+            where("#{table_name}.search_vector @@ to_tsquery('simple', ?)", tsquery).select(
               "#{table_name}.*, #{rank_expr} AS rank"
             ).order(Arel.sql("#{rank_expr} DESC"))
           end
