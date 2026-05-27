@@ -200,6 +200,7 @@ class Admin::MembersController < Admin::AdminController
         :principal,
         :linkedin,
         :linkedin_connected,
+        :newsletter_ressources,
         member_type_ids: [],
         organization_ids: []
       ]

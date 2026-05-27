@@ -34,7 +34,7 @@ user2 =
 
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
-5.times do |o|
+10.times do |o|
   Organization.create!(
     name: Faker::Company.name,
     address: Faker::Address.street_address,
@@ -50,7 +50,7 @@ user2 =
   )
 end
 
-10.times do |i|
+30.times do |i|
   member =
     Member.create!(
       gender: Faker::Gender.type,
@@ -62,7 +62,8 @@ end
       copil: Faker::Boolean,
       comex: Faker::Boolean,
       linkedin: "https://www.linkedin.com/person-#{i}",
-      linkedin_connected: Faker::Boolean
+      linkedin_connected: Faker::Boolean,
+      newsletter_ressources: Faker::Boolean
     )
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
