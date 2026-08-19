@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resources :organizations, concerns: %i[searchable filterable]
     resource :dashboard
     resources :member_types
+    resources :investments
     resources :notes, only: %i[show create update edit destroy]
     get "/notes/new/member/:member_id", to: "notes#new", as: :new_member_note
     get "/notes/new/organization/:organization_id",

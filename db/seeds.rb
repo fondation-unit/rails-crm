@@ -91,3 +91,8 @@ Note.create!(
   user: user2,
   contact_type: "chat"
 )
+
+Investment.create!(
+    name: "Type 1",
+    email_address: "marion@example.com",
+  )
