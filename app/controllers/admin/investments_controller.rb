@@ -19,7 +19,7 @@ class Admin::InvestmentsController < Admin::AdminController
       redirect_to admin_investments_path,
                   notice:
                     I18n.t(
-                      "investment.created",
+                      "investments.created",
                       name: @investment.name
                     )
     else
@@ -36,13 +36,10 @@ class Admin::InvestmentsController < Admin::AdminController
     @investment = Investment.find(params[:id])
 
     if @investment.update(investment_params)
-      p '*' * 10
-      p investment_params
-      p '*' * 10
       redirect_to admin_investments_path,
                   notice:
                     I18n.t(
-                      "investment.updated",
+                      "investments.updated",
                       name: @investment.name
                     )
     else
@@ -52,15 +49,18 @@ class Admin::InvestmentsController < Admin::AdminController
   end
 
   def destroy
-    @investment = Investment.includes(:notable).find(params[:id])
-    notable = @investment.notable
+    @investment = Investment.find(params[:id])
 
     if @investment.destroy
-      redirect_to polymorphic_path([:admin, notable]),
-                  alert: I18n.t("Investments.deleted")
+      redirect_to admin_investments_path,
+                  notice:
+                    I18n.t(
+                      "investments.updated",
+                      name: @investment.name
+                    )
     else
-      redirect_to polymorphic_path([:admin, notable]),
-                  alert: I18n.t("Investments.error_update")
+      flash[:alert] = @investment.errors.full_messages.join(", ")
+      render :edit, status: :unprocessable_entity
     end
   end
 
