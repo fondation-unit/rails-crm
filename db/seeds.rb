@@ -63,6 +63,7 @@ end
       comex: Faker::Boolean,
       linkedin: "https://www.linkedin.com/person-#{i}",
       linkedin_connected: Faker::Boolean,
+      investments: Faker::Boolean,
       newsletter_ressources: Faker::Boolean
     )
 
@@ -96,6 +97,11 @@ Note.create!(
 Investment.create!(
     name: "Type 1",
     email_address: "marion@example.com",
+  )
+
+Investment.create!(
+    name: "Type 2",
+    email_address: "mailys@example.com",
   )
 
 

@@ -19,7 +19,8 @@
     <%= f.label :phone_number, I18n.t('phone_number') %>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 </div>
-<div class="d-flex flex-row">
+<h2>Engagements</h2>
+<div class="d-flex flex-row flex-wrap">
     <div class="col-md-4">
         <div class="form_group my-4">
             <div class="form-check">
@@ -66,12 +67,20 @@
         </div>
         <% end %>
     </div>
-    <div class="col-md-4">
-        <% if investments %>
-        <%= f.label I18n.t('members.investments') %>
-        <div class="form_group my-4">
+</div>
+<div class="col-12">
+    <div class="form_group my-4">
+        <div class="form-check">
+            <%= f.check_box :investments, class: 'form-check-input', as: :boolean %>
+            <%= f.label :investments, class: 'form-check-label' %>
+        </div>
+    </div>
+    <div id="investments">
+        <% if @investments %>
+        <%= f.label I18n.t('investments.investments') %>
+        <div class=" form_group my-4">
             <%=
-        f.collection_check_boxes :investments_ids, investments,
+        f.collection_check_boxes :investment_ids, @investments,
           :id,
           :name,
           {} do |b| %>
@@ -86,6 +95,7 @@
 </div>
 
 </div>
+<h2>Réseaux</h2>
 <div class="form-group my-4">
     <%= f.label :linkedin, I18n.t('members.organizations.linkedin') %>
     <%= f.text_field :linkedin, class: 'form-control' %>

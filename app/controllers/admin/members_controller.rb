@@ -46,7 +46,7 @@ class Admin::MembersController < Admin::AdminController
     @investments = Investment.ordered
 
     notes = @member.notes
-    @pagy, @notes = pagy(notes)
+    @pagy, @notes= pagy(notes)
   end
 
   def create
@@ -208,6 +208,7 @@ class Admin::MembersController < Admin::AdminController
         :linkedin,
         :linkedin_connected,
         :newsletter_ressources,
+        :investments,
         member_type_ids: [],
         investment_ids: [],
         organization_ids: []

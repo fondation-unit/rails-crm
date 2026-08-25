@@ -59,13 +59,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "investments_members", id: false, force: :cascade do |t|
-    t.bigint "member_id", null: false
-    t.bigint "investment_id", null: false
-    t.index ["investment_id", "member_id"], name: "index_investments_members_on_investment_id_and_member_id"
-    t.index ["member_id", "investment_id"], name: "index_investments_members_on_member_id_and_investment_id"
-  end
-
   create_table "member_types", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -93,11 +86,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
     t.string "linkedin"
     t.boolean "linkedin_connected"
     t.boolean "newsletter_ressources"
+    t.boolean "investments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(\"position\", ''::character varying))::text) || ' '::text) || (COALESCE(email_address, ''::character varying))::text))", stored: true
     t.index ["email_address"], name: "index_members_on_email_address", unique: true
     t.index ["search_vector"], name: "index_members_on_search_vector", using: :gin
+  end
+
+  create_table "members_investments", id: false, force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.bigint "investment_id", null: false
+    t.index ["investment_id", "member_id"], name: "index_members_investments_on_investment_id_and_member_id"
+    t.index ["member_id", "investment_id"], name: "index_members_investments_on_member_id_and_investment_id"
   end
 
   create_table "members_organizations", id: false, force: :cascade do |t|
