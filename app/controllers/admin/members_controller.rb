@@ -208,7 +208,7 @@ class Admin::MembersController < Admin::AdminController
         :linkedin,
         :linkedin_connected,
         :newsletter_ressources,
-        :investments,
+        :invest,
         member_type_ids: [],
         investment_ids: [],
         organization_ids: []

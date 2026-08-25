@@ -74,7 +74,7 @@ end
       comex: Faker::Boolean,
       linkedin: "https://www.linkedin.com/person-#{i}",
       linkedin_connected: Faker::Boolean,
-      investments: Faker::Boolean,
+      invest: Faker::Boolean,
       newsletter_ressources: Faker::Boolean
     )
 

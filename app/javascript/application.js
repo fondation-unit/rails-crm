@@ -6,9 +6,12 @@ import "trix";
 import "@rails/actiontext";
 import "bootstrap";
 
-const investment = document.querySelector("#member_investments");
+const investment = document.querySelector("#member_invest");
 const investment_div = document.querySelector("#investments");
-
+const inputs = document.querySelectorAll(
+    "#investments input[id^='member_investment_ids_']"
+);
+console.log(inputs);
 if (investment) {
     if (investment.checked) {
         investment_div.style.display = "block";
@@ -23,6 +26,11 @@ if (investment) {
                 investment_div.style.display = "block";
             } else {
                 investment_div.style.display = "none";
+                document
+                    .querySelectorAll("input[id^='member_investment_ids_']")
+                    .forEach((c) => {
+                        c.checked = false;
+                    });
             }
         },
         false

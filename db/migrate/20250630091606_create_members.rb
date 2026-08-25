@@ -14,7 +14,7 @@ class CreateMembers < ActiveRecord::Migration[8.0]
       t.string :linkedin, null: true
       t.boolean :linkedin_connected, null: true
       t.boolean :newsletter_ressources, null: true
-      t.boolean :investments, null: true
+      t.boolean :invest, null: true
 
       t.timestamps
     end

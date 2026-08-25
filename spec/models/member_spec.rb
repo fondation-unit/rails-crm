@@ -15,7 +15,7 @@ end
 #  email_address         :string           not null
 #  first_name            :string           not null
 #  gender                :string
-#  investments           :boolean
+#  invest                :boolean
 #  last_name             :string           not null
 #  linkedin              :string
 #  linkedin_connected    :boolean
