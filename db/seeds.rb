@@ -34,6 +34,17 @@ user2 =
 
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
+
+Investment.create!(
+    name: "Type 1",
+    email_address: "marion@example.com",
+  )
+
+Investment.create!(
+    name: "Type 2",
+    email_address: "mailys@example.com",
+  )
+
 10.times do |o|
   Organization.create!(
     name: Faker::Company.name,
@@ -94,14 +105,5 @@ Note.create!(
   contact_type: "chat"
 )
 
-Investment.create!(
-    name: "Type 1",
-    email_address: "marion@example.com",
-  )
-
-Investment.create!(
-    name: "Type 2",
-    email_address: "mailys@example.com",
-  )
 
 
