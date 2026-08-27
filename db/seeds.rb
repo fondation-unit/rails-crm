@@ -35,15 +35,23 @@ user2 =
 %i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
 
 
-Investment.create!(
-    name: "Type 1",
-    email_address: "marion@example.com",
-  )
 
 Investment.create!(
-    name: "Type 2",
-    email_address: "mailys@example.com",
-  )
+name: "Donner son contenu",
+email_address: "mailys.giret@educagri.fr",
+)
+Investment.create!(
+name: "Participer à la relecture",
+email_address: "mailys.giret@educagri.fr",
+)
+Investment.create!(
+name: "Tester les ressources",
+email_address: "mailys.giret@educagri.fr",
+)
+Investment.create!(
+  name: "Identifier les manques/besoins",
+  email_address: "marion.lopez@educagri.fr",
+)
 
 10.times do |o|
   Organization.create!(
@@ -80,7 +88,7 @@ end
 
   member.member_types << MemberType.all.to_a.sample(rand(1..3))
   member.organizations << Organization.all.to_a.sample(rand(1..2))
-  member.investments << Investment.all.to_a.sample(rand(1..3))
+  member.investments << Investment.all.to_a.sample(rand(1..4))
 end
 
 Note.create!(

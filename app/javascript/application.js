@@ -11,8 +11,8 @@ const investment_div = document.querySelector("#investments");
 const inputs = document.querySelectorAll(
     "#investments input[id^='member_investment_ids_']"
 );
-console.log(inputs);
-if (investment) {
+
+function investHandle() {
     if (investment.checked) {
         investment_div.style.display = "block";
     } else {
@@ -35,4 +35,8 @@ if (investment) {
         },
         false
     );
+}
+window.onload = investHandle();
+if (investment) {
+    investHandle();
 }
