@@ -132,7 +132,19 @@ class Admin::MembersController < Admin::AdminController
   def import_member(exp)
     #orga = OrganizationHelper.update_or_create(exp)
     member_update = self.update_or_create(exp)
+    p '*' * 90
+    p member_update
+    p '*' * 90
 
+
+    if !exp[21].to_s.empty?
+      note_fields = {
+        user_id: current_user,
+        notable_type: 'Member',
+        notable_id: member_update[:id]
+      }
+      Note.new(note_fields)
+    end
 
   end
 
@@ -145,31 +157,33 @@ class Admin::MembersController < Admin::AdminController
       phone_number: nil,
       newsletter_ressources: exp[16] == 'Oui' ? true : false,
       invest: (exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui') ? true : false,
-  }     
+    }  
+    
+    
 
-  if(exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui')
-    investment_ids = []
-
-    investment_ids[] = 1 if(exp[17] == 'Oui')
-    investment_ids[] = 2 if(exp[18] == 'Oui')
-    investment_ids[] = 3 if(exp[19] == 'Oui')
-    investment_ids[] = 4 if(exp[20] == 'Oui')
-    p '*' * 90
-    p investment_ids
-    p '*' * 90
-
-    member_fields["investment_ids:"] = investment_ids.to_hash
-    end
+   
+      investment_ids = []
+ 
+      investment_ids << 1 if exp[17] == "Oui"
+      investment_ids << 2 if exp[18] == "Oui"
+      investment_ids << 3 if exp[19] == "Oui"
+      investment_ids << 4 if exp[20] == "Oui"
+    
+      member_fields[:investment_ids] = investment_ids
+    
+      member_fields
+    
   end
 
   def update_or_create(exp)
     member = Member.find_by(email_address:exp[3])
     member_fields = self.generate_member_fields(exp)
-    if(member)
+    if member
       member.update!(member_fields)
     else
-      Member.create!(member_fields)
+      member = Member.create!(member_fields)
     end
+    member
   end
 
   def search_and_filter(scope = Member)
@@ -235,6 +249,10 @@ class Admin::MembersController < Admin::AdminController
   def set_investments
     @investments = Investment.ordered
   end
+
+  def transform_array(ar, value)
+    ar.to_h { |key| [key, value] }
+end
 
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])
