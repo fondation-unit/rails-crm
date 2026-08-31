@@ -132,18 +132,17 @@ class Admin::MembersController < Admin::AdminController
   def import_member(exp)
     #orga = OrganizationHelper.update_or_create(exp)
     member_update = self.update_or_create(exp)
-    p '*' * 90
-    p member_update
-    p '*' * 90
+    
 
 
-    if !exp[21].to_s.empty?
+    if !exp[22].to_s.empty?
       note_fields = {
-        user_id: current_user,
+        user_id: current_user.id,
         notable_type: 'Member',
-        notable_id: member_update[:id]
+        notable_id: member_update[:id],
+        content: MemberHelper.utf_decode(exp[22])
       }
-      Note.new(note_fields)
+      Note.create!(note_fields)
     end
 
   end
@@ -156,7 +155,12 @@ class Admin::MembersController < Admin::AdminController
       email_address: exp[3],
       phone_number: nil,
       newsletter_ressources: exp[16] == 'Oui' ? true : false,
-      invest: (exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui') ? true : false,
+      invest: (
+        exp[17] == "Oui" ||
+        exp[18] == "Oui" ||
+        exp[19] == "Oui" ||
+        exp[20] == "Oui"
+      ),
     }  
     
     
