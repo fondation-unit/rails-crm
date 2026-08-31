@@ -150,15 +150,15 @@ class Admin::MembersController < Admin::AdminController
   if(exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui')
     investment_ids = []
 
-    investment_ids.push(1) if(exp[17] == 'Oui')
-    investment_ids.push(2) if(exp[18] == 'Oui')
-    investment_ids.push(3) if(exp[19] == 'Oui')
-    investment_ids.push(4) if(exp[20] == 'Oui')
-    p '*' *90
+    investment_ids[] = 1 if(exp[17] == 'Oui')
+    investment_ids[] = 2 if(exp[18] == 'Oui')
+    investment_ids[] = 3 if(exp[19] == 'Oui')
+    investment_ids[] = 4 if(exp[20] == 'Oui')
+    p '*' * 90
     p investment_ids
-    p '*' *90
+    p '*' * 90
 
-    member_fields["investment_ids"] = investment_ids
+    member_fields["investment_ids:"] = investment_ids.to_hash
     end
   end
 
