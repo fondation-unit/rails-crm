@@ -129,6 +129,8 @@ class Admin::OrganizationsController < Admin::AdminController
     end
   end
 
+  
+
   def sort_column
     if %w[id name city status user_id].include?(params[:sort])
       params[:sort]

@@ -3,6 +3,8 @@ class Admin::MembersController < Admin::AdminController
   include Searchable
   include Filterable
 
+  require 'csv'
+
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
   before_action :set_investments, only: %i[new create edit update]
@@ -114,7 +116,61 @@ class Admin::MembersController < Admin::AdminController
     search_and_filter_render(@pagy, @records)
   end
 
+  def import
+    uploaded_file = params[:csv_file]
+    if uploaded_file.present?
+      csv_data = CSV.parse(uploaded_file.read, headers: true)
+      csv_data.each do |row|
+        exp = row[0].split(';');
+        import_member(exp)
+      end
+    end
+  end
+
   private
+
+  def import_member(exp)
+    #orga = OrganizationHelper.update_or_create(exp)
+    member_update = self.update_or_create(exp)
+
+
+  end
+
+  def generate_member_fields(exp, orga=nil)
+
+    member_fields = {
+      first_name: MemberHelper.utf_decode(exp[1]),
+      last_name: MemberHelper.utf_decode(exp[2]),
+      email_address: exp[3],
+      phone_number: nil,
+      newsletter_ressources: exp[16] == 'Oui' ? true : false,
+      invest: (exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui') ? true : false,
+  }     
+
+  if(exp[17] == 'Oui' || exp[18] == 'Oui'  || exp[19] == 'Oui'  || exp[20] == 'Oui')
+    investment_ids = []
+
+    investment_ids.push(1) if(exp[17] == 'Oui')
+    investment_ids.push(2) if(exp[18] == 'Oui')
+    investment_ids.push(3) if(exp[19] == 'Oui')
+    investment_ids.push(4) if(exp[20] == 'Oui')
+    p '*' *90
+    p investment_ids
+    p '*' *90
+
+    member_fields["investment_ids"] = investment_ids
+    end
+  end
+
+  def update_or_create(exp)
+    member = Member.find_by(email_address:exp[3])
+    member_fields = self.generate_member_fields(exp)
+    if(member)
+      member.update!(member_fields)
+    else
+      Member.create!(member_fields)
+    end
+  end
 
   def search_and_filter(scope = Member)
     records = search_records(scope)

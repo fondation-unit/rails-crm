@@ -71,5 +71,6 @@ gem "pundit", "~> 2.5"
 gem "pwned", "~> 2.4"
 gem "pagy", "~> 43.4"
 gem "telephone_number"
+gem "csv"
 
 gem "sidekiq", "~> 8.0"
