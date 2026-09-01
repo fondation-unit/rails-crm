@@ -7,18 +7,13 @@ module OrganizationHelper
     orga_field = [
       name: exp[4],
       address: exp[6].present? ? exp[6] : nil,
-      zip_code: exp[5].present? ? exp[5] : nil,
+      zip_code: exp[5].present? ? exp[5] : nil
     ]
   end
 
   def self.update_or_create(exp)
     orga_fields = self.generate_orga_fields(exp)
     orga = Organization.find_by(name: exp[4])
-    if(orga)
-      orga.update!(orga_fields)
-    else
-      Organization.create!(orga_fields)
-    end
-      
-  end 
+    (orga) ? orga.update!(orga_fields) : Organization.create!(orga_fields)
+  end
 end

@@ -3,8 +3,6 @@ class Admin::MembersController < Admin::AdminController
   include Searchable
   include Filterable
 
-  require 'csv'
-
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
   before_action :set_investments, only: %i[new create edit update]
@@ -12,7 +10,7 @@ class Admin::MembersController < Admin::AdminController
   def index
     # Requête initiale
     members =
-      Member.includes(:organizations, :member_types,  :notes).order(
+      Member.includes(:organizations, :member_types, :notes).order(
         sort_column => sort_direction
       )
     # Application des filtres (s'il y en a en session)
@@ -48,7 +46,7 @@ class Admin::MembersController < Admin::AdminController
     @investments = Investment.ordered
 
     notes = @member.notes
-    @pagy, @notes= pagy(notes)
+    @pagy, @notes = pagy(notes)
   end
 
   def create
@@ -118,71 +116,15 @@ class Admin::MembersController < Admin::AdminController
 
   def import
     uploaded_file = params[:csv_file]
+
     if uploaded_file.present?
-      col_sep = ';'
-      csv_data = CSV.parse(uploaded_file.read, headers: true,col_sep: col_sep)
-      csv_data.each do |row|
-        import_member(row)
-      end
+      MemberImporter.new(uploaded_file, user: current_user).call
+
+      redirect_to admin_members_path, notice: I18n.t("members.imported")
     end
   end
 
   private
-
-  def import_member(exp)
-    #orga = OrganizationHelper.update_or_create(exp)
-    member_update = self.update_or_create(exp)
-    
-    if !exp["Notes"].to_s.empty?
-      note_fields = {
-        user_id: current_user.id,
-        notable_type: 'Member',
-        notable_id: member_update[:id],
-        content: MemberHelper.utf_decode(exp["Notes"])
-      }
-      Note.create!(note_fields)
-    end
-
-  end
-
-  def generate_member_fields(exp, orga=nil)
-
-
-    member_fields = {
-      first_name: MemberHelper.utf_decode(exp["first_name"]),
-      last_name: MemberHelper.utf_decode(exp["last_name"]),
-      email_address: exp["email_address"],
-      phone_number: nil,
-      copil: exp["copil (oui/non)"] == 'Oui' ? true : false,
-      comex: exp["comex (oui/non)"] == 'Oui' ? true : false,
-      newsletter_ressources: exp["newsletter_ressources (oui/non)"] == 'Oui' ? true : false,
-      invest: exp["Donner son contenu  (oui/non)"] == "Oui" || exp["Participer a la relecture  (oui/non)"] == "Oui" || exp["Tester les ressources  (oui/non)"] == "Oui" || exp["Identifier les besoins/manques  (oui/non)"] == "Oui"? true : false,
-    }  
-       
-    investment_ids = []
-
-    investment_ids << 1 if exp["Donner son contenu  (oui/non)"] == "Oui"
-    investment_ids << 2 if exp["Participer a la relecture  (oui/non)"] == "Oui"
-    investment_ids << 3 if exp["Tester les ressources  (oui/non)"] == "Oui"
-    investment_ids << 4 if exp["Identifier les besoins/manques  (oui/non)"] == "Oui"
-  
-    member_fields[:investment_ids] = investment_ids
-  
-    member_fields
-    
-  end
-
-  def update_or_create(exp)
-    member = Member.find_by(email_address:exp["email_address"])
-    member_fields = self.generate_member_fields(exp)
-
-    if member
-      member.update!(member_fields)
-    else
-      member = Member.create!(member_fields)
-    end
-    member
-  end
 
   def search_and_filter(scope = Member)
     records = search_records(scope)
@@ -247,10 +189,6 @@ class Admin::MembersController < Admin::AdminController
   def set_investments
     @investments = Investment.ordered
   end
-
-  def transform_array(ar, value)
-    ar.to_h { |key| [key, value] }
-end
 
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])
