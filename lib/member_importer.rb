@@ -16,6 +16,11 @@ class MemberImporter
       normalized_row =
         CSV::Row.new(row.headers.map { |h| normalize_header(h) }, row.fields)
 
+      p "*" * 80
+      p row
+      p normalized_row
+      p "*" * 80
+
       ImportMemberJob.perform_async(user.id, normalized_row.to_h)
     end
   end

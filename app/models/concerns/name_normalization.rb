@@ -1,8 +1,11 @@
 module NameNormalization
   extend ActiveSupport::Concern
 
-  USER_NAME_REGEX = /[^a-zA-ZéÉèÈëËàÀùÙäÄïÏöÖüÜâÂêÊîÎôÔûÛ\s-]/i
-  NAME_NORMALIZER = ->(name) { name.to_s.gsub(USER_NAME_REGEX, "").titleize }
+  USER_NAME_REGEX = /[^\p{Letter}\s-]/u
+  NAME_NORMALIZER =
+    lambda do |name|
+      name.to_s.gsub(USER_NAME_REGEX, "").split("-").map(&:titleize).join("-")
+    end
 
   class_methods do
     def normalize_user_names(*attrs)
