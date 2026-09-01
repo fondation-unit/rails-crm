@@ -5,5 +5,5 @@ module MemberHelper
 
   def self.utf_decode(string)
     "#{string.force_encoding("utf-8").strip}"
-  end 
+  end
 end
