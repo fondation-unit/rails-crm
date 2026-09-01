@@ -12,12 +12,22 @@ class MemberImporter
       headers: true,
       encoding: "bom|utf-8",
       col_sep: ";"
-    ) { |row| import_member(row) }
+    ) do |row|
+      normalized_row =
+        CSV::Row.new(row.headers.map { |h| normalize_header(h) }, row.fields)
+
+      import_member(normalized_row)
+    end
   end
 
   private
 
   attr_reader :user
+
+  def normalize_header(header)
+    # Normalisation des entêtes pour éviter les problèmes d'espaces multiples
+    header.to_s.strip.gsub(/\s+/, " ")
+  end
 
   def import_member(row)
     member = create_or_update_member(row)
@@ -56,10 +66,10 @@ class MemberImporter
 
   def investment_ids(row)
     {
-      "Donner son contenu  (oui/non)" => 1,
-      "Participer a la relecture  (oui/non)" => 2,
-      "Tester les ressources  (oui/non)" => 3,
-      "Identifier les besoins/manques  (oui/non)" => 4
+      "Donner son contenu (oui/non)" => 1,
+      "Participer a la relecture (oui/non)" => 2,
+      "Tester les ressources (oui/non)" => 3,
+      "Identifier les besoins/manques (oui/non)" => 4
     }.filter_map { |column, id| id if yes?(row[column]) }
   end
 
