@@ -32,7 +32,7 @@ user2 =
     confirmed_at: Time.current
   )
 
-%i[Partenaire Consortium Divers].each { |name| MemberType.create!(name: name) }
+%i[Partenaire Consortium Divers Enseignant].each { |name| MemberType.create!(name: name) }
 
 
 
@@ -86,7 +86,7 @@ end
       newsletter_ressources: Faker::Boolean
     )
 
-  member.member_types << MemberType.all.to_a.sample(rand(1..3))
+  member.member_types << MemberType.all.to_a.sample(rand(1..4))
   member.organizations << Organization.all.to_a.sample(rand(1..2))
   member.investments << Investment.all.to_a.sample(rand(1..4))
 end

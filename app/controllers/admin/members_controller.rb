@@ -119,10 +119,10 @@ class Admin::MembersController < Admin::AdminController
   def import
     uploaded_file = params[:csv_file]
     if uploaded_file.present?
-      csv_data = CSV.parse(uploaded_file.read, headers: true)
+      col_sep = ';'
+      csv_data = CSV.parse(uploaded_file.read, headers: true,col_sep: col_sep)
       csv_data.each do |row|
-        exp = row[0].split(';');
-        import_member(exp)
+        import_member(row)
       end
     end
   end
@@ -133,14 +133,12 @@ class Admin::MembersController < Admin::AdminController
     #orga = OrganizationHelper.update_or_create(exp)
     member_update = self.update_or_create(exp)
     
-
-
-    if !exp[22].to_s.empty?
+    if !exp["Notes"].to_s.empty?
       note_fields = {
         user_id: current_user.id,
         notable_type: 'Member',
         notable_id: member_update[:id],
-        content: MemberHelper.utf_decode(exp[22])
+        content: MemberHelper.utf_decode(exp["Notes"])
       }
       Note.create!(note_fields)
     end
@@ -149,39 +147,35 @@ class Admin::MembersController < Admin::AdminController
 
   def generate_member_fields(exp, orga=nil)
 
-    member_fields = {
-      first_name: MemberHelper.utf_decode(exp[1]),
-      last_name: MemberHelper.utf_decode(exp[2]),
-      email_address: exp[3],
-      phone_number: nil,
-      newsletter_ressources: exp[16] == 'Oui' ? true : false,
-      invest: (
-        exp[17] == "Oui" ||
-        exp[18] == "Oui" ||
-        exp[19] == "Oui" ||
-        exp[20] == "Oui"
-      ),
-    }  
-    
-    
 
-   
-      investment_ids = []
- 
-      investment_ids << 1 if exp[17] == "Oui"
-      investment_ids << 2 if exp[18] == "Oui"
-      investment_ids << 3 if exp[19] == "Oui"
-      investment_ids << 4 if exp[20] == "Oui"
-    
-      member_fields[:investment_ids] = investment_ids
-    
-      member_fields
+    member_fields = {
+      first_name: MemberHelper.utf_decode(exp["first_name"]),
+      last_name: MemberHelper.utf_decode(exp["last_name"]),
+      email_address: exp["email_address"],
+      phone_number: nil,
+      copil: exp["copil (oui/non)"] == 'Oui' ? true : false,
+      comex: exp["comex (oui/non)"] == 'Oui' ? true : false,
+      newsletter_ressources: exp["newsletter_ressources (oui/non)"] == 'Oui' ? true : false,
+      invest: exp["Donner son contenu  (oui/non)"] == "Oui" || exp["Participer a la relecture  (oui/non)"] == "Oui" || exp["Tester les ressources  (oui/non)"] == "Oui" || exp["Identifier les besoins/manques  (oui/non)"] == "Oui"? true : false,
+    }  
+       
+    investment_ids = []
+
+    investment_ids << 1 if exp["Donner son contenu  (oui/non)"] == "Oui"
+    investment_ids << 2 if exp["Participer a la relecture  (oui/non)"] == "Oui"
+    investment_ids << 3 if exp["Tester les ressources  (oui/non)"] == "Oui"
+    investment_ids << 4 if exp["Identifier les besoins/manques  (oui/non)"] == "Oui"
+  
+    member_fields[:investment_ids] = investment_ids
+  
+    member_fields
     
   end
 
   def update_or_create(exp)
-    member = Member.find_by(email_address:exp[3])
+    member = Member.find_by(email_address:exp["email_address"])
     member_fields = self.generate_member_fields(exp)
+
     if member
       member.update!(member_fields)
     else
