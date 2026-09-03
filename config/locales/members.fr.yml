@@ -17,6 +17,7 @@ fr:
     'error_update': 'Erreur lors de la suppression du membre'
     'invest': "Souhaite s'investir"
     'import': "Importer des membres"
+    'imported': "Les membres ont bien été importés"
     member_type:
       'created': 'Type de membre créé'
       'updated': 'Type de membre "%{name}" mis à jour'
