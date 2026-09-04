@@ -40,8 +40,8 @@ class Admin::OrganizationsController < Admin::AdminController
     if @organization.save
       redirect_to admin_organizations_path, notice: "Institution créée"
     else
-      flash[:alert] = @organization.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_organizations_path,
+                  alert: @investment.errors.full_messages.join(", ")
     end
   end
 
@@ -54,8 +54,8 @@ class Admin::OrganizationsController < Admin::AdminController
     else
       @organization.reload # Reload the object to get the existing attachment
 
-      flash[:alert] = @organization.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_organizations_path,
+                  alert: @investment.errors.full_messages.join(", ")
     end
   end
 

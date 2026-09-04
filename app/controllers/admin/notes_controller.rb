@@ -19,8 +19,8 @@ class Admin::NotesController < Admin::AdminController
       redirect_to polymorphic_path([:admin, @note.notable]),
                   notice: I18n.t("notes.created")
     else
-      flash[:alert] = @note.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to polymorphic_path([:admin, notable]),
+                  notice: @note.errors.full_messages.join(", ")
     end
   end
 
@@ -36,8 +36,8 @@ class Admin::NotesController < Admin::AdminController
       redirect_to polymorphic_path([:admin, notable]),
                   notice: I18n.t("notes.updated")
     else
-      flash[:alert] = @note.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to polymorphic_path([:admin, notable]),
+                  notice: @note.errors.full_messages.join(", ")
     end
   end
 

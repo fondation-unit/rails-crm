@@ -43,8 +43,8 @@ class Admin::InvestmentsController < Admin::AdminController
                       name: @investment.name
                     )
     else
-      flash[:alert] = @investment.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_investments_path,
+                  alert: @investment.errors.full_messages.join(", ")
     end
   end
 
@@ -59,8 +59,8 @@ class Admin::InvestmentsController < Admin::AdminController
                       name: @investment.name
                     )
     else
-      flash[:alert] = @investment.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_investments_path,
+                  alert: @investment.errors.full_messages.join(", ")
     end
   end
 

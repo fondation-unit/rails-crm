@@ -19,8 +19,8 @@ class Admin::MemberTypesController < Admin::AdminController
       redirect_to admin_member_types_path, notice: I18n.t(
         "members.member_type.created")
     else
-      flash[:alert] = @member_type.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_member_types_path,
+                  alert: @member_type.errors.full_messages.join(", ")
     end
   end
 
@@ -35,8 +35,8 @@ class Admin::MemberTypesController < Admin::AdminController
                       name: @member_type.name
                     )
     else
-      flash[:alert] = @member_type.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_member_types_path,
+                  alert: @member_type.errors.full_messages.join(", ")
     end
   end
 

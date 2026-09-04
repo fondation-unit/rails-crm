@@ -30,6 +30,7 @@ class Admin::MembersController < Admin::AdminController
 
   def show
     @member = Member.find(params[:id])
+    
     notes = @member.notes
     @pagy, @notes = pagy(notes)
   end
@@ -60,8 +61,7 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      flash[:alert] = @member.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
     end
   end
 
@@ -76,8 +76,7 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      flash[:alert] = @member.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
     end
   end
 

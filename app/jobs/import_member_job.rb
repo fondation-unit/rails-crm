@@ -51,12 +51,6 @@ class ImportMemberJob
     }.filter_map { |column, id| id if yes?(row[column]) }
   end
 
-  def organization_ids(member, orga)
-    {
-      member_id: member.id, 
-      organization_id: orga.id
-    }
-  end
 
   def yes?(value)
     value.to_s.casecmp("oui").zero?
