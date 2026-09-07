@@ -1,0 +1,11 @@
+fr:
+  investments:
+    "investments": "Types d'investissements"
+    'add': "Ajouter un type d'investissement"
+    'created': "Type d'investissement %{name} créé"
+    'updated': "Type d'investissement %{name} mis à jour"
+    'deleted': "Type d'investissement %{name} supprimé"
+    'error_update': 'Erreur lors de la suppression du type'
+    'validation_delete': "Etes-vous sur de vouloir effacer ce type d'investissement ?"
+    'give_courses' : 'Donner ses cours'
+    'type': "Type d'investissement"

@@ -42,7 +42,11 @@ Rails.application.routes.draw do
     resources :organizations, concerns: %i[searchable filterable]
     resource :dashboard
     resources :member_types
+    resources :investments
     resources :notes, only: %i[show create update edit destroy]
+    get "/member/import", to: "members#import", as: :member_import_form
+    post "/member/import", to: "members#import", as: :member_import
+
     get "/notes/new/member/:member_id", to: "notes#new", as: :new_member_note
     get "/notes/new/organization/:organization_id",
         to: "notes#new",

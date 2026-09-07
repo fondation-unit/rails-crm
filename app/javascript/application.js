@@ -5,3 +5,38 @@ import "./controllers";
 import "trix";
 import "@rails/actiontext";
 import "bootstrap";
+
+const investment = document.querySelector("#member_invest");
+const investment_div = document.querySelector("#investments");
+const inputs = document.querySelectorAll(
+    "#investments input[id^='member_investment_ids_']"
+);
+
+function investHandle() {
+    if (investment.checked) {
+        investment_div.style.display = "block";
+    } else {
+        investment_div.style.display = "none";
+    }
+
+    investment.addEventListener(
+        "change",
+        function (e) {
+            if (this.checked) {
+                investment_div.style.display = "block";
+            } else {
+                investment_div.style.display = "none";
+                document
+                    .querySelectorAll("input[id^='member_investment_ids_']")
+                    .forEach((c) => {
+                        c.checked = false;
+                    });
+            }
+        },
+        false
+    );
+}
+window.onload = investHandle();
+if (investment) {
+    investHandle();
+}

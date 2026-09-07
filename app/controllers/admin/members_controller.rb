@@ -5,6 +5,7 @@ class Admin::MembersController < Admin::AdminController
 
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
+  before_action :set_investments, only: %i[new create edit update]
 
   def index
     # Requête initiale
@@ -29,6 +30,7 @@ class Admin::MembersController < Admin::AdminController
 
   def show
     @member = Member.find(params[:id])
+    
     notes = @member.notes
     @pagy, @notes = pagy(notes)
   end
@@ -36,11 +38,13 @@ class Admin::MembersController < Admin::AdminController
   def new
     @member = Member.new
     @member_types = MemberType.ordered
+    @investments = Investment.ordered
   end
 
   def edit
     @member = Member.find(params[:id])
     @member_types = MemberType.ordered
+    @investments = Investment.ordered
 
     notes = @member.notes
     @pagy, @notes = pagy(notes)
@@ -57,8 +61,7 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      flash[:alert] = @member.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
     end
   end
 
@@ -73,8 +76,7 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      flash[:alert] = @member.errors.full_messages.join(", ")
-      render :edit, status: :unprocessable_entity
+      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
     end
   end
 
@@ -109,6 +111,16 @@ class Admin::MembersController < Admin::AdminController
     @pagy, @records = pagy(records)
 
     search_and_filter_render(@pagy, @records)
+  end
+
+  def import
+    uploaded_file = params[:csv_file]
+
+    if uploaded_file.present?
+      MemberImporter.new(uploaded_file, user: current_user).call
+
+      redirect_to admin_members_path, notice: I18n.t("members.imported")
+    end
   end
 
   private
@@ -173,6 +185,10 @@ class Admin::MembersController < Admin::AdminController
     @member_types = MemberType.ordered
   end
 
+  def set_investments
+    @investments = Investment.ordered
+  end
+
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])
       params[:sort]
@@ -201,7 +217,9 @@ class Admin::MembersController < Admin::AdminController
         :linkedin,
         :linkedin_connected,
         :newsletter_ressources,
+        :invest,
         member_type_ids: [],
+        investment_ids: [],
         organization_ids: []
       ]
     )
