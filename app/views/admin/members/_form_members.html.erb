@@ -19,6 +19,11 @@
     <%= f.label :phone_number, I18n.t('phone_number') %>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 </div>
+<div class="form-group my-4">
+    <%= f.label :status, I18n.t('members.organizations.status') %>
+    <% options = options_for_select(Member.statuses.map {|key, value| [I18n.t("members.organizations.statuses.#{key}"), key]}, f.object.status) %>
+    <%= f.select(:status, options, :include_blank => true) %>
+</div>
 
 <div class="d-flex flex-row flex-wrap">
     <div class="col-md-4">
