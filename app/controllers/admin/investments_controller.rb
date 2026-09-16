@@ -67,7 +67,7 @@ class Admin::InvestmentsController < Admin::AdminController
   private
 
   def sort_column
-    if %w[id name email_address].include?(params[:sort])
+    if %w[id name referent1 referent2 copy].include?(params[:sort])
       params[:sort]
     else
       "id"
@@ -79,6 +79,6 @@ class Admin::InvestmentsController < Admin::AdminController
   end
 
   def investment_params
-    params.expect(investment: %i[name email_address])
+    params.expect(investment: %i[name referent1 referent2 copy])
   end
 end

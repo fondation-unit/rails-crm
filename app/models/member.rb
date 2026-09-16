@@ -18,9 +18,8 @@ class Member < ApplicationRecord
             telephone_number: {
               country: "FR",
               message: "Numéro de téléphone invalide"
-            }
-            #, 
-            #allow_blank: true
+            }, 
+            allow_blank: true
 
   normalize_user_names :first_name, :last_name
 

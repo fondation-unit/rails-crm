@@ -54,7 +54,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
 
   create_table "investments", force: :cascade do |t|
     t.string "name", null: false
-    t.string "email_address", null: false
+    t.string "referent1", null: false
+    t.string "referent2", null: false
+    t.string "copy", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

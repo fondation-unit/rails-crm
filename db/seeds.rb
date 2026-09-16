@@ -38,19 +38,27 @@ user2 =
 
 Investment.create!(
 name: "Donner son contenu",
-email_address: "mailys.giret@educagri.fr",
+referent1: "mailys.giret@educagri.fr",
+referent2: "mailys.giret@educagri.fr",
+copy: "mailys.giret@educagri.fr",
 )
 Investment.create!(
 name: "Participer à la relecture",
-email_address: "mailys.giret@educagri.fr",
+referent1: "mailys.giret@educagri.fr",
+referent2: "mailys.giret@educagri.fr",
+copy: "mailys.giret@educagri.fr",
 )
 Investment.create!(
 name: "Tester les ressources",
-email_address: "mailys.giret@educagri.fr",
+referent1: "mailys.giret@educagri.fr",
+referent2: "mailys.giret@educagri.fr",
+copy: "mailys.giret@educagri.fr",
 )
 Investment.create!(
   name: "Identifier les manques/besoins",
-  email_address: "marion.lopez@educagri.fr",
+  referent1: "marion.lopez@educagri.fr",
+  referent2: "marion.lopez@educagri.fr",
+  copy: "marion.lopez@educagri.fr",
 )
 
 #10.times do |o|

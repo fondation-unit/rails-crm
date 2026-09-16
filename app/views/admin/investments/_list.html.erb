@@ -5,8 +5,16 @@
             <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'name' %>">
                 <%= I18n.t('name') %>
             </th>
-            <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'email_address' %>">
-                <%= I18n.t('email_address') %>
+            <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent1' %>">
+                <%= I18n.t('investments.referent1') %>
+            </th>
+            </th>
+            <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent2' %>">
+                <%= I18n.t('investments.referent2') %>
+            </th>
+            </th>
+            <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'copy' %>">
+                <%= I18n.t('investments.copy') %>
             </th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -17,7 +25,9 @@
         <tr>
             <td><%= c.id %></td>
             <td><%= c.name %></td>
-            <td><%= c.email_address %></td>
+            <td><%= c.referent1 %></td>
+            <td><%= c.referent2 %></td>
+            <td><%= c.copy %></td>
             <td><%= link_to I18n.t('edit'), edit_admin_investment_path(c) %></td>
             <td>
                 <%=
