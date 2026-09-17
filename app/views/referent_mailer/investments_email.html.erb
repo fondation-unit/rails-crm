@@ -1,6 +1,10 @@
 <h1>Ajout d'un membre sur le CRM PLAPIMA</h1>
 <p>
-    <%= @member.first_name %> <%= @member.last_name %> a choisi de s'investir dans le projet PLAPIMA.
+    <%= @member.first_name %> <%= @member.last_name %> a choisi de s'investir dans le projet PLAPIMA.<br>
+    Mail : <%= @member.email_address %>
+    <% if @member.phone_number %>
+    <br>Tel : <%= @member.phone_number %>
+    <% end %>
     Il souhaite : <br>
 <ul>
     <% @member.investments.each do |i| %>

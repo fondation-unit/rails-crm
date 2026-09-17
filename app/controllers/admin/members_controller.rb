@@ -28,10 +28,6 @@ class Admin::MembersController < Admin::AdminController
         @organizations = Organization.order(:name)
         @investments = Investment.order(:name)
 
-        p '*' * 90
-        p @investments
-        p '*' * 90
-
         @pagy, @records = pagy(members)
     end
 
