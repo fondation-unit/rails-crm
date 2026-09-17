@@ -1,0 +1,13 @@
+<h1>Ajout d'un membre sur le CRM PLAPIMA</h1>
+<p>
+    <%= @member.first_name %> <%= @member.last_name %> a choisi de s'investir dans le projet PLAPIMA.
+    Il souhaite : <br>
+<ul>
+    <% @member.investments.each do |i| %>
+    <li><%= i.name %> </li>
+    <% end %>
+</ul>
+</p>
+<% if @member.investments.count > 1 %>
+<p class="bold">ATTENTION : ce membre a choisi de s'investir dans plusieurs thématiques, il convient donc de voir avec les autres référents qui doit l'appeler</p>
+<% end %>

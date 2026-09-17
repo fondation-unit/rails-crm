@@ -1,8 +1,8 @@
 class ReferentMailer < ApplicationMailer
     def investments_email
-        member = params[:member]
-        recipients = generateRecipients(member)
-        message = generateMessage(member)
+        @member = params[:member]
+        recipients = generateRecipients(@member)
+        mail(to: recipients, subject: "Nouveau membre sur le CRM PLAPIMA")
     end
 
     def generateRecipients(member)
@@ -17,17 +17,5 @@ class ReferentMailer < ApplicationMailer
             recipients[] = "postmaster@lapatweb.fr"
         end
         recipients.join(';')
-    end
-
-    def generateMessage(member)
-        message = "#{member.first_name} #{member.last_name} a choisi de s'investir dans le projet PLAPIMA.
-            Il souhaite : \n"
-        member.investments.each do |i|
-            message += " - " + i.name + "\n"
-        end
-
-        if member.investments.length > 1
-            message += "ATTENTION : ce membre a choisi de s'investir dans plusieurs thématiques, il convient donc de voir avec les autres référents qui doit l'appeler"
-        end
     end
 end
