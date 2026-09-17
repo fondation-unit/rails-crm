@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_16_134931) do
   end
 
   create_table "disciplines", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,6 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_16_134931) do
   end
 
   create_table "levels", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

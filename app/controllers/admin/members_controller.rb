@@ -11,7 +11,7 @@ class Admin::MembersController < Admin::AdminController
         # Requête initiale
         members =
             Member
-                .includes(:organizations, :member_types, :notes)
+                .includes(:organizations, :member_types, :notes, :investments)
                 .order(sort_column => sort_direction)
 
         # Application des filtres (s'il y en a en session)
@@ -26,6 +26,11 @@ class Admin::MembersController < Admin::AdminController
         end
 
         @organizations = Organization.order(:name)
+        @investments = Investment.order(:name)
+
+        p '*' * 90
+        p @investments
+        p '*' * 90
 
         @pagy, @records = pagy(members)
     end
@@ -149,6 +154,12 @@ class Admin::MembersController < Admin::AdminController
                     records
                         .joins(:member_types)
                         .where(member_types: { id: values })
+                        .where(organizations: { id: values })
+            when 'investment_ids'
+                records =
+                    records
+                        .joins(:investments)
+                        .where(investments: { id: values })
             else
                 # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
                 # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.

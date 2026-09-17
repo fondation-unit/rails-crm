@@ -1,0 +1,22 @@
+<div class="d-flex w-100 justify-content-between">
+    <h1><%= I18n.t('members.level.title') %></h1>
+    <%= link_to I18n.t('members.level.add'), new_admin_level_path, class: 'btn btn-primary align-self-center' %>
+</div>
+<%=
+  render 'shared/tables/sortable_table',
+         headers: [[:id, '#'], [:name, 'Nom'], [:edit, ''], [:delete, '']],
+         objects: @records,
+         pagy: @pagy,
+         columns: %w[id name edit delete],
+         formatters: {
+           edit: ->(level) { link_to I18n.t('edit'), edit_admin_level_path(level) },
+           delete: ->(level) {
+             link_to I18n.t('delete'),
+                     admin_level_path(level),
+                     data: {
+                       turbo_method: :delete,
+                       turbo_confirm: I18n.t('members.level.validation_delete'),
+                     }
+           },
+         }
+%>
