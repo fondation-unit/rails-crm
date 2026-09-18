@@ -39,26 +39,32 @@ end
 Investment.create!(
     name: 'Donner son contenu',
     referent1: 'mailys.giret@educagri.fr',
-    referent2: 'mailys.giret@educagri.fr',
-    copy: 'mailys.giret@educagri.fr',
+    referent2: 'sylvain.duranton@unit.eu',
+    copy: 'morad.mahdjoub@utbm.fr',
 )
 Investment.create!(
     name: 'Participer à la relecture',
     referent1: 'mailys.giret@educagri.fr',
-    referent2: 'mailys.giret@educagri.fr',
-    copy: 'mailys.giret@educagri.fr',
+    referent2: 'thiefaine.fafournoux@unit.eu;alexandre.vuillot@agrosupdijon.fr',
+    copy: 'morad.mahdjoub@utbm.fr',
 )
 Investment.create!(
     name: 'Tester les ressources',
-    referent1: 'mailys.giret@educagri.fr',
-    referent2: 'mailys.giret@educagri.fr',
-    copy: 'mailys.giret@educagri.fr',
+    referent1: 'thiefaine.fafournoux@unit.eu',
+    referent2: 'alexandre.vuillot@agrosupdijon.fr',
+    copy: 'morad.mahdjoub@utbm.fr',
 )
 Investment.create!(
     name: 'Identifier les manques/besoins',
-    referent1: 'marion.lopez@educagri.fr',
-    referent2: 'marion.lopez@educagri.fr',
-    copy: 'marion.lopez@educagri.fr',
+    referent1: 'fernandodacosta58@orange.fr;federico.tajariol@univ-fcomte.fr',
+    referent2: 'didier.carmien@educagri.fr;m.mari@axema.fr',
+    copy: 'morad.mahdjoub@utbm.fr',
+)
+Investment.create!(
+    name: 'Créer du contenu',
+    referent1: 'mailys.giret@educagri.fr;alexandre.vuillot@agrosupdijon.fr',
+    referent2: 'sylvain.duranton@unit.eu',
+    copy: 'morad.mahdjoub@utbm.fr',
 )
 
 #10.times do |o|
