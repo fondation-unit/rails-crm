@@ -9,56 +9,56 @@
 #   end
 #
 #
-Faker::Config.locale = "fr"
+Faker::Config.locale = 'fr'
 
 user1 =
-  User.create!(
-    first_name: "User",
-    last_name: "Dummy",
-    email_address: "dummy@example.com",
-    password: ENV["DUMMY_USER_PASSWORD"],
-    password_confirmation: ENV["DUMMY_USER_PASSWORD"],
-    confirmation_sent_at: Time.current,
-    confirmed_at: Time.current
-  )
+    User.create!(
+        first_name: 'User',
+        last_name: 'Dummy',
+        email_address: 'dummy@example.com',
+        password: ENV['DUMMY_USER_PASSWORD'],
+        password_confirmation: ENV['DUMMY_USER_PASSWORD'],
+        confirmation_sent_at: Time.current,
+        confirmed_at: Time.current,
+    )
 user2 =
-  User.create!(
-    first_name: "User",
-    last_name: "Dummy",
-    email_address: "dummy2@example.com",
-    password: ENV["DUMMY_USER_PASSWORD"],
-    password_confirmation: ENV["DUMMY_USER_PASSWORD"],
-    confirmation_sent_at: Time.current,
-    confirmed_at: Time.current
-  )
+    User.create!(
+        first_name: 'User',
+        last_name: 'Dummy',
+        email_address: 'dummy2@example.com',
+        password: ENV['DUMMY_USER_PASSWORD'],
+        password_confirmation: ENV['DUMMY_USER_PASSWORD'],
+        confirmation_sent_at: Time.current,
+        confirmed_at: Time.current,
+    )
 
-%i[Partenaire Consortium Divers Enseignant].each { |name| MemberType.create!(name: name) }
-
-
+%i[Partenaire Consortium Divers Enseignant].each do |name|
+    MemberType.create!(name: name)
+end
 
 Investment.create!(
-name: "Donner son contenu",
-referent1: "mailys.giret@educagri.fr",
-referent2: "mailys.giret@educagri.fr",
-copy: "mailys.giret@educagri.fr",
+    name: 'Donner son contenu',
+    referent1: 'mailys.giret@educagri.fr',
+    referent2: 'mailys.giret@educagri.fr',
+    copy: 'mailys.giret@educagri.fr',
 )
 Investment.create!(
-name: "Participer à la relecture",
-referent1: "mailys.giret@educagri.fr",
-referent2: "mailys.giret@educagri.fr",
-copy: "mailys.giret@educagri.fr",
+    name: 'Participer à la relecture',
+    referent1: 'mailys.giret@educagri.fr',
+    referent2: 'mailys.giret@educagri.fr',
+    copy: 'mailys.giret@educagri.fr',
 )
 Investment.create!(
-name: "Tester les ressources",
-referent1: "mailys.giret@educagri.fr",
-referent2: "mailys.giret@educagri.fr",
-copy: "mailys.giret@educagri.fr",
+    name: 'Tester les ressources',
+    referent1: 'mailys.giret@educagri.fr',
+    referent2: 'mailys.giret@educagri.fr',
+    copy: 'mailys.giret@educagri.fr',
 )
 Investment.create!(
-  name: "Identifier les manques/besoins",
-  referent1: "marion.lopez@educagri.fr",
-  referent2: "marion.lopez@educagri.fr",
-  copy: "marion.lopez@educagri.fr",
+    name: 'Identifier les manques/besoins',
+    referent1: 'marion.lopez@educagri.fr',
+    referent2: 'marion.lopez@educagri.fr',
+    copy: 'marion.lopez@educagri.fr',
 )
 
 #10.times do |o|
@@ -120,6 +120,3 @@ Investment.create!(
 #  user: user2,
 #  contact_type: "chat"
 #)
-
-
-

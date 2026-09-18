@@ -2,9 +2,10 @@
 <p>
     <%= @member.first_name %> <%= @member.last_name %> a choisi de s'investir dans le projet PLAPIMA.<br>
     Mail : <%= @member.email_address %>
-    <% if @member.phone_number %>
+    <% if @member.phone_number.present? %>
     <br>Tel : <%= @member.phone_number %>
     <% end %>
+    <br>
     Il souhaite : <br>
 <ul>
     <% @member.investments.each do |i| %>
