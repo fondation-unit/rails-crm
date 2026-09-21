@@ -7,7 +7,6 @@ class Note < ApplicationRecord
   validates_associated :user
 
   scope :ordered, -> { order(created_at: "desc") }
-
 end
 
 # == Schema Information
