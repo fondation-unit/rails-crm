@@ -50,6 +50,8 @@ fr:
                 "rappel": "Rappel"
                 "refus": "Refus"
                 "inconnu": "Inconnu"
+            "import": "Importer des institutions"
+            "imported": "Les institutions ont bien été importées"
         discipline:
             "modify": "Modifier un module enseigné"
             "add": "Ajouter un module enseigné"

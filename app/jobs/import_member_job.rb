@@ -45,7 +45,10 @@ class ImportMemberJob
            notable_id: member.id,
            notable_type: "Member"
          ).present?
-      member.notes.create!(user_id: user.id, content: decode_row(row["Notes"]))
+      member.notes.create!(
+        user_id: user.id,
+        content: MemberHelper.utf_decode(row["Notes"])
+      )
     end
 
     if new_member
