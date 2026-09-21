@@ -1,68 +1,68 @@
 <div class="d-flex w-100 flex-column justify-content-between mb-md-6 mb-4">
-    <h1><%= I18n.t('members.show_title') %></h1>
+  <h1><%= I18n.t('members.show_title') %></h1>
 
-    <div class="d-flex flex-md-row flex-column mb-4">
-        <div class="col-md-6">
-            <div class="card-content">
-                <div class="identity ">
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="fa-solid fa-address-card me-2 mb-1"></i>
-                        <%= "#{@member.gender} #{MemberHelper.full_name(@member)}" %>
-                    </div>
-                    <% if @member.position.present? %>
-                    <div class="d-flex flex-row align-items-center">
-                        <i class="fa-solid fa-user-tie me-2 mb-1"></i>
-                        <%= @member.position %>
-                    </div>
-                    <% end %>
-                </div>
-                <div class="d-flex flex-row align-items-center">
-                    <i class="fa-solid fa-envelope me-2 mb-1"></i>
-                    <%= mail_to @member.email_address, @member.email_address %>
-                </div>
-                <% if @member.phone_number.present? %>
-                <div class="d-flex flex-row align-items-center">
-                    <i class="fa-solid fa-phone me-2 mb-1"></i>
-                    <%= link_to @member.phone_number, "tel:#{@member.set_phone_link}" %>
-                </div>
-                <% end %>
-            </div>
+  <div class="d-flex flex-md-row flex-column mb-4">
+    <div class="col-md-6">
+      <div class="card-content">
+        <div class="identity ">
+          <div class="d-flex flex-row align-items-center">
+            <i class="fa-solid fa-address-card me-2 mb-1"></i>
+            <%= "#{@member.gender} #{MemberHelper.full_name(@member)}" %>
+          </div>
+          <% if @member.position.present? %>
             <div class="d-flex flex-row align-items-center">
-                <%= I18n.t('members.copil_member') %>
-                :
-                <%= @member.copil ? I18n.t('Yes') : I18n.t('No') %>
-                <br />
-                <%= I18n.t('members.comex_member') %>
-                :
-                <%= @member.comex ? I18n.t('Yes') : I18n.t('No') %>
-                <br />
+              <i class="fa-solid fa-user-tie me-2 mb-1"></i>
+              <%= @member.position %>
             </div>
+          <% end %>
         </div>
-        <div class="col-md-6">
-            <div class="d-flex flex-row align-items-center">
-                <%= I18n.t('members.invest') %>
-                :
-                <%= @member.invest ? I18n.t('Yes') : I18n.t('No') %>
-
-            </div>
-            <% if @member.investments.present? %>
-            <p class="my-2 fw-bold">Types d'investissement</p>
-            <% @member.investments.each do |val| %>
-            <%= val.name %><br>
-            <% end %>
-            <% end %>
+        <div class="d-flex flex-row align-items-center">
+          <i class="fa-solid fa-envelope me-2 mb-1"></i>
+          <%= mail_to @member.email_address, @member.email_address %>
         </div>
+        <% if @member.phone_number.present? %>
+          <div class="d-flex flex-row align-items-center">
+            <i class="fa-solid fa-phone me-2 mb-1"></i>
+            <%= link_to @member.phone_number, "tel:#{@member.set_phone_link}" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="d-flex flex-row align-items-center">
+        <%= I18n.t('members.copil_member') %>
+        :
+        <%= @member.copil ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+        <%= I18n.t('members.comex_member') %>
+        :
+        <%= @member.comex ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+      </div>
     </div>
-    <div class="d-flex flex-row justify-content-between align-items-center">
-        <div>
-            <% if Current&.session&.user %>
-            <%= link_to I18n.t('edit'), edit_admin_member_path(@member), { class: 'btn btn-primary' } %>
-            <% end %>
-        </div>
-        <div>
-            <%= link_to I18n.t('notes.add'), admin_new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
-        </div>
+    <div class="col-md-6">
+      <div class="d-flex flex-row align-items-center">
+        <%= I18n.t('members.invest') %>
+        :
+        <%= @member.invest ? I18n.t('Yes') : I18n.t('No') %>
+      </div>
+      <% if @member.investments.present? %>
+        <p class="my-2 fw-bold">Types d'investissement</p>
+        <% @member.investments.each do |val| %>
+          <%= val.name %>
+          <br />
+        <% end %>
+      <% end %>
     </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div>
+      <% if Current&.session&.user %>
+        <%= link_to I18n.t('edit'), edit_admin_member_path(@member), { class: 'btn btn-primary' } %>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to I18n.t('notes.add'), admin_new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
+    </div>
+  </div>
 </div>
 
 <%=

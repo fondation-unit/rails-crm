@@ -1,49 +1,55 @@
 <%= form_with url: url, method: method, model: member do |f| %>
-<div class="form-group my-4">
+  <div class="form-group my-4">
     <%= f.label :first_name, I18n.t('first_name') %>
     <%= f.text_field :first_name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :last_name, I18n.t('last_name') %>
     <%= f.text_field :last_name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :email_address, I18n.t('email_address') %>
     <%= f.email_field :email_address, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :position, I18n.t('members.position') %>
     <%= f.text_field :position, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :phone_number, I18n.t('phone_number') %>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :status, I18n.t('members.organizations.status') %>
-    <% options = options_for_select(Member.statuses.map {|key, value| [I18n.t("members.organizations.statuses.#{key}"), key]}, f.object.status) %>
-    <%= f.select(:status, options, :include_blank => true) %>
-</div>
+    <%
+      options =
+        options_for_select(
+          Member.statuses.map { |key, value| [I18n.t("members.organizations.statuses.#{key}"), key] },
+          f.object.status,
+        )
+    %>
+    <%= f.select(:status, options, include_blank: true) %>
+  </div>
 
-<div class="d-flex flex-row flex-wrap">
+  <div class="d-flex flex-row flex-wrap">
     <div class="col-md-4">
-        <div class="form_group my-4">
-            <div class="form-check">
-                <%= f.check_box :copil, class: 'form-check-input', as: :boolean %>
-                <%= f.label :copil, class: 'form-check-label' %>
-            </div>
+      <div class="form_group my-4">
+        <div class="form-check">
+          <%= f.check_box :copil, class: 'form-check-input', as: :boolean %>
+          <%= f.label :copil, class: 'form-check-label' %>
         </div>
-        <div class="form_group my-4">
-            <div class="form-check">
-                <%= f.check_box :comex, class: 'form-check-input', as: :boolean %>
-                <%= f.label :comex, class: 'form-check-label' %>
-            </div>
+      </div>
+      <div class="form_group my-4">
+        <div class="form-check">
+          <%= f.check_box :comex, class: 'form-check-input', as: :boolean %>
+          <%= f.label :comex, class: 'form-check-label' %>
         </div>
+      </div>
     </div>
     <div class="col-md-4">
-        <%= f.label I18n.t('members.institution') %>
-        <div class="form_group my-4">
-            <%=
+      <%= f.label I18n.t('members.institution') %>
+      <div class="form_group my-4">
+        <%=
           f.collection_select(
             :organization_ids,
             @organizations,
@@ -53,76 +59,75 @@
             { multiple: true },
           )
         %>
-        </div>
+      </div>
     </div>
     <div class="col-md-4">
-        <% if member_types %>
+      <% if member_types %>
         <%= f.label I18n.t('members.member_type.member_type') %>
         <div class="form_group my-4">
-            <%=
+          <%=
         f.collection_check_boxes :member_type_ids, member_types,
           :id,
           :name,
           {} do |b| %>
             <div class="form-check">
-                <%= b.check_box(class: 'form-check-input') %>
-                <%= b.label(class: 'form-check-label') { b.object.name } %>
+              <%= b.check_box(class: 'form-check-input') %>
+              <%= b.label(class: 'form-check-label') { b.object.name } %>
             </div>
-            <% end %>
+          <% end %>
         </div>
-        <% end %>
+      <% end %>
     </div>
-</div>
-<h2>Engagements</h2>
-<div class="col-12">
+  </div>
+
+  <h2>Engagements</h2>
+  <div class="col-12">
     <div class="form_group my-4">
-        <div class="form-check">
-            <%= f.check_box :invest, class: 'form-check-input', as: :boolean %>
-            <%= f.label :invest, I18n.t('members.invest'), class: 'form-check-label' %>
-        </div>
+      <div class="form-check">
+        <%= f.check_box :invest, class: 'form-check-input', as: :boolean %>
+        <%= f.label :invest, I18n.t('members.invest'), class: 'form-check-label' %>
+      </div>
     </div>
     <div id="investments">
-        <% if @investments %>
+      <% if @investments %>
         <%= f.label I18n.t('investments.investments') %>
         <div class=" form_group my-4">
-            <%=
-        f.collection_check_boxes :investment_ids, @investments,
-          :id,
-          :name,
-          {} do |b| %>
+          <%= f.collection_check_boxes :investment_ids, @investments,
+                    :id,
+                    :name,
+                    {} do |b| %>
             <div class="form-check">
-                <%= b.check_box(class: 'form-check-input') %>
-                <%= b.label(class: 'form-check-label') { b.object.name } %>
+              <%= b.check_box(class: 'form-check-input') %>
+              <%= b.label(class: 'form-check-label') { b.object.name } %>
             </div>
-            <% end %>
+          <% end %>
         </div>
-        <% end %>
+      <% end %>
     </div>
-</div>
+  </div>
 
-</div>
-<h2>Réseaux</h2>
-<div class="form-group my-4">
+  <h2>Réseaux</h2>
+  <div class="form-group my-4">
     <%= f.label :linkedin, I18n.t('members.organizations.linkedin') %>
     <%= f.text_field :linkedin, class: 'form-control' %>
-</div>
-<div class="form_group my-4">
+  </div>
+  <div class="form_group my-4">
     <div class="form-check">
-        <%= f.check_box :linkedin_connected, class: 'form-check-input', as: :boolean %>
-        <%= f.label :linkedin_connected, class: 'form-check-label' %>
+      <%= f.check_box :linkedin_connected, class: 'form-check-input', as: :boolean %>
+      <%= f.label :linkedin_connected, class: 'form-check-label' %>
     </div>
-</div>
-<div class="form_group my-4">
+  </div>
+  <div class="form_group my-4">
     <div class="form-check">
-        <%= f.check_box :newsletter_ressources, class: 'form-check-input', as: :boolean %>
-        <%= f.label :newsletter_ressources, class: 'form-check-label' %>
+      <%= f.check_box :newsletter_ressources, class: 'form-check-input', as: :boolean %>
+      <%= f.label :newsletter_ressources, class: 'form-check-label' %>
     </div>
-</div>
-<button type="submit" class="btn btn-primary mb-5">
+  </div>
+  <button type="submit" class="btn btn-primary mb-5">
     <% if member.persisted? %>
-    <%= I18n.t('update') %>
+      <%= I18n.t('update') %>
     <% else %>
-    <%= I18n.t('create') %>
+      <%= I18n.t('create') %>
     <% end %>
-</button>
+  </button>
 <% end %>

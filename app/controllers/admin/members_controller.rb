@@ -1,245 +1,240 @@
 class Admin::MembersController < Admin::AdminController
-    include MemberHelper
-    include Searchable
-    include Filterable
+  include MemberHelper
+  include Searchable
+  include Filterable
 
-    before_action :set_organizations, only: %i[new create edit update]
-    before_action :set_member_types, only: %i[new create edit update]
-    before_action :set_investments, only: %i[new create edit update]
+  before_action :set_organizations, only: %i[new create edit update]
+  before_action :set_member_types, only: %i[new create edit update]
+  before_action :set_investments, only: %i[new create edit update]
 
-    def index
-        # Requête initiale
-        members =
-            Member
-                .includes(:organizations, :member_types, :notes, :investments)
-                .order(sort_column => sort_direction)
+  def index
+    # Requête initiale
+    members =
+      Member.includes(
+        :organizations,
+        :member_types,
+        :notes,
+        :investments
+      ).order(sort_column => sort_direction)
 
-        # Application des filtres (s'il y en a en session)
-        records = search_and_filter(members)
+    # Application des filtres (s'il y en a en session)
+    records = search_and_filter(members)
 
-        # Complément de Requête (!= Elise Lucet)
-        members = records.order(sort_column => sort_direction)
+    # Complément de Requête (!= Elise Lucet)
+    members = records.order(sort_column => sort_direction)
 
-        respond_to do |format|
-            format.html
-            format.turbo_stream
-        end
-
-        @organizations = Organization.order(:name)
-        @investments = Investment.order(:name)
-
-        @pagy, @records = pagy(members)
+    respond_to do |format|
+      format.html
+      format.turbo_stream
     end
 
-    def show
-        @member = Member.find(params[:id])
+    @organizations = Organization.order(:name)
+    @investments = Investment.order(:name)
 
-        notes = @member.notes
-        @pagy, @notes = pagy(notes)
+    @pagy, @records = pagy(members)
+  end
+
+  def show
+    @member = Member.find(params[:id])
+
+    notes = @member.notes
+    @pagy, @notes = pagy(notes)
+  end
+
+  def new
+    @member = Member.new
+    @member_types = MemberType.ordered
+    @investments = Investment.ordered
+  end
+
+  def edit
+    @member = Member.find(params[:id])
+    @member_types = MemberType.ordered
+    @investments = Investment.ordered
+
+    notes = @member.notes
+    @pagy, @notes = pagy(notes)
+  end
+
+  def create
+    @member = Member.new(member_params)
+
+    if @member.save
+      ReferentMailer.with(member: @member).investments_email.deliver_later
+      redirect_to admin_members_path,
+                  notice:
+                    I18n.t(
+                      "members.created",
+                      name: MemberHelper.full_name(@member)
+                    )
+    else
+      redirect_to admin_members_path,
+                  alert: @member.errors.full_messages.join(", ")
     end
+  end
 
-    def new
-        @member = Member.new
-        @member_types = MemberType.ordered
-        @investments = Investment.ordered
+  def update
+    @member = Member.find(params[:id])
+
+    if @member.update(member_params)
+      redirect_to admin_members_path,
+                  notice:
+                    I18n.t(
+                      "members.updated",
+                      name: MemberHelper.full_name(@member)
+                    )
+    else
+      redirect_to admin_members_path,
+                  alert: @member.errors.full_messages.join(", ")
     end
+  end
 
-    def edit
-        @member = Member.find(params[:id])
-        @member_types = MemberType.ordered
-        @investments = Investment.ordered
+  def destroy
+    @member = Member.find(params[:id])
 
-        notes = @member.notes
-        @pagy, @notes = pagy(notes)
+    if @member.destroy
+      redirect_to admin_members_path,
+                  alert:
+                    I18n.t(
+                      "members.deleted",
+                      name: MemberHelper.full_name(@member)
+                    )
+    else
+      redirect_to admin_members_path, alert: I18n.t("members.error_update")
     end
+  end
 
-    def create
-        @member = Member.new(member_params)
+  def search
+    scope = Member.includes(:notes)
+    records = search_and_filter(scope)
 
-        if @member.save
-            ReferentMailer.with(member: @member).investments_email.deliver_later
-            redirect_to admin_members_path,
-                        notice:
-                            I18n.t(
-                                'members.created',
-                                name: MemberHelper.full_name(@member),
-                            )
+    @pagy, @records = pagy(records)
+
+    search_and_filter_render(@pagy, @records)
+  end
+
+  def filter
+    scope = Member.includes(:notes)
+    records = search_and_filter(scope)
+
+    @pagy, @records = pagy(records)
+
+    search_and_filter_render(@pagy, @records)
+  end
+
+  def import
+    uploaded_file = params[:csv_file]
+
+    if uploaded_file.present?
+      MemberImporter.new(uploaded_file, user: current_user).call
+
+      redirect_to admin_members_path, notice: I18n.t("members.imported")
+    end
+  end
+
+  private
+
+  def search_and_filter(scope = Member)
+    records = search_records(scope)
+    filters = get_filters(records)
+
+    filters&.each do |key, values|
+      key = key.to_s
+
+      records =
+        case key
+        when "organization_ids"
+          records.joins(:organizations).where(organizations: { id: values })
+        when "member_type_ids"
+          records
+            .joins(:member_types)
+            .where(member_types: { id: values })
+            .where(organizations: { id: values })
+        when "investment_ids"
+          records.joins(:investments).where(investments: { id: values })
         else
-            redirect_to admin_members_path,
-                        alert: @member.errors.full_messages.join(', ')
-        end
-    end
-    
-    def update
-        @member = Member.find(params[:id])
+          # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
+          # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
+          next unless records.column_names.include?(key.to_s)
 
-        if @member.update(member_params)
-            redirect_to admin_members_path,
-                        notice:
-                            I18n.t(
-                                'members.updated',
-                                name: MemberHelper.full_name(@member),
-                            )
-        else
-            redirect_to admin_members_path,
-                        alert: @member.errors.full_messages.join(', ')
+          records.where(key => values)
         end
     end
 
-    def destroy
-        @member = Member.find(params[:id])
+    records.order(sort_column => sort_direction)
+  end
 
-        if @member.destroy
-            redirect_to admin_members_path,
-                        alert:
-                            I18n.t(
-                                'members.deleted',
-                                name: MemberHelper.full_name(@member),
-                            )
-        else
-            redirect_to admin_members_path,
-                        alert: I18n.t('members.error_update')
-        end
+  def search_and_filter_render(pagy, records)
+    respond_to do |format|
+      format.html { render "admin/members/list" }
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.update(
+                   "search_results",
+                   partial: "admin/members/list",
+                   locals: {
+                     records: records,
+                     pagy: pagy
+                   }
+                 ),
+                 turbo_stream.update(
+                   "search_pagination",
+                   partial: "shared/ui/pagy",
+                   locals: {
+                     pagy: pagy
+                   }
+                 )
+               ]
+      end
     end
+  end
 
-    def search
-        scope = Member.includes(:notes)
-        records = search_and_filter(scope)
+  def set_organizations
+    @organizations = Organization.ordered
+  end
 
-        @pagy, @records = pagy(records)
+  def set_member_types
+    @member_types = MemberType.ordered
+  end
 
-        search_and_filter_render(@pagy, @records)
+  def set_investments
+    @investments = Investment.ordered
+  end
+
+  def sort_column
+    if %w[id first_name last_name email_address].include?(params[:sort])
+      params[:sort]
+    else
+      "id"
     end
+  end
 
-    def filter
-        scope = Member.includes(:notes)
-        records = search_and_filter(scope)
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
-        @pagy, @records = pagy(records)
-
-        search_and_filter_render(@pagy, @records)
-    end
-
-    def import
-        uploaded_file = params[:csv_file]
-
-        if uploaded_file.present?
-            MemberImporter.new(uploaded_file, user: current_user).call
-
-            redirect_to admin_members_path, notice: I18n.t('members.imported')
-        end
-    end
-
-    private
-
-    def search_and_filter(scope = Member)
-        records = search_records(scope)
-        filters = get_filters(records)
-
-        filters&.each do |key, values|
-            key = key.to_s
-
-            case key
-            when 'organization_ids'
-                records =
-                    records
-                        .joins(:organizations)
-                        .where(organizations: { id: values })
-            when 'member_type_ids'
-                records =
-                    records
-                        .joins(:member_types)
-                        .where(member_types: { id: values })
-                        .where(organizations: { id: values })
-            when 'investment_ids'
-                records =
-                    records
-                        .joins(:investments)
-                        .where(investments: { id: values })
-            else
-                # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
-                # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
-                next unless records.column_names.include?(key.to_s)
-
-                records = records.where(key => values)
-            end
-        end
-
-        records = records.order(sort_column => sort_direction)
-        records
-    end
-
-    def search_and_filter_render(pagy, records)
-        respond_to do |format|
-            format.html { render 'admin/members/list' }
-            format.turbo_stream do
-                render turbo_stream: [
-                           turbo_stream.update(
-                               'search_results',
-                               partial: 'admin/members/list',
-                               locals: {
-                                   records: records,
-                                   pagy: pagy,
-                               },
-                           ),
-                           turbo_stream.update(
-                               'search_pagination',
-                               partial: 'shared/ui/pagy',
-                               locals: {
-                                   pagy: pagy,
-                               },
-                           ),
-                       ]
-            end
-        end
-    end
-
-    def set_organizations
-        @organizations = Organization.ordered
-    end
-
-    def set_member_types
-        @member_types = MemberType.ordered
-    end
-
-    def set_investments
-        @investments = Investment.ordered
-    end
-
-    def sort_column
-        if %w[id first_name last_name email_address].include?(params[:sort])
-            params[:sort]
-        else
-            'id'
-        end
-    end
-
-    def sort_direction
-        %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-    end
-
-    def member_params
-        params.expect(
-            member: [
-                :first_name,
-                :last_name,
-                :email_address,
-                :position,
-                :phone_number,
-                :copil,
-                :comex,
-                :notes,
-                :decisionnaire,
-                :principal,
-                :linkedin,
-                :linkedin_connected,
-                :newsletter_ressources,
-                :invest,
-                :status,
-                member_type_ids: [],
-                investment_ids: [],
-                organization_ids: [],
-            ],
-        )
-    end
+  def member_params
+    params.expect(
+      member: [
+        :first_name,
+        :last_name,
+        :email_address,
+        :position,
+        :phone_number,
+        :copil,
+        :comex,
+        :notes,
+        :decisionnaire,
+        :principal,
+        :linkedin,
+        :linkedin_connected,
+        :newsletter_ressources,
+        :invest,
+        :status,
+        member_type_ids: [],
+        investment_ids: [],
+        organization_ids: []
+      ]
+    )
+  end
 end

@@ -11,13 +11,13 @@
       <div class="d-flex flex-md-row align-items-start">
         <div class="content">
           <p>
-            <%= @organization.address %>
-            <br />
+            <%= @organization.address %><br />
             <%= @organization.zip_code %>
             <br />
             <%= @organization.city %>
             <br />
-            <%= I18n.t('members.organizations.linkedin') %> :
+            <%= I18n.t('members.organizations.linkedin') %>
+            :
             <a href="<%= @organization.linkedin %>" target="_blank"><%= @organization.linkedin %></a>
             <br />
             <%= I18n.t('members.organizations.linkedin_connected_single') %>
@@ -52,10 +52,16 @@
            }
   %>
   <div class="d-flex w-100 justify-content-between mt-5">
-    <h2>Les notes de
-      <%= @organization.name %></h2>
+    <h2>
+      Les notes de
+      <%= @organization.name %>
+    </h2>
     <div>
-      <%= link_to I18n.t('notes.add'), admin_new_organization_note_path(organization_id: @organization.id), { class: 'btn btn-info' } %>
+      <%=
+        link_to I18n.t('notes.add'),
+                admin_new_organization_note_path(organization_id: @organization.id),
+                { class: 'btn btn-info' }
+      %>
     </div>
   </div>
   <%=
@@ -73,7 +79,11 @@
            pagy: @pagy2,
            columns: %w[contact_type public content created_at user_id edit delete],
            formatters: {
-             edit: ->(note) { link_to I18n.t('edit'), admin_edit_organization_note_path(@organization,note) if is_current_user?(note.user&.id) },
+             edit: ->(note) {
+               if is_current_user?(note.user&.id)
+                 link_to I18n.t('edit'), admin_edit_organization_note_path(@organization, note)
+               end
+             },
              delete: ->(note) {
                if is_current_user?(note.user&.id)
                  link_to I18n.t('delete'),
@@ -91,7 +101,7 @@
                  else
                    '<i class="fa-solid fa-check text-success"></i>'
                  end,
-                 )
+               )
              },
              created_at: ->(note) { date_readable(note.created_at) },
              content: ->(note) { note_excerpt(note.content) },
