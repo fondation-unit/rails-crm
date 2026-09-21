@@ -1,26 +1,25 @@
 <%= form_with url: url, method: method, model: investment do |f| %>
-<div class="form-group my-4">
+  <div class="form-group my-4">
     <%= f.label :name, I18n.t('name') %>
     <%= f.text_field :name, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :referent1, I18n.t('investments.referent1') %>
     <%= f.email_field :referent1, required: true, class: 'form-control' %>
-</div>
-<div class="form-group my-4">
+  </div>
+  <div class="form-group my-4">
     <%= f.label :referent2, I18n.t('investments.referent2') %>
-    <%= f.email_field :referent2,  class: 'form-control' %>
-</div>
-</div>
-<div class="form-group my-4">
+    <%= f.email_field :referent2, class: 'form-control' %>
+  </div>
+  <div class="form-group my-4">
     <%= f.label :copy, I18n.t('investments.copy') %>
     <%= f.email_field :copy, class: 'form-control' %>
-</div>
-<button type="submit" class="btn btn-primary mb-5">
+  </div>
+  <button type="submit" class="btn btn-primary mb-5">
     <% if investment.persisted? %>
-    <%= I18n.t('update') %>
+      <%= I18n.t('update') %>
     <% else %>
-    <%= I18n.t('create') %>
+      <%= I18n.t('create') %>
     <% end %>
-</button>
+  </button>
 <% end %>
