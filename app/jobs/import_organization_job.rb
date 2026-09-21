@@ -8,10 +8,10 @@ class ImportOrganizationJob
 
     orga.update!(
       name: row["Etablissement"],
-      zip_code: row["Code Postal"].present? ? row["Code Postal"] : nil,
-      city: row["Ville"].present? ? row["Ville"] : nil,
+      zip_code: row["Code Postal"].presence,
+      city: row["Ville"].presence,
       user_id: user.id,
-      status: row["Statut"].present? ? row["Statut"] : 0
+      status: row["Statut"].presence&.to_i || 0
     )
 
     if row["Notes"].present? &&
