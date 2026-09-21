@@ -100,8 +100,7 @@ class Admin::OrganizationsController < Admin::AdminController
       records = records.where(key => values)
     end
 
-    records = records.includes(:notes).order(sort_column => sort_direction)
-    records
+    records.includes(:notes).order(sort_column => sort_direction)
   end
 
   def search_and_filter_render(pagy, records)
@@ -128,8 +127,6 @@ class Admin::OrganizationsController < Admin::AdminController
       end
     end
   end
-
-  
 
   def sort_column
     if %w[id name city status user_id].include?(params[:sort])
