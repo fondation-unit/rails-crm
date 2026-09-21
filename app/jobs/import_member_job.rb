@@ -28,7 +28,7 @@ class ImportMemberJob
         zip_code: row["Code Postal"].presence,
         city: row["Ville"].presence,
         user_id: user.id,
-        status: row["Statut"].presence || 0
+        status: row["Statut"].presence&.to_i || 0
       )
 
       if !checkLienOrgaMember(member)
