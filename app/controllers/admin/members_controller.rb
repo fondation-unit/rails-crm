@@ -69,7 +69,7 @@ class Admin::MembersController < Admin::AdminController
                         alert: @member.errors.full_messages.join(', ')
         end
     end
-
+    
     def update
         @member = Member.find(params[:id])
 
