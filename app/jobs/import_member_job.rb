@@ -6,17 +6,18 @@ class ImportMemberJob
     member = Member.find_or_initialize_by(email_address: row["email_address"])
 
     new_member = member.new_record?
+    investments = investment_ids(row)
 
     member.update!(
-      first_name: decode(row["first_name"]),
-      last_name: decode(row["last_name"]),
+      first_name: MemberHelper.utf_decode(row["first_name"]),
+      last_name: MemberHelper.utf_decode(row["last_name"]),
       email_address: row["email_address"],
       phone_number: nil,
       copil: yes?(row["copil (oui/non)"]),
       comex: yes?(row["comex (oui/non)"]),
       newsletter_ressources: yes?(row["newsletter_ressources (oui/non)"]),
-      invest: investment_ids(row).any?,
-      investment_ids: investment_ids(row)
+      invest: investments.any?,
+      investment_ids: investments
     )
 
     if row["Etablissement"].present?
@@ -43,7 +44,7 @@ class ImportMemberJob
            notable_id: member.id,
            notable_type: "Member"
          ).present?
-      member.notes.create!(user_id: user.id, content: decode(row["Notes"]))
+      member.notes.create!(user_id: user.id, content: decode_row(row["Notes"]))
     end
 
     if new_member
@@ -68,9 +69,5 @@ class ImportMemberJob
 
   def checkLienOrgaMember(member)
     member.organizations.exists?
-  end
-
-  def decode(value)
-    MemberHelper.utf_decode(value)
   end
 end
