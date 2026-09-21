@@ -1,9 +1,6 @@
 require "sidekiq/web"
 
-Rails
-  .application
-  .routes
-  .draw do
+Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
 
     # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -31,8 +28,6 @@ Rails
         get :filter, defaults: { format: :turbo_stream }
       end
     end
-
-    # Utilisation sur une ressource
 
     namespace :users do
       resource :session
