@@ -31,7 +31,7 @@ class ImportMemberJob
         status: row["Statut"].presence&.to_i || 0
       )
 
-      if !checkLienOrgaMember(member)
+      if !member.has_organizations?
         sql =
           "INSERT INTO members_organizations (member_id, organization_id) VALUES (#{member.id}, #{orga.id})"
         ActiveRecord::Base.connection.execute(sql)
@@ -65,9 +65,5 @@ class ImportMemberJob
 
   def yes?(value)
     value.to_s.casecmp("oui").zero?
-  end
-
-  def checkLienOrgaMember(member)
-    member.organizations.exists?
   end
 end

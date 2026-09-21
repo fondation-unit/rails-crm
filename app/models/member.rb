@@ -53,6 +53,10 @@ class Member < ApplicationRecord
     self.phone_number = phone_object.e164_number
   end
 
+  def has_organizations?
+    organizations.exists?
+  end
+
   private
 
   def set_phone_number
