@@ -1,81 +1,70 @@
 class ImportMemberJob
-    include Sidekiq::Job
+  include Sidekiq::Job
 
-    def perform(user_id, row)
-        user = User.find(user_id)
-        member =
-            Member.find_or_initialize_by(email_address: row['email_address'])
+  def perform(user_id, row)
+    user = User.find(user_id)
+    member = Member.find_or_initialize_by(email_address: row["email_address"])
 
-        newMember = member.new_record?
+    new_member = member.new_record?
+    investments = investment_ids(row)
 
-        member.update!(
-            first_name: decode(row['first_name']),
-            last_name: decode(row['last_name']),
-            email_address: row['email_address'],
-            phone_number: nil,
-            copil: yes?(row['copil (oui/non)']),
-            comex: yes?(row['comex (oui/non)']),
-            newsletter_ressources: yes?(row['newsletter_ressources (oui/non)']),
-            invest: investment_ids(row).any?,
-            investment_ids: investment_ids(row),
-        )
+    member.update!(
+      first_name: MemberHelper.utf_decode(row["first_name"]),
+      last_name: MemberHelper.utf_decode(row["last_name"]),
+      email_address: row["email_address"],
+      phone_number: nil,
+      copil: yes?(row["copil (oui/non)"]),
+      comex: yes?(row["comex (oui/non)"]),
+      newsletter_ressources: yes?(row["newsletter_ressources (oui/non)"]),
+      invest: investments.any?,
+      investment_ids: investments
+    )
 
-        if row['Etablissement'].present?
-            orga =
-                Organization.find_or_initialize_by(name: row['Etablissement'])
+    if row["Etablissement"].present?
+      etab = row["Etablissement"]
+      orga = Organization.find_or_initialize_by(name: etab)
 
-            orga.update!(
-                name: row['Etablissement'],
-                zip_code:
-                    row['Code Postal'].present? ? row['Code Postal'] : nil,
-                city: row['Ville'].present? ? row['Ville'] : nil,
-                user_id: user.id,
-                status: row['Statut'].present? ? row['Statut'] : 0,
-            )
+      orga.update!(
+        name: etab,
+        zip_code: row["Code Postal"].presence,
+        city: row["Ville"].presence,
+        user_id: user.id,
+        status: row["Statut"].presence&.to_i || 0
+      )
 
-            if !checkLienOrgaMember(member)
-                sql =
-                    "INSERT INTO members_organizations (member_id, organization_id) VALUES (#{member.id}, #{orga.id})"
-                ActiveRecord::Base.connection.execute(sql)
-            end
-        end
-
-        if row['Notes'].present? &&
-               !Note.find_by(
-                   user_id: user.id,
-                   notable_id: member.id,
-                   notable_type: 'Member',
-               ).present?
-            member.notes.create!(
-                user_id: user.id,
-                content: decode(row['Notes']),
-            )
-        end
-        if newMember
-            ReferentMailer.with(member: member).investments_email.deliver_later
-        end
+      if !member.has_organizations?
+        sql =
+          "INSERT INTO members_organizations (member_id, organization_id) VALUES (#{member.id}, #{orga.id})"
+        ActiveRecord::Base.connection.execute(sql)
+      end
     end
 
-    private
-
-    def investment_ids(row)
-        {
-            'Donner son contenu (oui/non)' => 1,
-            'Participer a la relecture (oui/non)' => 2,
-            'Tester les ressources (oui/non)' => 3,
-            'Identifier les besoins/manques (oui/non)' => 4,
-        }.filter_map { |column, id| id if yes?(row[column]) }
+    if row["Notes"].present? &&
+         !Note.find_by(
+           user_id: user.id,
+           notable_id: member.id,
+           notable_type: "Member"
+         ).present?
+      member.notes.create!(user_id: user.id, content: decode_row(row["Notes"]))
     end
 
-    def yes?(value)
-        value.to_s.casecmp('oui').zero?
+    if new_member
+      ReferentMailer.with(member: member).investments_email.deliver_later
     end
+  end
 
-    def checkLienOrgaMember(member)
-        member.organizations.exists?
-    end
+  private
 
-    def decode(value)
-        MemberHelper.utf_decode(value)
-    end
+  def investment_ids(row)
+    {
+      "Donner son contenu (oui/non)" => 1,
+      "Participer a la relecture (oui/non)" => 2,
+      "Tester les ressources (oui/non)" => 3,
+      "Identifier les besoins/manques (oui/non)" => 4
+    }.filter_map { |column, id| id if yes?(row[column]) }
+  end
+
+  def yes?(value)
+    value.to_s.casecmp("oui").zero?
+  end
 end

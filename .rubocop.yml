@@ -18,3 +18,10 @@ Naming/VariableName:
   Enabled: true
   EnforcedStyle: snake_case
   AllowedPatterns: []
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  Enabled: true
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes

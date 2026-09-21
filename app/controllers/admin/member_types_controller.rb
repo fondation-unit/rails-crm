@@ -16,8 +16,8 @@ class Admin::MemberTypesController < Admin::AdminController
     @member_type = MemberType.new(member_type_params)
 
     if @member_type.save
-      redirect_to admin_member_types_path, notice: I18n.t(
-        "members.member_type.created")
+      redirect_to admin_member_types_path,
+                  notice: I18n.t("members.member_type.created")
     else
       redirect_to admin_member_types_path,
                   alert: @member_type.errors.full_messages.join(", ")

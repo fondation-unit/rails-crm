@@ -1,13 +1,12 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1 class="mb-4"><%= I18n.t('investments.investments') %></h1>
-    <%= link_to I18n.t('investments.add'), new_admin_investment_path, class: 'btn btn-primary align-self-center' %>
+  <h1 class="mb-4"><%= I18n.t('investments.investments') %></h1>
+  <%= link_to I18n.t('investments.add'), new_admin_investment_path, class: 'btn btn-primary align-self-center' %>
 </div>
 
-
 <div id="search_results">
-    <%= render 'list', records: @records %>
+  <%= render 'list', records: @records %>
 </div>
 
 <div id="search_pagination" data-turbo-prefetch="false">
-    <%= render 'shared/ui/pagy', pagy: @pagy %>
+  <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>

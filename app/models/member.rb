@@ -1,64 +1,68 @@
 class Member < ApplicationRecord
-    include NameNormalization
-    include FullTextSearchable
+  include NameNormalization
+  include FullTextSearchable
 
-    has_many :notes, as: :notable
+  has_many :notes, as: :notable
 
-    has_and_belongs_to_many :member_types, join_table: 'member_types_members'
-    has_and_belongs_to_many :organizations, join_table: 'members_organizations'
-    has_and_belongs_to_many :investments, join_table: 'members_investments'
+  has_and_belongs_to_many :member_types, join_table: "member_types_members"
+  has_and_belongs_to_many :organizations, join_table: "members_organizations"
+  has_and_belongs_to_many :investments, join_table: "members_investments"
 
-    STATUS_TABLE_MEMBER_CLASSES = {
-        'a_contacter': 'table-info',
-        'contacte': 'table-success',
-        'rappel': 'table-secondary',
-        'refus': 'table-danger',
-        'inconnu': 'table-warning',
-    }
+  STATUS_TABLE_MEMBER_CLASSES = {
+    a_contacter: "table-info",
+    contacte: "table-success",
+    rappel: "table-secondary",
+    refus: "table-danger",
+    inconnu: "table-warning"
+  }
 
-    validates :first_name, :last_name, presence: true
-    validates :email_address,
-              uniqueness: true,
-              format: {
-                  with: URI::MailTo::EMAIL_REGEXP,
-              }
-    validates :phone_number,
-              telephone_number: {
-                  country: 'FR',
-                  message: 'Numéro de téléphone invalide',
-              },
-              allow_blank: true
+  validates :first_name, :last_name, presence: true
+  validates :email_address,
+            uniqueness: true,
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP
+            }
+  validates :phone_number,
+            telephone_number: {
+              country: "FR",
+              message: "Numéro de téléphone invalide"
+            },
+            allow_blank: true
 
-    normalize_user_names :first_name, :last_name
+  normalize_user_names :first_name, :last_name
 
-    before_save :set_phone_number
-    enum :status, self::STATUS_TABLE_MEMBER_CLASSES.keys
+  before_save :set_phone_number
+  enum :status, self::STATUS_TABLE_MEMBER_CLASSES.keys
 
-    default_scope { includes(%i[member_types investments]) }
+  default_scope { includes(%i[member_types investments]) }
 
-    def organizations_names
-        organizations.collect { |org| { name: org.name, id: org.id } }
-    end
+  def organizations_names
+    organizations.collect { |org| { name: org.name, id: org.id } }
+  end
 
-    def member_types_names
-        member_types.collect { |type| { name: type.name, id: type.id } }
-    end
+  def member_types_names
+    member_types.collect { |type| { name: type.name, id: type.id } }
+  end
 
-    def investments_names
-        investments.collect { |type| { name: type.name } }
-    end
+  def investments_names
+    investments.collect { |type| { name: type.name } }
+  end
 
-    def set_phone_link
-        phone_object = TelephoneNumber.parse(phone_number, :fr)
-        self.phone_number = phone_object.e164_number
-    end
+  def set_phone_link
+    phone_object = TelephoneNumber.parse(phone_number, :fr)
+    self.phone_number = phone_object.e164_number
+  end
 
-    private
+  def has_organizations?
+    organizations.exists?
+  end
 
-    def set_phone_number
-        phone_object = TelephoneNumber.parse(phone_number, :fr)
-        self.phone_number = phone_object.international_number
-    end
+  private
+
+  def set_phone_number
+    phone_object = TelephoneNumber.parse(phone_number, :fr)
+    self.phone_number = phone_object.international_number
+  end
 end
 
 # == Schema Information
