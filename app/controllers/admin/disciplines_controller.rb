@@ -39,11 +39,11 @@ class Admin::DisciplinesController < Admin::AdminController
 
   def destroy
     @discipline = Discipline.find(params[:id])
-    nom = @discipline.name
 
     if @discipline.destroy
       redirect_to admin_disciplines_path,
-                  notice: I18n.t("members.discipline.deleted", name: nom)
+                  notice:
+                    I18n.t("members.discipline.deleted", name: @discipline.name)
     else
       redirect_to admin_disciplines_path,
                   alert: I18n.t("members.discipline.error_update")
