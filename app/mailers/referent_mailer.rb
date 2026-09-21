@@ -21,7 +21,7 @@ class ReferentMailer < ApplicationMailer
 
       recipients.uniq!
     else
-      recipients[] = "postmaster@lapatweb.fr"
+      recipients[] = ENV.fetch("REFERENT_EMAIL")
     end
 
     recipients.join(";")
