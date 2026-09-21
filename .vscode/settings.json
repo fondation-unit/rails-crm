@@ -33,7 +33,7 @@
     "editor.semanticHighlighting.enabled": true
   },
   "task.autoDetect": "off",
-  "rubyLsp.formatter": "rubocop",
+  "rubyLsp.formatter": "syntax_tree",
   // Stylelint SCSS
   "stylelint.validate": ["css", "postcss", "scss"],
   // Disable other stylesheet linters
