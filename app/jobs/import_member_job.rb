@@ -5,7 +5,7 @@ class ImportMemberJob
     user = User.find(user_id)
     member = Member.find_or_initialize_by(email_address: row["email_address"])
 
-    newMember = member.new_record?
+    new_member = member.new_record?
 
     member.update!(
       first_name: decode(row["first_name"]),
@@ -45,7 +45,8 @@ class ImportMemberJob
          ).present?
       member.notes.create!(user_id: user.id, content: decode(row["Notes"]))
     end
-    if newMember
+
+    if new_member
       ReferentMailer.with(member: member).investments_email.deliver_later
     end
   end
