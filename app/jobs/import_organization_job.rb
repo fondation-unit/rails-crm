@@ -3,11 +3,12 @@ class ImportOrganizationJob
 
   def perform(user_id, row)
     user = User.find(user_id)
+    etab = row["Etablissement"]
 
-    orga = Organization.find_or_initialize_by(name: row["Etablissement"])
+    orga = Organization.find_or_initialize_by(name: etab)
 
     orga.update!(
-      name: row["Etablissement"],
+      name: etab,
       zip_code: row["Code Postal"].presence,
       city: row["Ville"].presence,
       user_id: user.id,
