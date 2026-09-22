@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "admin/dashboard#index"
+
   # Déclaration du concern de routes avec ses méthodes attenantes
   concern :searchable do
     collection do
@@ -28,8 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Utilisation sur une ressource
-
   namespace :users do
     resource :session
     resources :passwords, param: :token
@@ -43,9 +42,17 @@ Rails.application.routes.draw do
     resource :dashboard
     resources :member_types
     resources :investments
+    resources :disciplines
+    resources :levels
     resources :notes, only: %i[show create update edit destroy]
     get "/member/import", to: "members#import", as: :member_import_form
     post "/member/import", to: "members#import", as: :member_import
+    get "/organization/import",
+        to: "organizations#import",
+        as: :organization_import_form
+    post "/organization/import",
+         to: "organizations#import",
+         as: :organization_import
 
     get "/notes/new/member/:member_id", to: "notes#new", as: :new_member_note
     get "/notes/new/organization/:organization_id",

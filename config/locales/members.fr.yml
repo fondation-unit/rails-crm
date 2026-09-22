@@ -1,49 +1,72 @@
 fr:
-  members:
-    'members': 'Les membres'
-    "Modify a member's type": 'Modifier un type de membre'
-    'position': 'Poste occupé'
-    'institution': 'Institution'
-    'type': 'Type de membre'
-    'select_institution': 'Sélectionnez une institution'
-    'add': 'Ajouter un membre'
-    'show_title': 'Fiche membre'
-    'copil_member': 'Membre du Copil'
-    'comex_member': 'Membre du Comex'
-    'validation_delete': 'Etes-vous sur de vouloir effacer ce membre ?'
-    'created': 'Membre %{name} créé'
-    'updated': 'Membre %{name} mis à jour'
-    'deleted': 'Membre %{name} supprimé'
-    'error_update': 'Erreur lors de la suppression du membre'
-    'invest': "Souhaite s'investir"
-    'import': "Importer des membres"
-    'imported': "Les membres ont bien été importés"
-    member_type:
-      'created': 'Type de membre créé'
-      'updated': 'Type de membre "%{name}" mis à jour'
-      'deleted': 'Type de membre "%{name}" supprimé'
-      'error_update': 'Erreur lors de la suppression du type de membre'
-      'type_members': 'Les types de membres'
-      'add': 'Ajouter un type de membre'
-      'name': 'Nom du type de membre'
-      'member_type': 'Type de membre'
-      'validation_delete': 'Etes-vous sur de vouloir effacer ce type de membre ?'
-    organizations:
-      'lat': 'Latitude'
-      'lng': 'Longitude'
-      'remove_logo': 'Supprimer le logo'
-      'modify': 'Modifier une institution'
-      'add': 'Ajouter une institution'
-      'title': 'Les institutions'
-      'validation_delete': 'Etes-vous sur de vouloir effacer cette institution ?'
-      'linkedin': 'Compte Linkedin'
-      'linkedin_connected': 'Compte Linkedin connecté ?'
-      'linkedin_connected_single': 'Compte Linkedin connecté :'
-      'status': 'Statut'
-      'user_id': 'Créé par'
-      'statuses':
-        "a_contacter": "À contacter"
-        "contacte": "Contacté"
-        "rappel": "Rappel"
-        "refus": "Refus"
-        "inconnu": "Inconnu"
+    members:
+        "members": "Les membres"
+        "Modify a member's type": "Modifier un type de membre"
+        "position": "Poste occupé"
+        "institution": "Institution"
+        "type": "Type de membre"
+        "select_institution": "Sélectionnez une institution"
+        "add": "Ajouter un membre"
+        "show_title": "Fiche membre"
+        "copil_member": "Membre du Copil"
+        "comex_member": "Membre du Comex"
+        "validation_delete": "Etes-vous sur de vouloir effacer ce membre ?"
+        "created": "Membre %{name} créé"
+        "updated": "Membre %{name} mis à jour"
+        "deleted": "Membre %{name} supprimé"
+        "error_update": "Erreur lors de la suppression du membre"
+        "invest": "Souhaite s'investir"
+        "import": "Importer des membres"
+        "imported": "Les membres ont bien été importés"
+        member_type:
+            "created": "Type de membre créé"
+            "updated": 'Type de membre "%{name}" mis à jour'
+            "deleted": 'Type de membre "%{name}" supprimé'
+            "error_update": "Erreur lors de la suppression du type de membre"
+            "type_members": "Les types de membres"
+            "add": "Ajouter un type de membre"
+            "name": "Nom du type de membre"
+            "member_type": "Type de membre"
+            "validation_delete": "Etes-vous sur de vouloir effacer ce type de membre ?"
+        organizations:
+            "lat": "Latitude"
+            "lng": "Longitude"
+            "remove_logo": "Supprimer le logo"
+            "modify": "Modifier une institution"
+            "add": "Ajouter une institution"
+            "title": "Les institutions"
+            "validation_delete": "Etes-vous sur de vouloir effacer cette institution ?"
+            "linkedin": "Compte Linkedin"
+            "linkedin_connected": "Compte Linkedin connecté ?"
+            "linkedin_connected_single": "Compte Linkedin connecté :"
+            "status": "Statut"
+            "user_id": "Créé par"
+            "created": "Institution créée"
+            "updated": 'Institution "%{name}" mise à jour'
+            "deleted": 'Institution "%{name}" supprimée'
+            "statuses":
+                "a_contacter": "À contacter"
+                "contacte": "Contacté"
+                "rappel": "Rappel"
+                "refus": "Refus"
+                "inconnu": "Inconnu"
+            "import": "Importer des institutions"
+            "imported": "Les institutions ont bien été importées"
+        discipline:
+            "modify": "Modifier un module enseigné"
+            "add": "Ajouter un module enseigné"
+            "title": "Les modules enseignés"
+            "validation_delete": "Etes-vous sur de vouloir effacer ce module enseigné"
+            "created": "Module enseigné créé"
+            "updated": 'Module enseigné "%{name}" mis à jour'
+            "deleted": 'Module enseigné "%{name}" supprimé'
+            "name": "Nom"
+        level:
+            "modify": "Modifier un niveau d'enseignement"
+            "add": "Ajouter un niveau d'enseignement"
+            "title": "Les niveaux d'enseignement"
+            "validation_delete": "Etes-vous sur de vouloir effacer ce niveau d'enseignement"
+            "created": "Niveau d'enseignement créé"
+            "updated": "Niveau d'enseignement '%{name}' mis à jour"
+            "deleted": "Niveau d'enseignement '%{name}' supprimé"
+            "name": "Nom"

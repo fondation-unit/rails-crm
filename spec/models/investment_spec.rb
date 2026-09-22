@@ -8,9 +8,11 @@ end
 #
 # Table name: investments
 #
-#  id            :bigint           not null, primary key
-#  email_address :string           not null
-#  name          :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id         :bigint           not null, primary key
+#  copy       :string           not null
+#  name       :string           not null
+#  referent1  :string           not null
+#  referent2  :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #

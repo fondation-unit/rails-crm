@@ -28,6 +28,7 @@ end
 #  position              :string
 #  principal             :boolean
 #  search_vector         :tsvector
+#  status                :integer          default("a_contacter")
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #

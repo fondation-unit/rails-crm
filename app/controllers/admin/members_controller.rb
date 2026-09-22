@@ -10,11 +10,16 @@ class Admin::MembersController < Admin::AdminController
   def index
     # Requête initiale
     members =
-      Member.includes(:organizations, :member_types, :notes).order(
-        sort_column => sort_direction
-      )
+      Member.includes(
+        :organizations,
+        :member_types,
+        :notes,
+        :investments
+      ).order(sort_column => sort_direction)
+
     # Application des filtres (s'il y en a en session)
     records = search_and_filter(members)
+
     # Complément de Requête (!= Elise Lucet)
     members = records.order(sort_column => sort_direction)
 
@@ -24,13 +29,14 @@ class Admin::MembersController < Admin::AdminController
     end
 
     @organizations = Organization.order(:name)
+    @investments = Investment.order(:name)
 
     @pagy, @records = pagy(members)
   end
 
   def show
     @member = Member.find(params[:id])
-    
+
     notes = @member.notes
     @pagy, @notes = pagy(notes)
   end
@@ -54,6 +60,7 @@ class Admin::MembersController < Admin::AdminController
     @member = Member.new(member_params)
 
     if @member.save
+      ReferentMailer.with(member: @member).investments_email.deliver_later
       redirect_to admin_members_path,
                   notice:
                     I18n.t(
@@ -61,7 +68,8 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
+      redirect_to admin_members_path,
+                  alert: @member.errors.full_messages.join(", ")
     end
   end
 
@@ -76,7 +84,8 @@ class Admin::MembersController < Admin::AdminController
                       name: MemberHelper.full_name(@member)
                     )
     else
-      redirect_to admin_members_path, alert: @member.errors.full_messages.join(", ")
+      redirect_to admin_members_path,
+                  alert: @member.errors.full_messages.join(", ")
     end
   end
 
@@ -132,24 +141,27 @@ class Admin::MembersController < Admin::AdminController
     filters&.each do |key, values|
       key = key.to_s
 
-      case key
-      when "organization_ids"
-        records =
+      records =
+        case key
+        when "organization_ids"
           records.joins(:organizations).where(organizations: { id: values })
-      when "member_type_ids"
-        records =
-          records.joins(:member_types).where(member_types: { id: values })
-      else
-        # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
-        # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
-        next unless records.column_names.include?(key.to_s)
+        when "member_type_ids"
+          records
+            .joins(:member_types)
+            .where(member_types: { id: values })
+            .where(organizations: { id: values })
+        when "investment_ids"
+          records.joins(:investments).where(investments: { id: values })
+        else
+          # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
+          # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
+          next unless records.column_names.include?(key.to_s)
 
-        records = records.where(key => values)
-      end
+          records.where(key => values)
+        end
     end
 
-    records = records.order(sort_column => sort_direction)
-    records
+    records.order(sort_column => sort_direction)
   end
 
   def search_and_filter_render(pagy, records)
@@ -218,6 +230,7 @@ class Admin::MembersController < Admin::AdminController
         :linkedin_connected,
         :newsletter_ressources,
         :invest,
+        :status,
         member_type_ids: [],
         investment_ids: [],
         organization_ids: []

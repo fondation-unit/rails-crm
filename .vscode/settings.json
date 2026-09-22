@@ -27,6 +27,7 @@
     "editor.formatOnSave": true
   },
   "[ruby]": {
+    "editor.tabSize": 2,
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.semanticHighlighting.enabled": true

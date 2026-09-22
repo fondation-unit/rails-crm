@@ -1,17 +1,27 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
-    <div>
-        <%= link_to I18n.t('members.import'), admin_member_import_form_path, class: 'btn btn-primary align-self-center' %>
-        <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
-    </div>
+  <h1 class="mb-4"><%= I18n.t('members.members') %></h1>
+  <div>
+    <%= link_to I18n.t('members.add'), new_admin_member_path, class: 'btn btn-primary align-self-center' %>
+    <%= link_to I18n.t('members.import'), admin_member_import_form_path, class: 'btn btn-primary align-self-center' %>
+  </div>
 </div>
 
-<%= render partial: 'admin/members/parts/search_bar', locals: { path: search_admin_members_path } %>
+<%=
+  render partial: 'admin/members/parts/search_bar',
+         locals: {
+           path: search_admin_members_path,
+           translate: 'organizations',
+           translate_list: 'organizations.statuses',
+           filters: {
+             status: Organization.statuses,
+           },
+         }
+%>
 
 <div id="search_results">
-    <%= render 'list', records: @records %>
+  <%= render 'list', records: @records %>
 </div>
 
 <div id="search_pagination" data-turbo-prefetch="false">
-    <%= render 'shared/ui/pagy', pagy: @pagy %>
+  <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>

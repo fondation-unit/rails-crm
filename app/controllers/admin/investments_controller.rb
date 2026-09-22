@@ -4,7 +4,7 @@ class Admin::InvestmentsController < Admin::AdminController
   include Pundit::Authorization
 
   def index
-  investments = Investment.all.order(sort_column => sort_direction)
+    investments = Investment.all.order(sort_column => sort_direction)
     @pagy, @records = pagy(investments)
   end
 
@@ -17,14 +17,10 @@ class Admin::InvestmentsController < Admin::AdminController
 
     if @investment.save
       redirect_to admin_investments_path,
-                  notice:
-                    I18n.t(
-                      "investments.created",
-                      name: @investment.name
-                    )
+                  notice: I18n.t("investments.created", name: @investment.name)
     else
-      flash[:alert] = @investment.errors.full_messages.join(", ")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_investments_path,
+                  alert: @investment.errors.full_messages.join(", ")
     end
   end
 
@@ -37,11 +33,7 @@ class Admin::InvestmentsController < Admin::AdminController
 
     if @investment.update(investment_params)
       redirect_to admin_investments_path,
-                  notice:
-                    I18n.t(
-                      "investments.updated",
-                      name: @investment.name
-                    )
+                  notice: I18n.t("investments.updated", name: @investment.name)
     else
       redirect_to admin_investments_path,
                   alert: @investment.errors.full_messages.join(", ")
@@ -53,11 +45,7 @@ class Admin::InvestmentsController < Admin::AdminController
 
     if @investment.destroy
       redirect_to admin_investments_path,
-                  notice:
-                    I18n.t(
-                      "investments.updated",
-                      name: @investment.name
-                    )
+                  notice: I18n.t("investments.updated", name: @investment.name)
     else
       redirect_to admin_investments_path,
                   alert: @investment.errors.full_messages.join(", ")
@@ -67,7 +55,7 @@ class Admin::InvestmentsController < Admin::AdminController
   private
 
   def sort_column
-    if %w[id name email_address].include?(params[:sort])
+    if %w[id name referent1 referent2 copy].include?(params[:sort])
       params[:sort]
     else
       "id"
@@ -79,6 +67,6 @@ class Admin::InvestmentsController < Admin::AdminController
   end
 
   def investment_params
-    params.expect(investment: %i[name email_address])
+    params.expect(investment: %i[name referent1 referent2 copy])
   end
 end

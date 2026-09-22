@@ -5,8 +5,10 @@ class Admin::OrganizationsController < Admin::AdminController
   def index
     # Requête initiale
     organizations = Organization.includes(:notes)
+
     # Application des filtres s'il y en a en session
     records = search_and_filter(organizations)
+
     # Complément de requête
     organizations = records.order(sort_column => sort_direction)
     @pagy, @records = pagy(organizations)
@@ -86,6 +88,17 @@ class Admin::OrganizationsController < Admin::AdminController
     search_and_filter_render(@pagy, @records)
   end
 
+  def import
+    uploaded_file = params[:csv_file]
+
+    if uploaded_file.present?
+      OrganizationImporter.new(uploaded_file, user: current_user).call
+
+      redirect_to admin_organizations_path,
+                  notice: I18n.t("members.organizations.imported")
+    end
+  end
+
   private
 
   def search_and_filter(scope = Organization)
@@ -100,8 +113,7 @@ class Admin::OrganizationsController < Admin::AdminController
       records = records.where(key => values)
     end
 
-    records = records.includes(:notes).order(sort_column => sort_direction)
-    records
+    records.includes(:notes).order(sort_column => sort_direction)
   end
 
   def search_and_filter_render(pagy, records)
@@ -128,8 +140,6 @@ class Admin::OrganizationsController < Admin::AdminController
       end
     end
   end
-
-  
 
   def sort_column
     if %w[id name city status user_id].include?(params[:sort])

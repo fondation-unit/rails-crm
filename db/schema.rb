@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_16_134931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,9 +52,23 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "disciplines", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "investments", force: :cascade do |t|
     t.string "name", null: false
-    t.string "email_address", null: false
+    t.string "referent1", null: false
+    t.string "referent2", null: false
+    t.string "copy", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "levels", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -87,6 +101,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_18_123640) do
     t.boolean "linkedin_connected"
     t.boolean "newsletter_ressources"
     t.boolean "invest"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "search_vector", type: :tsvector, as: "to_tsvector('simple'::regconfig, (((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(\"position\", ''::character varying))::text) || ' '::text) || (COALESCE(email_address, ''::character varying))::text))", stored: true

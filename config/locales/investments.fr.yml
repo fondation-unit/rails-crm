@@ -9,3 +9,6 @@ fr:
     'validation_delete': "Etes-vous sur de vouloir effacer ce type d'investissement ?"
     'give_courses' : 'Donner ses cours'
     'type': "Type d'investissement"
+    'referent1': 'Référent 1'
+    'referent2': 'Référent 2'
+    'copy': 'Copie'

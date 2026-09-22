@@ -8,6 +8,14 @@ class Member < ApplicationRecord
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
   has_and_belongs_to_many :investments, join_table: "members_investments"
 
+  STATUS_TABLE_MEMBER_CLASSES = {
+    a_contacter: "table-info",
+    contacte: "table-success",
+    rappel: "table-secondary",
+    refus: "table-danger",
+    inconnu: "table-warning"
+  }
+
   validates :first_name, :last_name, presence: true
   validates :email_address,
             uniqueness: true,
@@ -18,15 +26,15 @@ class Member < ApplicationRecord
             telephone_number: {
               country: "FR",
               message: "Numéro de téléphone invalide"
-            }
-            #, 
-            #allow_blank: true
+            },
+            allow_blank: true
 
   normalize_user_names :first_name, :last_name
 
   before_save :set_phone_number
+  enum :status, self::STATUS_TABLE_MEMBER_CLASSES.keys
 
-  default_scope { includes([:member_types, :investments]) }
+  default_scope { includes(%i[member_types investments]) }
 
   def organizations_names
     organizations.collect { |org| { name: org.name, id: org.id } }
@@ -43,6 +51,10 @@ class Member < ApplicationRecord
   def set_phone_link
     phone_object = TelephoneNumber.parse(phone_number, :fr)
     self.phone_number = phone_object.e164_number
+  end
+
+  def has_organizations?
+    organizations.exists?
   end
 
   private
@@ -73,6 +85,7 @@ end
 #  position              :string
 #  principal             :boolean
 #  search_vector         :tsvector
+#  status                :integer          default("a_contacter")
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
