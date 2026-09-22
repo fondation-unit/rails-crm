@@ -9,6 +9,7 @@ class ImportOrganizationJob
 
     orga.update!(
       name: etab,
+      address: row["Adresse"].presence,
       zip_code: row["Code Postal"].presence,
       city: row["Ville"].presence,
       user_id: user.id,
