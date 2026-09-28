@@ -23,4 +23,15 @@ module ApplicationHelper
 
     date
   end
+
+  def is_active?()
+    if current_page?(admin_member_types_path) ||
+         current_page?(admin_investments_path) ||
+         current_page?(admin_disciplines_path) ||
+         current_page?(admin_levels_path)
+      "show"
+    else
+      ""
+    end
+  end
 end
