@@ -1,6 +1,6 @@
 fr:
     menu:
-        "CRM": "CRM"
+        "params": "Paramétrages CRM"
         "members": "Les membres"
         "member_types": "Les types de membres"
         "organizations": "Les institutions"
