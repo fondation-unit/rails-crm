@@ -7,6 +7,8 @@ class Member < ApplicationRecord
   has_and_belongs_to_many :member_types, join_table: "member_types_members"
   has_and_belongs_to_many :organizations, join_table: "members_organizations"
   has_and_belongs_to_many :investments, join_table: "members_investments"
+  has_and_belongs_to_many :levels, join_table: "members_levels"
+  has_and_belongs_to_many :disciplines, join_table: "members_disciplines"
 
   STATUS_TABLE_MEMBER_CLASSES = {
     a_contacter: "table-info",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_16_134931) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_28_084240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -109,11 +109,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_16_134931) do
     t.index ["search_vector"], name: "index_members_on_search_vector", using: :gin
   end
 
+  create_table "members_disciplines", id: false, force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.bigint "discipline_id", null: false
+  end
+
   create_table "members_investments", id: false, force: :cascade do |t|
     t.bigint "member_id", null: false
     t.bigint "investment_id", null: false
     t.index ["investment_id", "member_id"], name: "index_members_investments_on_investment_id_and_member_id"
     t.index ["member_id", "investment_id"], name: "index_members_investments_on_member_id_and_investment_id"
+  end
+
+  create_table "members_levels", id: false, force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.bigint "level_id", null: false
   end
 
   create_table "members_organizations", id: false, force: :cascade do |t|

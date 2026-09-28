@@ -6,6 +6,8 @@ class Admin::MembersController < Admin::AdminController
   before_action :set_organizations, only: %i[new create edit update]
   before_action :set_member_types, only: %i[new create edit update]
   before_action :set_investments, only: %i[new create edit update]
+  before_action :set_levels, only: %i[new create edit update]
+  before_action :set_disciplines, only: %i[new create edit update]
 
   def index
     # Requête initiale
@@ -14,6 +16,8 @@ class Admin::MembersController < Admin::AdminController
         :organizations,
         :member_types,
         :notes,
+        :levels,
+        :disciplines,
         :investments
       ).order(sort_column => sort_direction)
 
@@ -45,12 +49,16 @@ class Admin::MembersController < Admin::AdminController
     @member = Member.new
     @member_types = MemberType.ordered
     @investments = Investment.ordered
+    @levels = Level.ordered
+    @disciplines = Discipline.ordered
   end
 
   def edit
     @member = Member.find(params[:id])
     @member_types = MemberType.ordered
     @investments = Investment.ordered
+    @levels = Level.ordered
+    @disciplines = Discipline.ordered
 
     notes = @member.notes
     @pagy, @notes = pagy(notes)
@@ -201,6 +209,14 @@ class Admin::MembersController < Admin::AdminController
     @investments = Investment.ordered
   end
 
+  def set_levels
+    @levels = Level.ordered
+  end
+
+  def set_disciplines
+    @disciplines = Discipline.ordered
+  end
+
   def sort_column
     if %w[id first_name last_name email_address].include?(params[:sort])
       params[:sort]
@@ -233,7 +249,9 @@ class Admin::MembersController < Admin::AdminController
         :status,
         member_type_ids: [],
         investment_ids: [],
-        organization_ids: []
+        organization_ids: [],
+        level_ids: [],
+        discipline_ids: []
       ]
     )
   end
