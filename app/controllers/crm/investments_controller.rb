@@ -1,7 +1,7 @@
 module Crm
   class InvestmentsController < ApplicationController
-    include Crm::Searchable
-    include Crm::Filterable
+    include Searchable
+    include Filterable
     include Pundit::Authorization
 
     def index

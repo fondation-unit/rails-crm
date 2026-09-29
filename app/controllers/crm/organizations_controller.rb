@@ -1,7 +1,7 @@
 module Crm
   class OrganizationsController < ApplicationController
-    include Crm::Filterable
-    include Crm::Searchable
+    include Filterable
+    include Searchable
 
     def index
       # Requête initiale

@@ -1,7 +1,7 @@
 module Crm
   class Organization < ApplicationRecord
     include FileAttachable
-    include Crm::FullTextSearchable
+    include FullTextSearchable
 
     STATUS_TABLE_CLASSES = {
       a_contacter: "table-info",
