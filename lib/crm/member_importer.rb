@@ -1,31 +1,33 @@
 require "csv"
 
-class MemberImporter
-  def initialize(file, user:)
-    @file = file
-    @user = user
-  end
-
-  def call
-    CSV.foreach(
-      @file.path,
-      headers: true,
-      encoding: "bom|utf-8",
-      col_sep: ";"
-    ) do |row|
-      normalized_row =
-        CSV::Row.new(row.headers.map { |h| normalize_header(h) }, row.fields)
-
-      ImportMemberJob.perform_async(user.id, normalized_row.to_h)
+module Crm
+  class MemberImporter
+    def initialize(file, user:)
+      @file = file
+      @user = user
     end
-  end
 
-  private
+    def call
+      CSV.foreach(
+        @file.path,
+        headers: true,
+        encoding: "bom|utf-8",
+        col_sep: ";"
+      ) do |row|
+        normalized_row =
+          CSV::Row.new(row.headers.map { |h| normalize_header(h) }, row.fields)
 
-  attr_reader :user
+        ImportMemberJob.perform_async(user.id, normalized_row.to_h)
+      end
+    end
 
-  def normalize_header(header)
-    # Normalisation des entêtes pour éviter les problèmes d'espaces multiples
-    header.to_s.strip.gsub(/\s+/, " ")
+    private
+
+    attr_reader :user
+
+    def normalize_header(header)
+      # Normalisation des entêtes pour éviter les problèmes d'espaces multiples
+      header.to_s.strip.gsub(/\s+/, " ")
+    end
   end
 end

@@ -1,14 +1,14 @@
 module Crm
-class Note < ApplicationRecord
-  belongs_to :notable, polymorphic: true
-  belongs_to :user
+  class Note < ApplicationRecord
+    belongs_to :notable, polymorphic: true
+    belongs_to :user
 
-  has_rich_text :content
+    has_rich_text :content
 
-  validates_associated :user
+    validates_associated :user
 
-  scope :ordered, -> { order(created_at: "desc") }
-end
+    scope :ordered, -> { order(created_at: "desc") }
+  end
 end
 
 # == Schema Information
