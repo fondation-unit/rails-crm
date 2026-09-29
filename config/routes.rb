@@ -1,4 +1,18 @@
 Crm::Engine.routes.draw do
+  concern :searchable do
+    collection do
+      post :search, defaults: { format: :turbo_stream }
+      get :search, defaults: { format: :turbo_stream }
+    end
+  end
+
+  concern :filterable do
+    collection do
+      post :filter, defaults: { format: :turbo_stream }
+      get :filter, defaults: { format: :turbo_stream }
+    end
+  end
+
   resources :members, concerns: %i[searchable filterable]
   resources :organizations, concerns: %i[searchable filterable]
   resource :dashboard
@@ -7,6 +21,7 @@ Crm::Engine.routes.draw do
   resources :disciplines
   resources :levels
   resources :notes, only: %i[show create update edit destroy]
+
   get "/member/import", to: "members#import", as: :member_import_form
   post "/member/import", to: "members#import", as: :member_import
   get "/organization/import",

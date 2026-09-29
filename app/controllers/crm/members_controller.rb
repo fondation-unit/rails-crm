@@ -1,8 +1,8 @@
 module Crm
   class MembersController < ApplicationController
     include MemberHelper
-    include Searchable
-    include Filterable
+    include Crm::Searchable
+    include Crm::Filterable
 
     before_action :set_organizations, only: %i[new create edit update]
     before_action :set_member_types, only: %i[new create edit update]

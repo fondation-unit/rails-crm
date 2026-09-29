@@ -1,10 +1,10 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
+    "source.fixAll.stylelint": "never"
   },
   "[erb]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -27,17 +27,24 @@
     "editor.formatOnSave": true
   },
   "[ruby]": {
-    "editor.tabSize": 2,
-    "editor.formatOnSave": true,
     "editor.defaultFormatter": "Shopify.ruby-lsp",
-    "editor.semanticHighlighting.enabled": true
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.rulers": [120],
+    "editor.semanticHighlighting.enabled": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
   },
   "task.autoDetect": "off",
-  "rubyLsp.formatter": "syntax_tree",
-  // Stylelint SCSS
-  "stylelint.validate": ["css", "postcss", "scss"],
   // Disable other stylesheet linters
   "css.validate": false,
   "less.validate": false,
-  "scss.validate": false
+  "scss.validate": false,
+
+  "rubyLsp.formatter": "syntax_tree",
+  "ruby.rubocop.useBundler": true,
+  "ruby.rubocop.configFilePath": "./.rubocop.yml"
 }

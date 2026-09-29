@@ -1,7 +1,7 @@
 module Crm
   class Member < ApplicationRecord
     include NameNormalization
-    include FullTextSearchable
+    include Crm::FullTextSearchable
 
     has_many :notes, as: :notable
 
