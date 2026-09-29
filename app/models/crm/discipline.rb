@@ -1,10 +1,10 @@
 module Crm
-class Discipline < ApplicationRecord
-  has_and_belongs_to_many :members, join_table: "members_disciplines"
-  validates :name, presence: true
+  class Discipline < ApplicationRecord
+    has_and_belongs_to_many :members, join_table: "members_disciplines"
+    validates :name, presence: true
 
-  scope :ordered, -> { order(name: "asc") }
-end
+    scope :ordered, -> { order(name: "asc") }
+  end
 end
 
 # == Schema Information

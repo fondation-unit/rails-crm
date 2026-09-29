@@ -1,5 +1,5 @@
 module Crm
-  class Admin::DashboardController < Admin::AdminController
+  class DashboardController < ApplicationController
     def index
     end
   end
