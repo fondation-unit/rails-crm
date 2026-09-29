@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || 'Rails Crm' %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+  </head>
+
+  <body>
+    <div id="page">
+      <aside class="navbar navbar-vertical navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <%= link_to root_path, class:"navbar-brand mb-0 h1" do %>
+            <% if File.file? "#{Rails.root.join("app", "assets",
+          "images")}/logo-baseline.png" %>
+              <%= image_tag 'logo-baseline.png', height: '50' %>
+            <% else %>
+              <%= Rails.application.config.site_name %>
+            <% end %>
+          <% end %>
+          <%= render 'layouts/menu' %>
+        </div>
+      </aside>
+      <%= render 'layouts/header' %>
+      <div class="page-wrapper">
+        <h2 class="auth-heading text-center mb-5"><%= content_for(:title) %></h2>
+
+        <div class="auth-form-container text-start">
+          <% flash.each do |key, value| %>
+            <div class="<%= flash_class(key) %> alert-dismissible" role="alert">
+              <%= value %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

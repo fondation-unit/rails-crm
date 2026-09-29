@@ -1,0 +1,8 @@
+<h1><%= I18n.t('investments.add') %></h1>
+<%=
+  render 'form_investments',
+         investment: @investment,
+         url: admin_investments_path,
+         investment_types: @investment_types,
+         method: 'post'
+%>

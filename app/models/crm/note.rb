@@ -1,0 +1,31 @@
+module Crm
+class Note < ApplicationRecord
+  belongs_to :notable, polymorphic: true
+  belongs_to :user
+
+  has_rich_text :content
+
+  validates_associated :user
+
+  scope :ordered, -> { order(created_at: "desc") }
+end
+end
+
+# == Schema Information
+#
+# Table name: notes
+#
+#  id           :bigint           not null, primary key
+#  contact_type :string
+#  notable_type :string           not null
+#  public       :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  notable_id   :bigint           not null
+#  user_id      :bigint
+#
+# Indexes
+#
+#  index_notes_on_notable  (notable_type,notable_id)
+#  index_notes_on_user_id  (user_id)
+#

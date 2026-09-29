@@ -1,0 +1,11 @@
+<%= form_with url: path, method: :post do |f| %>
+  <label for="organization">Choisissez une institution :</label>
+  <input list="organizations" id="organization" name="organization" />
+
+  <datalist id="organizations">
+    <%= @organizations.each do |organization| %>
+      <option value="<%= organization.name %>"></option>
+    <% end %>
+  </datalist>
+  <%= submit_tag t(:filter), class: 'btn btn-primary mt-3' %>
+<% end %>

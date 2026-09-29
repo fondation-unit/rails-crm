@@ -1,0 +1,13 @@
+<%= form_with url: url, model: member_type do |f| %>
+  <div class="form-group my-4">
+    <%= f.label :name, I18n.t('members.member_type.name') %>
+    <%= f.text_field :name, required: true, class: 'form-control' %>
+  </div>
+  <button type="submit" class="btn btn-primary mb-5">
+    <% if @member_type.persisted? %>
+      <%= I18n.t('update') %>
+    <% else %>
+      <%= I18n.t('create') %>
+    <% end %>
+  </button>
+<% end %>

@@ -1,0 +1,5 @@
+web: env RUBY_DEBUG_OPEN=true bin/rails server
+js: npm run start
+css: npm run watch:css
+redis: redis-server
+sidekiq: bundle exec sidekiq -q default

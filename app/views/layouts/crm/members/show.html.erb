@@ -1,0 +1,110 @@
+<div class="d-flex w-100 flex-column justify-content-between mb-md-6 mb-4">
+  <h1><%= I18n.t('members.show_title') %></h1>
+
+  <div class="d-flex flex-md-row flex-column mb-4">
+    <div class="col-md-6">
+      <div class="card-content">
+        <div class="identity ">
+          <div class="d-flex flex-row align-items-center">
+            <i class="fa-solid fa-address-card me-2 mb-1"></i>
+            <%= "#{@member.gender} #{MemberHelper.full_name(@member)}" %>
+          </div>
+          <% if @member.position.present? %>
+            <div class="d-flex flex-row align-items-center">
+              <i class="fa-solid fa-user-tie me-2 mb-1"></i>
+              <%= @member.position %>
+            </div>
+          <% end %>
+        </div>
+        <div class="d-flex flex-row align-items-center">
+          <i class="fa-solid fa-envelope me-2 mb-1"></i>
+          <%= mail_to @member.email_address, @member.email_address %>
+        </div>
+        <% if @member.phone_number.present? %>
+          <div class="d-flex flex-row align-items-center">
+            <i class="fa-solid fa-phone me-2 mb-1"></i>
+            <%= link_to @member.phone_number, "tel:#{@member.set_phone_link}" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="d-flex flex-row align-items-center">
+        <%= I18n.t('members.copil_member') %>
+        :
+        <%= @member.copil ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+        <%= I18n.t('members.comex_member') %>
+        :
+        <%= @member.comex ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex flex-row align-items-center">
+        <%= I18n.t('members.invest') %>
+        :
+        <%= @member.invest ? I18n.t('Yes') : I18n.t('No') %>
+      </div>
+      <% if @member.investments.present? %>
+        <p class="my-2 fw-bold">Types d'investissement</p>
+        <% @member.investments.each do |val| %>
+          <%= val.name %>
+          <br />
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div>
+      <% if Current&.session&.user %>
+        <%= link_to I18n.t('edit'), edit_admin_member_path(@member), { class: 'btn btn-primary' } %>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to I18n.t('notes.add'), admin_new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
+    </div>
+  </div>
+</div>
+
+<%=
+  render 'shared/tables/sortable_table',
+         headers: [
+           [:contact_type, I18n.t('notes.contact_type')],
+           [:public, I18n.t('notes.public')],
+           [:content, I18n.t('notes.content')],
+           [:created_at, I18n.t('notes.created_at')],
+           [:user_id, I18n.t('notes.created_by')],
+           [:edit, ''],
+           [:delete, ''],
+         ],
+         objects: @notes,
+         pagy: @pagy,
+         columns: %w[contact_type public content created_at user_id edit delete],
+         formatters: {
+           edit: ->(note) { link_to I18n.t('edit'), edit_admin_note_path(note) if is_current_user?(note.user&.id) },
+           delete: ->(note) {
+             if is_current_user?(note.user&.id)
+               link_to I18n.t('delete'),
+                       admin_note_path(note),
+                       data: {
+                         turbo_method: :delete,
+                         turbo_confirm: I18n.t('notes.validation_delete'),
+                       }
+             end
+           },
+           public: ->(note) {
+             raw(
+               if note.public != true
+                 '<i class="fa-solid fa-xmark text-danger"></i>'
+               else
+                 '<i class="fa-solid fa-check text-success"></i>'
+               end,
+             )
+           },
+           created_at: ->(note) { date_readable(note.created_at) },
+           content: ->(note) { note_excerpt(note.content) },
+           user_id: ->(note) {
+             is_current_user?(note.user&.id) ? I18n.t('notes.moi') : note.user.first_name + ' ' + note.user.last_name
+           },
+           contact_type: ->(note) { note.contact_type.present? ? I18n.t("notes.#{note.contact_type}") : '' },
+         }
+%>

@@ -1,0 +1,3 @@
+<h1><%= I18n.t('investments.add') %></h1>
+
+<%= render 'form_investments', investment: @investment, url: admin_investment_path(@investment), method: 'patch' %>
