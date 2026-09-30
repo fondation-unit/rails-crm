@@ -1,9 +1,10 @@
 {
-    "recommendations": [
-        "Shopify.ruby-lsp",
-        "esbenp.prettier-vscode",
-        "syler.sass-indented",
-        "stylelint.vscode-stylelint",
-        "damms005.devdb"
-    ]
+  "recommendations": [
+    "Shopify.ruby-lsp",
+    "esbenp.prettier-vscode",
+    "syler.sass-indented",
+    "stylelint.vscode-stylelint",
+    "misogi.ruby-rubocop",
+    "pavlitsky.yard"
+  ]
 }

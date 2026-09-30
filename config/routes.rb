@@ -1,4 +1,6 @@
 Crm::Engine.routes.draw do
+  root "application#index"
+
   concern :searchable do
     collection do
       post :search, defaults: { format: :turbo_stream }

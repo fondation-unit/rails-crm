@@ -5,23 +5,26 @@ plugins: rubocop-rspec
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+AllCops:
+  NewCops: enable
+
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
 Layout/SpaceInsideArrayLiteralBrackets:
-    Enabled: false
+  Enabled: false
 
 RSpec/ExampleLength:
-    Enabled: false
-
+  Enabled: false
 RSpec/MultipleExpectations:
-    Enabled: false
+  Enabled: false
+RSpec/IncludeExamples:
+  Enabled: false
 
 Naming/VariableName:
-    Enabled: true
-    EnforcedStyle: snake_case
-    AllowedPatterns: []
-
-Style/StringLiterals:
-    EnforcedStyle: double_quotes
-    Enabled: true
-
-Style/StringLiteralsInInterpolation:
-    EnforcedStyle: double_quotes
+  Enabled: true
+  EnforcedStyle: snake_case
+  AllowedPatterns: []
