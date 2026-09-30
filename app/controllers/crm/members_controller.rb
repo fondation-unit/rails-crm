@@ -72,7 +72,7 @@ module Crm
                     notice:
                       I18n.t(
                         "members.created",
-                        name: MemberHelper.full_name(@member)
+                        name: Crm::MemberHelper.full_name(@member)
                       )
       else
         redirect_to crm.members_path,
@@ -89,7 +89,7 @@ module Crm
                     notice:
                       I18n.t(
                         "members.updated",
-                        name: MemberHelper.full_name(@member)
+                        name: Crm::MemberHelper.full_name(@member)
                       )
       else
         redirect_to crm.members_path,
@@ -106,7 +106,7 @@ module Crm
                     alert:
                       I18n.t(
                         "members.deleted",
-                        name: MemberHelper.full_name(@member)
+                        name: Crm::MemberHelper.full_name(@member)
                       )
       else
         redirect_to crm.members_path, alert: I18n.t("members.error_update")

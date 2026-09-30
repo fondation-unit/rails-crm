@@ -27,7 +27,7 @@
   </thead>
   <tbody>
     <% records.each_with_index do |c, i| %>
-      <tr class="<%= MemberHelper.status_class(c) %>">
+      <tr class="<%= Crm::MemberHelper.status_class(c) %>">
         <td><%= c.id %></td>
         <td><%= link_to c.first_name, crm.member_path(c.id) %></td>
         <td><%= link_to c.last_name, crm.member_path(c.id) %></td>

@@ -1,6 +1,6 @@
 module Crm
   class MemberType < ApplicationRecord
-    has_and_belongs_to_many :members, join_table: "member_types_members"
+    has_and_belongs_to_many :members, join_table: "crm_members_member_types"
 
     validates :name, presence: true
 

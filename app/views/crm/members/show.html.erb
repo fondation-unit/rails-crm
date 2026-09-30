@@ -7,7 +7,7 @@
         <div class="identity ">
           <div class="d-flex flex-row align-items-center">
             <i class="bi bi-person-vcard-fill me-2 mb-1"></i>
-            <%= "#{@member.gender} #{MemberHelper.full_name(@member)}" %>
+            <%= "#{@member.gender} #{Crm::MemberHelper.full_name(@member)}" %>
           </div>
           <% if @member.position.present? %>
             <div class="d-flex flex-row align-items-center">
