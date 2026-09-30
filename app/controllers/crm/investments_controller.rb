@@ -2,7 +2,6 @@ module Crm
   class InvestmentsController < ApplicationController
     include Searchable
     include Filterable
-    include Pundit::Authorization
 
     def index
       investments = Investment.all.order(sort_column => sort_direction)
@@ -17,10 +16,10 @@ module Crm
       @investment = Investment.new(investment_params)
 
       if @investment.save
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     notice: I18n.t("investments.created", name: @investment.name)
       else
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
@@ -33,10 +32,10 @@ module Crm
       @investment = Investment.find(params[:id])
 
       if @investment.update(investment_params)
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     notice: I18n.t("investments.updated", name: @investment.name)
       else
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
@@ -45,10 +44,10 @@ module Crm
       @investment = Investment.find(params[:id])
 
       if @investment.destroy
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     notice: I18n.t("investments.updated", name: @investment.name)
       else
-        redirect_to admin_investments_path,
+        redirect_to investments_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end

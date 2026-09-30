@@ -2,5 +2,5 @@ require "crm/version"
 require "crm/engine"
 
 module Crm
-  # Your code goes here...
+  require "telephone_number"
 end

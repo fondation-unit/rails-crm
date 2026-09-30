@@ -2,7 +2,7 @@ module Crm
   module Searchable
     extend ActiveSupport::Concern
 
-    def search_records(scope, policy = true)
+    def search_records(scope)
       session[:search] = params[:q].to_s if params.key?(:q)
 
       query = session[:search].to_s

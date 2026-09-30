@@ -1,18 +1,18 @@
 <div class="d-flex w-100 justify-content-between">
     <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
     <div>
-        <%= link_to I18n.t('members.organizations.add'), new_admin_organization_path, class: 'btn btn-primary align-self-center' %>
-        <%= link_to I18n.t('members.organizations.import'), admin_organization_import_form_path, class: 'btn btn-primary align-self-center' %>
+        <%= link_to I18n.t('members.organizations.add'), new_organization_path, class: 'btn btn-primary align-self-center' %>
+        <%= link_to I18n.t('members.organizations.import'), organization_import_form_path, class: 'btn btn-primary align-self-center' %>
     </div>
 </div>
 <%=
-  render partial: 'admin/organizations/parts/search_bar_organizations',
+  render partial: 'crm/organizations/parts/search_bar_organizations',
          locals: {
-           path: search_admin_organizations_path,
+           path: search_organizations_path,
            translate: 'organizations',
            translate_list: 'organizations.statuses',
            filters: {
-             status: Organization.statuses,
+             status: Crm::Organization.statuses,
            },
          }
 %>

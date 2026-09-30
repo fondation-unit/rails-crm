@@ -70,14 +70,14 @@ module Crm
 
       if @member.save
         ReferentMailer.with(member: @member).investments_email.deliver_later
-        redirect_to admin_members_path,
+        redirect_to members_path,
                     notice:
                       I18n.t(
                         "members.created",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to admin_members_path,
+        redirect_to members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
@@ -86,14 +86,14 @@ module Crm
       @member = Member.find(params[:id])
 
       if @member.update(member_params)
-        redirect_to admin_members_path,
+        redirect_to members_path,
                     notice:
                       I18n.t(
                         "members.updated",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to admin_members_path,
+        redirect_to members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
@@ -102,14 +102,14 @@ module Crm
       @member = Member.find(params[:id])
 
       if @member.destroy
-        redirect_to admin_members_path,
+        redirect_to members_path,
                     alert:
                       I18n.t(
                         "members.deleted",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to admin_members_path, alert: I18n.t("members.error_update")
+        redirect_to members_path, alert: I18n.t("members.error_update")
       end
     end
 
@@ -137,7 +137,7 @@ module Crm
       if uploaded_file.present?
         MemberImporter.new(uploaded_file, user: current_user).call
 
-        redirect_to admin_members_path, notice: I18n.t("members.imported")
+        redirect_to members_path, notice: I18n.t("members.imported")
       end
     end
 
@@ -175,12 +175,12 @@ module Crm
 
     def search_and_filter_render(pagy, records)
       respond_to do |format|
-        format.html { render "admin/members/list" }
+        format.html { render "members/list" }
         format.turbo_stream do
           render turbo_stream: [
                   turbo_stream.update(
                     "search_results",
-                    partial: "admin/members/list",
+                    partial: "members/list",
                     locals: {
                       records: records,
                       pagy: pagy

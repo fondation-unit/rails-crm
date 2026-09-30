@@ -1,6 +1,6 @@
 class CreateNotes < ActiveRecord::Migration[8.0]
   def change
-    create_table :notes do |t|
+    create_table :crm_notes do |t|
       t.boolean :public, default: false
       t.string :contact_type
       t.references :user

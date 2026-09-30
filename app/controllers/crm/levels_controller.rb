@@ -17,9 +17,9 @@ module Crm
       @level = Level.new(level_params)
 
       if @level.save
-        redirect_to admin_levels_path, notice: I18n.t("members.level.created")
+        redirect_to levels_path, notice: I18n.t("members.level.created")
       else
-        redirect_to admin_levels_path,
+        redirect_to levels_path,
                     alert: @level.errors.full_messages.join(", ")
       end
     end
@@ -28,10 +28,10 @@ module Crm
       @level = Level.find(params[:id])
 
       if @level.update(level_params)
-        redirect_to admin_levels_path,
+        redirect_to levels_path,
                     notice: I18n.t("members.level.updated", name: @level.name)
       else
-        redirect_to admin_levels_path,
+        redirect_to levels_path,
                     alert: @level.errors.full_messages.join(", ")
       end
     end
@@ -41,10 +41,10 @@ module Crm
       nom = @level.name
 
       if @level.destroy
-        redirect_to admin_levels_path,
+        redirect_to levels_path,
                     notice: I18n.t("members.level.deleted", name: nom)
       else
-        redirect_to admin_levels_path, alert: I18n.t("members.level.error_update")
+        redirect_to levels_path, alert: I18n.t("members.level.error_update")
       end
     end
 

@@ -1,4 +1,9 @@
 module Crm
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ::ApplicationController
+    helper Crm::FilterHelper
+
+    def index
+      render 'crm/dashboard/index'
+    end
   end
 end

@@ -1,7 +1,6 @@
 module Crm
   class NotesController < ApplicationController
     include MemberHelper
-    include Pundit::Authorization
 
     def index
     end

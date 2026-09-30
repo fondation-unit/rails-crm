@@ -1,18 +1,19 @@
 fr:
-  "update": "Mettre à jour"
-  "create": "Créer"
-  "edit": "Editer"
-  "delete": "Supprimer"
-  "first_name": "Prénom"
-  "last_name": "Nom"
-  "email_address": "Adresse email"
-  "phone_number": "Téléphone"
-  "Yes": "Oui"
-  "No": "Non"
-  "name": "Nom"
-  "address": "Adresse"
-  "zip_code": "Code postal"
-  "city": "Ville"
-  "search": "Recherche"
-  "filter": "Filtrer"
-  "import": "Importer"
+  crm: 'CRM'
+  update: 'Mettre à jour'
+  create: 'Créer'
+  edit: 'Editer'
+  delete: 'Supprimer'
+  first_name: 'Prénom'
+  last_name: 'Nom'
+  email_address: 'Adresse email'
+  phone_number: 'Téléphone'
+  'Yes': 'Oui'
+  'No': 'Non'
+  name: 'Nom'
+  address: 'Adresse'
+  zip_code: 'Code postal'
+  city: 'Ville'
+  search: 'Recherche'
+  filter: 'Filtrer'
+  import: 'Importer'
