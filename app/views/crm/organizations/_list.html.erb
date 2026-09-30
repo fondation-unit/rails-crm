@@ -38,7 +38,7 @@
         <td><%= c.zip_code %></td>
         <td><%= c.city %></td>
         <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
-        <td><%= UserHelper.full_name(c.user) %></td>
+        <td><%= Crm::UserHelper.full_name(c.user) %></td>
         <td><%= link_to I18n.t('notes.add'), new_organization_note_path(c), { class: 'btn btn-info' } %></td>
         <td><%= link_to I18n.t('edit'), edit_organization_path(c) %></td>
         <td>
