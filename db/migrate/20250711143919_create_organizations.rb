@@ -15,7 +15,20 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    execute <<~SQL
+        ALTER TABLE crm_organizations
+        ADD COLUMN search_vector tsvector
+        GENERATED ALWAYS AS (
+          to_tsvector('simple',
+            coalesce(name, '') || ' ' ||
+            coalesce(city, '') || ' ' ||
+            coalesce(address, '')
+          )
+        ) STORED;
+      SQL
+
+    add_index :crm_organizations, :name, unique: true
+    add_index :crm_organizations, :search_vector, using: :gin
   end
-
-
 end

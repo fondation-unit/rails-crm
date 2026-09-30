@@ -6,23 +6,23 @@
       <div class="card-content">
         <div class="identity ">
           <div class="d-flex flex-row align-items-center">
-            <i class="fa-solid fa-address-card me-2 mb-1"></i>
+            <i class="bi bi-person-vcard-fill me-2 mb-1"></i>
             <%= "#{@member.gender} #{MemberHelper.full_name(@member)}" %>
           </div>
           <% if @member.position.present? %>
             <div class="d-flex flex-row align-items-center">
-              <i class="fa-solid fa-user-tie me-2 mb-1"></i>
+              <i class="bi bi-person-badge-fill me-2 mb-1"></i>
               <%= @member.position %>
             </div>
           <% end %>
         </div>
         <div class="d-flex flex-row align-items-center">
-          <i class="fa-solid fa-envelope me-2 mb-1"></i>
+          <i class="bi bi-envelope-fill me-2 mb-1"></i>
           <%= mail_to @member.email_address, @member.email_address %>
         </div>
         <% if @member.phone_number.present? %>
           <div class="d-flex flex-row align-items-center">
-            <i class="fa-solid fa-phone me-2 mb-1"></i>
+            <i class="bi bi-telephone-fill me-2 mb-1"></i>
             <%= link_to @member.phone_number, "tel:#{@member.set_phone_link}" %>
           </div>
         <% end %>
@@ -94,9 +94,9 @@
            public: ->(note) {
              raw(
                if note.public != true
-                 '<i class="fa-solid fa-xmark text-danger"></i>'
+                 '<i class="bi bi-x-lg text-danger"></i>'
                else
-                 '<i class="fa-solid fa-check text-success"></i>'
+                 '<i class="bi bi-check-lg text-success"></i>'
                end,
              )
            },
