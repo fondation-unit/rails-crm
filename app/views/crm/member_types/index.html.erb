@@ -3,7 +3,7 @@
     <%= link_to I18n.t('members.member_type.add'), crm.new_member_type_path, class: 'btn btn-primary align-self-center' %>
 </div>
 <%=
-  render 'shared/tables/sortable_table',
+  render 'crm/shared/sortable_table',
          headers: [[:id, '#'], [:name, 'Nom'], [:edit, ''], [:delete, '']],
          objects: @records,
          pagy: @pagy,

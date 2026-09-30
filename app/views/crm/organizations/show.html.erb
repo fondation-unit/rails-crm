@@ -32,7 +32,7 @@
     <%= @organization.name %>
   </h2>
   <%=
-    render 'shared/tables/sortable_table',
+    render 'crm/shared/sortable_table',
            headers: [
              [:id, '#'],
              [:first_name, 'Prénom'],
@@ -65,7 +65,7 @@
     </div>
   </div>
   <%=
-    render 'shared/tables/sortable_table',
+    render 'crm/shared/sortable_table',
            headers: [
              [:contact_type, I18n.t('notes.contact_type')],
              [:public, I18n.t('notes.public')],
