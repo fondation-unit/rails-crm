@@ -11,7 +11,6 @@ module Crm
     before_action :set_disciplines, only: %i[new create edit update]
 
     def index
-      # Requête initiale
       members =
         Member.includes(
           :organizations,
@@ -22,16 +21,9 @@ module Crm
           :investments
         ).order(sort_column => sort_direction)
 
-      # Application des filtres (s'il y en a en session)
+      members = policy_scope(members)
       records = search_and_filter(members)
-
-      # Complément de Requête (!= Elise Lucet)
       members = records.order(sort_column => sort_direction)
-
-      respond_to do |format|
-        format.html
-        format.turbo_stream
-      end
 
       @organizations = Organization.order(:name)
       @investments = Investment.order(:name)
@@ -41,6 +33,7 @@ module Crm
 
     def show
       @member = Member.find(params[:id])
+      authorize @member
 
       notes = @member.notes
       @pagy, @notes = pagy(notes)
@@ -48,6 +41,8 @@ module Crm
 
     def new
       @member = Member.new
+      authorize @member
+
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -56,6 +51,8 @@ module Crm
 
     def edit
       @member = Member.find(params[:id])
+      authorize @member
+
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -67,49 +64,52 @@ module Crm
 
     def create
       @member = Member.new(member_params)
+      authorize @member
 
       if @member.save
         ReferentMailer.with(member: @member).investments_email.deliver_later
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     notice:
                       I18n.t(
                         "members.created",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
 
     def update
       @member = Member.find(params[:id])
+      authorize @member
 
       if @member.update(member_params)
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     notice:
                       I18n.t(
                         "members.updated",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
 
     def destroy
       @member = Member.find(params[:id])
+      authorize @member
 
       if @member.destroy
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert:
                       I18n.t(
                         "members.deleted",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path, alert: I18n.t("members.error_update")
+        redirect_to crm.members_path, alert: I18n.t("members.error_update")
       end
     end
 
@@ -132,6 +132,7 @@ module Crm
     end
 
     def import
+      authorize Member
       uploaded_file = params[:csv_file]
 
       if uploaded_file.present?

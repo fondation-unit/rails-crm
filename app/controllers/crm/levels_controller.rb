@@ -1,50 +1,56 @@
 module Crm
   class LevelsController < ApplicationController
     def index
-      levels = Level.all.order(sort_column => sort_direction)
+      levels = policy_scope(Level.order(sort_column => sort_direction))
       @pagy, @records = pagy(levels)
     end
 
     def new
       @level = Level.new
+      authorize @level
     end
 
     def edit
       @level = Level.find(params[:id])
+      authorize @level
     end
 
     def create
       @level = Level.new(level_params)
+      authorize @level
 
       if @level.save
-        redirect_to levels_path, notice: I18n.t("members.level.created")
+        redirect_to crm.levels_path, notice: I18n.t("members.level.created")
       else
-        redirect_to levels_path,
+        redirect_to crm.levels_path,
                     alert: @level.errors.full_messages.join(", ")
       end
     end
 
     def update
       @level = Level.find(params[:id])
+      authorize @level
 
       if @level.update(level_params)
-        redirect_to levels_path,
+        redirect_to crm.levels_path,
                     notice: I18n.t("members.level.updated", name: @level.name)
       else
-        redirect_to levels_path,
+        redirect_to crm.levels_path,
                     alert: @level.errors.full_messages.join(", ")
       end
     end
 
     def destroy
       @level = Level.find(params[:id])
+      authorize @level
+
       nom = @level.name
 
       if @level.destroy
-        redirect_to levels_path,
+        redirect_to crm.levels_path,
                     notice: I18n.t("members.level.deleted", name: nom)
       else
-        redirect_to levels_path, alert: I18n.t("members.level.error_update")
+        redirect_to crm.levels_path, alert: I18n.t("members.level.error_update")
       end
     end
 

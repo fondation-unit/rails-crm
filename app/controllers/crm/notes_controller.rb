@@ -7,49 +7,58 @@ module Crm
 
     def new
       @note = Note.new
+      authorize @note
+
       @notable = find_notable
     end
 
     def create
       notable = find_notable
       @note = Note.new(note_params)
+      authorize @note
+
       @note.notable = notable
 
       if @note.save
-        redirect_to polymorphic_path([:admin, @note.notable]),
+        redirect_to crm.polymorphic_path([:admin, @note.notable]),
                     notice: I18n.t("notes.created")
       else
-        redirect_to polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([:admin, notable]),
                     notice: @note.errors.full_messages.join(", ")
       end
     end
 
     def edit
       @note = Note.find(params[:id])
+      authorize @note
     end
 
     def update
       @note = Note.includes(:notable).find(params[:id])
+      authorize @note
+
       notable = @note.notable
 
       if @note.update(note_params)
-        redirect_to polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([:admin, notable]),
                     notice: I18n.t("notes.updated")
       else
-        redirect_to polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([:admin, notable]),
                     notice: @note.errors.full_messages.join(", ")
       end
     end
 
     def destroy
       @note = Note.includes(:notable).find(params[:id])
+      authorize @note
+
       notable = @note.notable
 
       if @note.destroy
-        redirect_to polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([:admin, notable]),
                     alert: I18n.t("notes.deleted")
       else
-        redirect_to polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([:admin, notable]),
                     alert: I18n.t("notes.error_update")
       end
     end

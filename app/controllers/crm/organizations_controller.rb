@@ -4,73 +4,73 @@ module Crm
     include Searchable
 
     def index
-      # Requête initiale
-      organizations = Organization.includes(:notes)
-
-      # Application des filtres s'il y en a en session
+      organizations = policy_scope(Organization.includes(:notes))
       records = search_and_filter(organizations)
-
-      # Complément de requête
       organizations = records.order(sort_column => sort_direction)
       @pagy, @records = pagy(organizations)
-
-      respond_to do |format|
-        format.html
-        format.turbo_stream
-      end
     end
 
     def show
       @organization = Organization.includes(:members, :notes).find(params[:id])
+      authorize @organization
+
       @pagy, @records = pagy(@organization.members)
+
       notes = @organization.notes
       @pagy2, @notes = pagy(notes)
     end
 
     def new
       @organization = Organization.new
+      authorize @organization
     end
 
     def edit
       @organization = Organization.find(params[:id])
+      authorize @organization
+
       notes = @organization.notes
       @pagy, @notes = pagy(notes)
     end
 
     def create
       @organization = Organization.new(organization_params)
+      authorize @organization
 
       if @organization.save
-        redirect_to organizations_path, notice: "Institution créée"
+        redirect_to crm.organizations_path, notice: "Institution créée"
       else
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
 
     def update
       @organization = Organization.find(params[:id])
+      authorize @organization
 
       if @organization.update(organization_params)
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     notice: "Institution \"#{@organization.name}\" mise à jour"
       else
         @organization.reload # Reload the object to get the existing attachment
 
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
 
     def destroy
       @organization = Organization.find(params[:id])
+      authorize @organization
+
       nom = @organization.name
 
       if @organization.destroy
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     notice: "Institution \"#{nom}\" supprimée"
       else
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     alert: "Erreur lors de la suppression de l'institution"
       end
     end
@@ -90,12 +90,13 @@ module Crm
     end
 
     def import
+      authorize Organization
       uploaded_file = params[:csv_file]
 
       if uploaded_file.present?
         OrganizationImporter.new(uploaded_file, user: current_user).call
 
-        redirect_to organizations_path,
+        redirect_to crm.organizations_path,
                     notice: I18n.t("members.organizations.imported")
       end
     end
@@ -118,13 +119,17 @@ module Crm
     end
 
     def search_and_filter_render(pagy, records)
+      list_partial = "#{controller_path}/list"
+
       respond_to do |format|
-        format.html { render "organizations/list" }
+        format.html do
+          render partial: list_partial, locals: { records:, pagy: }
+        end
         format.turbo_stream do
           render turbo_stream: [
                   turbo_stream.update(
                     "search_results",
-                    partial: "organizations/list",
+                    partial: list_partial,
                     locals: {
                       records: records,
                       pagy: pagy

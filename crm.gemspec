@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.version     = Crm::VERSION
   spec.authors     = [ "ledob44" ]
   spec.email       = [ "olivier.imbert@unit.eu" ]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of Crm."
-  spec.description = "TODO: Description of Crm."
+  spec.homepage    = "https://github.com/fondation-unit/rails-crm"
+  spec.summary     = "Rails CRM."
+  spec.description = "Rails CRM."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 8.1.0.rc1"
+  spec.add_dependency "rails", ">= 8.1.3"
   spec.add_dependency "telephone_number"
 end

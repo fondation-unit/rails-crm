@@ -1,52 +1,57 @@
 module Crm
   class DisciplinesController < ApplicationController
     def index
-      disciplines = Discipline.all.order(sort_column => sort_direction)
+      disciplines = policy_scope(Discipline.order(sort_column => sort_direction))
       @pagy, @records = pagy(disciplines)
     end
 
     def new
       @discipline = Discipline.new
+      authorize @discipline
     end
 
     def edit
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
     end
 
     def create
       @discipline = Discipline.new(discipline_params)
+      authorize @discipline
 
       if @discipline.save
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice: I18n.t("members.discipline.created")
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
 
     def update
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
 
       if @discipline.update(discipline_params)
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice:
                       I18n.t("members.discipline.updated", name: @discipline.name)
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
 
     def destroy
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
 
       if @discipline.destroy
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice:
                       I18n.t("members.discipline.deleted", name: @discipline.name)
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: I18n.t("members.discipline.error_update")
       end
     end

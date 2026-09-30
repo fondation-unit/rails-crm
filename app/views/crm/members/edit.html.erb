@@ -1,16 +1,16 @@
 <h1><%= I18n.t('members.add') %></h1>
 
 <%=
-  render 'form_members', member: @member, url: member_path(@member), member_types: @member_types, method: 'patch'
+  render 'form_members', member: @member, url: crm.member_path(@member), member_types: @member_types, method: 'patch'
 %>
 
 <div class="d-flex flex-md-row justify-content-between align-items-center">
   <h2 class="mb-4">Les notes</h2>
-  <%= link_to I18n.t('notes.add'), new_member_note_path(@member.id), class: 'btn btn-primary align-self-center' %>
+  <%= link_to I18n.t('notes.add'), crm.new_member_note_path(@member.id), class: 'btn btn-primary align-self-center' %>
 </div>
 
 <%=
-  render 'shared/tables/sortable_table',
+  render 'crm/shared/sortable_table',
          headers: [
            [:contact_type, I18n.t('notes.contact_type')],
            [:public, I18n.t('notes.public')],
@@ -24,10 +24,10 @@
          pagy: @pagy,
          columns: %w[contact_type public content created_at user_id edit delete],
          formatters: {
-           edit: ->(note) { link_to I18n.t('edit'), edit_note_path(note) },
+           edit: ->(note) { link_to I18n.t('edit'), crm.edit_note_path(note) },
            delete: ->(note) {
                link_to I18n.t('delete'),
-                       note_path(note),
+                       crm.note_path(note),
                        data: {
                          turbo_method: :delete,
                          turbo_confirm: I18n.t('notes.validation_delete'),
