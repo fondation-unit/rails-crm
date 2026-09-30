@@ -1,20 +1,23 @@
 module Crm
   class LevelsController < ApplicationController
     def index
-      levels = Level.all.order(sort_column => sort_direction)
+      levels = policy_scope(Level.order(sort_column => sort_direction))
       @pagy, @records = pagy(levels)
     end
 
     def new
       @level = Level.new
+      authorize @level
     end
 
     def edit
       @level = Level.find(params[:id])
+      authorize @level
     end
 
     def create
       @level = Level.new(level_params)
+      authorize @level
 
       if @level.save
         redirect_to crm.levels_path, notice: I18n.t("members.level.created")
@@ -26,6 +29,7 @@ module Crm
 
     def update
       @level = Level.find(params[:id])
+      authorize @level
 
       if @level.update(level_params)
         redirect_to crm.levels_path,
@@ -38,6 +42,8 @@ module Crm
 
     def destroy
       @level = Level.find(params[:id])
+      authorize @level
+
       nom = @level.name
 
       if @level.destroy

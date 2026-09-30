@@ -1,7 +1,7 @@
 module Crm
   class DisciplinesController < ApplicationController
     def index
-      disciplines = policy_scope(Discipline.all.order(sort_column => sort_direction))
+      disciplines = policy_scope(Discipline.order(sort_column => sort_direction))
       @pagy, @records = pagy(disciplines)
     end
 
