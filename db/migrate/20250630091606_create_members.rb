@@ -18,6 +18,22 @@ class CreateMembers < ActiveRecord::Migration[8.0]
       t.integer :status, null: true, default: 0
 
       t.timestamps
-   end
+    end
+
+    execute <<~SQL
+        ALTER TABLE crm_members
+        ADD COLUMN search_vector tsvector
+        GENERATED ALWAYS AS (
+          to_tsvector('simple',
+            coalesce(first_name, '') || ' ' ||
+            coalesce(last_name, '') || ' ' ||
+            coalesce(position, '') || ' ' ||
+            coalesce(email_address, '')
+          )
+        ) STORED;
+      SQL
+
+    add_index :crm_members, :email_address, unique: true
+    add_index :crm_members, :search_vector, using: :gin
   end
 end

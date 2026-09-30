@@ -17,7 +17,7 @@ module Crm
 
     has_many :notes, as: :notable
 
-    has_and_belongs_to_many :members, join_table: "members_organizations"
+    has_and_belongs_to_many :members
 
     has_one_attached :logo do |attachable|
       attachable.variant :thumb, resize_to_limit: [200, 200]

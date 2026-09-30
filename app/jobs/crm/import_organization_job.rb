@@ -25,7 +25,7 @@ module Crm
           ).present?
         orga.notes.create!(
           user_id: user.id,
-          content: MemberHelper.utf_decode(row["Notes"])
+          content: Crm::MemberHelper.utf_decode(row["Notes"])
         )
       end
     end

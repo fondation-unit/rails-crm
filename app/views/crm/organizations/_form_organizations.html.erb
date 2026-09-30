@@ -62,7 +62,7 @@
           f.object.status,
         )
     %>
-    <%= f.select(:status, options) %>
+    <%= f.select :status, options, { include_blank: false }, { class: "form-select" } %>
   </div>
   <button type="submit" class="btn btn-primary mb-5">
     <% if @organization.persisted? %>

@@ -10,8 +10,8 @@ module Crm
       investments = investment_ids(row)
 
       member.update!(
-        first_name: MemberHelper.utf_decode(row["first_name"]),
-        last_name: MemberHelper.utf_decode(row["last_name"]),
+        first_name: Crm::MemberHelper.utf_decode(row["first_name"]),
+        last_name: Crm::MemberHelper.utf_decode(row["last_name"]),
         email_address: row["email_address"],
         phone_number: nil,
         copil: yes?(row["copil (oui/non)"]),
@@ -48,7 +48,7 @@ module Crm
           ).present?
         member.notes.create!(
           user_id: user.id,
-          content: MemberHelper.utf_decode(row["Notes"])
+          content: Crm::MemberHelper.utf_decode(row["Notes"])
         )
       end
 

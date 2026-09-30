@@ -8,7 +8,7 @@
             Crm::Organization.statuses.map { |key, value| [I18n.t("members.organizations.statuses.#{key}"), key] },
           )
       %>
-      <%= f.select('status', options) %>
+      <%= f.select 'status', options, { include_blank: false }, { class: "form-select" } %>
     </div>
     <button type="submit" class="btn btn-primary mb-5">
       <%= I18n.t('filter') %>
