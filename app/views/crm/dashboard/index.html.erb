@@ -1,1 +1,27 @@
 <h1><%= I18n.t('crm') %></h1>
+
+<ul class="navbar-nav pt-lg-3">
+  <li class="nav-item ">
+    <%= link_to I18n.t('menu.organizations'), crm.organizations_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item ">
+    <%= link_to I18n.t('menu.members'), crm.members_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to I18n.t('menu.params'), crm.members_path, class: 'nav-link ', data: { 'bs-toggle': 'dropdown'} %>
+    <ul>
+      <li class="nav-item ">
+        <%= link_to I18n.t('menu.member_types'), crm.member_types_path, class: 'nav-link' %>
+      </li>
+      <li class=" nav-item ">
+        <%= link_to I18n.t('menu.investments'), crm.investments_path, class: 'nav-link' %>
+      </li>
+      <li class=" nav-item ">
+        <%= link_to I18n.t('menu.disciplines'), crm.disciplines_path, class: 'nav-link' %>
+      </li>
+      <li class=" nav-item ">
+        <%= link_to I18n.t('menu.levels'), crm.levels_path, class: 'nav-link' %>
+      </li>
+    </ul>
+  </li>
+</ul>

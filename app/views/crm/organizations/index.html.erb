@@ -1,9 +1,9 @@
 <div class="d-flex w-100 justify-content-between">
-    <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
-    <div>
-        <%= link_to I18n.t('members.organizations.add'), crm.new_organization_path, class: 'btn btn-primary align-self-center' %>
-        <%= link_to I18n.t('members.organizations.import'), crm.organization_import_form_path, class: 'btn btn-primary align-self-center' %>
-    </div>
+  <h1 class="mb-4"><%= I18n.t('members.organizations.title') %></h1>
+  <div>
+    <%= link_to I18n.t('members.organizations.add'), crm.new_organization_path, class: 'btn btn-primary align-self-center' %>
+    <%= link_to I18n.t('members.organizations.import'), crm.organization_import_form_path, class: 'btn btn-primary align-self-center' %>
+  </div>
 </div>
 <%=
   render partial: 'crm/organizations/parts/search_bar_organizations',
@@ -18,9 +18,8 @@
 %>
 
 <div id="search_results">
-    <%= render 'list', records: @records %>
+  <%= render 'list', records: @records %>
 </div>
-
 <div id="search_pagination" data-turbo-prefetch="false">
-    <%= render 'shared/ui/pagy', pagy: @pagy %>
+  <%= render 'shared/ui/pagy', pagy: @pagy %>
 </div>

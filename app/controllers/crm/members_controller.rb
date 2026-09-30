@@ -25,11 +25,6 @@ module Crm
       records = search_and_filter(members)
       members = records.order(sort_column => sort_direction)
 
-      respond_to do |format|
-        format.html
-        format.turbo_stream
-      end
-
       @organizations = Organization.order(:name)
       @investments = Investment.order(:name)
 
