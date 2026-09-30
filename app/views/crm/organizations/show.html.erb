@@ -45,10 +45,10 @@
            pagy: @pagy,
            columns: %w[id first_name last_name email_address phone_number edit],
            formatters: {
-             edit: ->(member) { link_to 'Editer', edit_member_path(member) },
+             edit: ->(member) { link_to 'Editer', crm.edit_member_path(member) },
              email_address: ->(member) { mail_to member.email_address, member.email_address },
-             first_name: ->(member) { link_to member.first_name, member_path(member.id) },
-             last_name: ->(member) { link_to member.last_name, member_path(member.id) },
+             first_name: ->(member) { link_to member.first_name, crm.member_path(member.id) },
+             last_name: ->(member) { link_to member.last_name, crm.member_path(member.id) },
            }
   %>
   <div class="d-flex w-100 justify-content-between mt-5">
@@ -59,7 +59,7 @@
     <div>
       <%=
         link_to I18n.t('notes.add'),
-                new_organization_note_path(organization_id: @organization.id),
+                crm.new_organization_note_path(organization_id: @organization.id),
                 { class: 'btn btn-info' }
       %>
     </div>
@@ -81,13 +81,13 @@
            formatters: {
              edit: ->(note) {
                if is_current_user?(note.user&.id)
-                 link_to I18n.t('edit'), edit_organization_note_path(@organization, note)
+                 link_to I18n.t('edit'), crm.edit_organization_note_path(@organization, note)
                end
              },
              delete: ->(note) {
                if is_current_user?(note.user&.id)
                  link_to I18n.t('delete'),
-                         note_path(note),
+                         crm.note_path(note),
                          data: {
                            turbo_method: :delete,
                            turbo_confirm: I18n.t('notes.validation_delete'),

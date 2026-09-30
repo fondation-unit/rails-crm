@@ -68,14 +68,14 @@ module Crm
 
       if @member.save
         ReferentMailer.with(member: @member).investments_email.deliver_later
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     notice:
                       I18n.t(
                         "members.created",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
@@ -85,14 +85,14 @@ module Crm
       authorize @member
 
       if @member.update(member_params)
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     notice:
                       I18n.t(
                         "members.updated",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert: @member.errors.full_messages.join(", ")
       end
     end
@@ -102,14 +102,14 @@ module Crm
       authorize @member
 
       if @member.destroy
-        redirect_to members_path,
+        redirect_to crm.members_path,
                     alert:
                       I18n.t(
                         "members.deleted",
                         name: MemberHelper.full_name(@member)
                       )
       else
-        redirect_to members_path, alert: I18n.t("members.error_update")
+        redirect_to crm.members_path, alert: I18n.t("members.error_update")
       end
     end
 

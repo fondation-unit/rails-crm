@@ -26,10 +26,10 @@ module Crm
     end
 
     def is_active?()
-      if current_page?(member_types_path) ||
-          current_page?(investments_path) ||
-          current_page?(disciplines_path) ||
-          current_page?(levels_path)
+      if current_page?(crm.member_types_path) ||
+          current_page?(crm.investments_path) ||
+          current_page?(crm.disciplines_path) ||
+          current_page?(crm.levels_path)
         "show"
       else
         ""

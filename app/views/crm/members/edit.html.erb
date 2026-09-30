@@ -24,10 +24,10 @@
          pagy: @pagy,
          columns: %w[contact_type public content created_at user_id edit delete],
          formatters: {
-           edit: ->(note) { link_to I18n.t('edit'), edit_note_path(note) },
+           edit: ->(note) { link_to I18n.t('edit'), crm.edit_note_path(note) },
            delete: ->(note) {
                link_to I18n.t('delete'),
-                       note_path(note),
+                       crm.note_path(note),
                        data: {
                          turbo_method: :delete,
                          turbo_confirm: I18n.t('notes.validation_delete'),

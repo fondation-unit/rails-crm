@@ -20,10 +20,10 @@ module Crm
       authorize @discipline
 
       if @discipline.save
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice: I18n.t("members.discipline.created")
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
@@ -33,11 +33,11 @@ module Crm
       authorize @discipline
 
       if @discipline.update(discipline_params)
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice:
                       I18n.t("members.discipline.updated", name: @discipline.name)
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
@@ -47,11 +47,11 @@ module Crm
       authorize @discipline
 
       if @discipline.destroy
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     notice:
                       I18n.t("members.discipline.deleted", name: @discipline.name)
       else
-        redirect_to disciplines_path,
+        redirect_to crm.disciplines_path,
                     alert: I18n.t("members.discipline.error_update")
       end
     end
