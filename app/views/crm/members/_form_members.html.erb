@@ -28,7 +28,7 @@
           f.object.status,
         )
     %>
-    <%= f.select(:status, options, include_blank: true) %>
+    <%= f.select :status, options, {include_blank: true}, {class: "form-select"} %>
 </div>
 
 <div class="d-flex flex-row flex-wrap">
@@ -50,15 +50,15 @@
         <%= f.label I18n.t('members.institution') %>
         <div class="form_group my-4">
             <%=
-          f.collection_select(
-            :organization_ids,
-            @organizations,
-            :id,
-            :name,
-            { prompt: I18n.t('members.select_institution') },
-            { multiple: true },
-          )
-        %>
+            f.collection_select(
+                :organization_ids,
+                @organizations,
+                :id,
+                :name,
+                { prompt: I18n.t('members.select_institution') },
+                { multiple: true, class: "form-select" },
+            )
+            %>
         </div>
     </div>
     <div class="col-md-4">
