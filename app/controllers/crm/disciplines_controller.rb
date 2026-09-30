@@ -17,10 +17,10 @@ module Crm
       @discipline = Discipline.new(discipline_params)
 
       if @discipline.save
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     notice: I18n.t("members.discipline.created")
       else
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
@@ -29,11 +29,11 @@ module Crm
       @discipline = Discipline.find(params[:id])
 
       if @discipline.update(discipline_params)
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     notice:
                       I18n.t("members.discipline.updated", name: @discipline.name)
       else
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
       end
     end
@@ -42,11 +42,11 @@ module Crm
       @discipline = Discipline.find(params[:id])
 
       if @discipline.destroy
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     notice:
                       I18n.t("members.discipline.deleted", name: @discipline.name)
       else
-        redirect_to admin_disciplines_path,
+        redirect_to disciplines_path,
                     alert: I18n.t("members.discipline.error_update")
       end
     end

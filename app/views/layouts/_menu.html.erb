@@ -2,25 +2,25 @@
     <ul class="navbar-nav pt-lg-3">
 
         <li class="nav-item ">
-            <%= link_to I18n.t('menu.organizations'), admin_organizations_path, class: 'nav-link dropdown-item' %>
+            <%= link_to I18n.t('menu.organizations'), organizations_path, class: 'nav-link dropdown-item' %>
         </li>
         <li class="nav-item ">
-            <%= link_to I18n.t('menu.members'), admin_members_path, class: 'nav-link dropdown-item' %>
+            <%= link_to I18n.t('menu.members'), members_path, class: 'nav-link dropdown-item' %>
         </li>
         <li class="nav-item dropdown">
-            <%= link_to I18n.t('menu.params'), admin_members_path, class: 'nav-link  dropdown-toggle', data: { 'bs-toggle': 'dropdown'} %>
+            <%= link_to I18n.t('menu.params'), members_path, class: 'nav-link  dropdown-toggle', data: { 'bs-toggle': 'dropdown'} %>
             <ul class="dropdown-menu <%= is_active?() %>">
                 <li class="nav-item ">
-                    <%= link_to I18n.t('menu.member_types'), admin_member_types_path, class: 'nav-link dropdown-item' %>
+                    <%= link_to I18n.t('menu.member_types'), member_types_path, class: 'nav-link dropdown-item' %>
                 </li>
                 <li class=" nav-item ">
-                    <%= link_to I18n.t('menu.investments'), admin_investments_path, class: 'nav-link dropdown-item' %>
+                    <%= link_to I18n.t('menu.investments'), investments_path, class: 'nav-link dropdown-item' %>
                 </li>
                 <li class=" nav-item ">
-                    <%= link_to I18n.t('menu.disciplines'), admin_disciplines_path, class: 'nav-link dropdown-item' %>
+                    <%= link_to I18n.t('menu.disciplines'), disciplines_path, class: 'nav-link dropdown-item' %>
                 </li>
                 <li class=" nav-item ">
-                    <%= link_to I18n.t('menu.levels'), admin_levels_path, class: 'nav-link dropdown-item' %>
+                    <%= link_to I18n.t('menu.levels'), levels_path, class: 'nav-link dropdown-item' %>
                 </li>
             </ul>
         </li>

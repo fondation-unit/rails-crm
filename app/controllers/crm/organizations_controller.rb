@@ -41,9 +41,9 @@ module Crm
       @organization = Organization.new(organization_params)
 
       if @organization.save
-        redirect_to admin_organizations_path, notice: "Institution créée"
+        redirect_to organizations_path, notice: "Institution créée"
       else
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
@@ -52,12 +52,12 @@ module Crm
       @organization = Organization.find(params[:id])
 
       if @organization.update(organization_params)
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     notice: "Institution \"#{@organization.name}\" mise à jour"
       else
         @organization.reload # Reload the object to get the existing attachment
 
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     alert: @investment.errors.full_messages.join(", ")
       end
     end
@@ -67,10 +67,10 @@ module Crm
       nom = @organization.name
 
       if @organization.destroy
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     notice: "Institution \"#{nom}\" supprimée"
       else
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     alert: "Erreur lors de la suppression de l'institution"
       end
     end
@@ -95,7 +95,7 @@ module Crm
       if uploaded_file.present?
         OrganizationImporter.new(uploaded_file, user: current_user).call
 
-        redirect_to admin_organizations_path,
+        redirect_to organizations_path,
                     notice: I18n.t("members.organizations.imported")
       end
     end

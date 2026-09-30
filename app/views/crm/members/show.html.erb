@@ -56,11 +56,11 @@
   <div class="d-flex flex-row justify-content-between align-items-center">
     <div>
       <% if Current&.session&.user %>
-        <%= link_to I18n.t('edit'), edit_admin_member_path(@member), { class: 'btn btn-primary' } %>
+        <%= link_to I18n.t('edit'), edit_member_path(@member), { class: 'btn btn-primary' } %>
       <% end %>
     </div>
     <div>
-      <%= link_to I18n.t('notes.add'), admin_new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
+      <%= link_to I18n.t('notes.add'), new_member_note_path(member_id: @member.id), { class: 'btn btn-info' } %>
     </div>
   </div>
 </div>
@@ -80,11 +80,11 @@
          pagy: @pagy,
          columns: %w[contact_type public content created_at user_id edit delete],
          formatters: {
-           edit: ->(note) { link_to I18n.t('edit'), edit_admin_note_path(note) if is_current_user?(note.user&.id) },
+           edit: ->(note) { link_to I18n.t('edit'), edit_note_path(note) if is_current_user?(note.user&.id) },
            delete: ->(note) {
              if is_current_user?(note.user&.id)
                link_to I18n.t('delete'),
-                       admin_note_path(note),
+                       note_path(note),
                        data: {
                          turbo_method: :delete,
                          turbo_confirm: I18n.t('notes.validation_delete'),

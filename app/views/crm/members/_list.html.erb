@@ -29,20 +29,20 @@
     <% records.each_with_index do |c, i| %>
       <tr class="<%= MemberHelper.status_class(c) %>">
         <td><%= c.id %></td>
-        <td><%= link_to c.first_name, admin_member_path(c.id) %></td>
-        <td><%= link_to c.last_name, admin_member_path(c.id) %></td>
+        <td><%= link_to c.first_name, member_path(c.id) %></td>
+        <td><%= link_to c.last_name, member_path(c.id) %></td>
         <td><%= c.email_address %></td>
         <td>
-          <%= raw c.organizations_names.map { |wl| link_to wl[:name], admin_organization_path(wl[:id]) }.join(', ') %>
+          <%= raw c.organizations_names.map { |wl| link_to wl[:name], organization_path(wl[:id]) }.join(', ') %>
         </td>
         <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
         <td><%= raw c.investments_names.map { |wl| wl[:name] }.join(', ') %></td>
-        <td><%= link_to I18n.t('notes.add'), admin_new_member_note_path(c), { class: 'btn btn-info' } %></td>
-        <td><%= link_to I18n.t('edit'), edit_admin_member_path(c) %></td>
+        <td><%= link_to I18n.t('notes.add'), new_member_note_path(c), { class: 'btn btn-info' } %></td>
+        <td><%= link_to I18n.t('edit'), edit_member_path(c) %></td>
         <td>
           <%=
             link_to I18n.t('delete'),
-                    admin_member_path(c),
+                    member_path(c),
                     data: {
                       turbo_method: :delete,
                       turbo_confirm: I18n.t('members.validation_delete'),

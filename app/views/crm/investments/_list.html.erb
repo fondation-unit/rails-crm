@@ -26,11 +26,11 @@
         <td><%= c.referent1 %></td>
         <td><%= c.referent2 %></td>
         <td><%= c.copy %></td>
-        <td><%= link_to I18n.t('edit'), edit_admin_investment_path(c) %></td>
+        <td><%= link_to I18n.t('edit'), edit_investment_path(c) %></td>
         <td>
           <%=
             link_to I18n.t('delete'),
-                    admin_investment_path(c),
+                    investment_path(c),
                     data: {
                       turbo_method: :delete,
                       turbo_confirm: I18n.t('investments.validation_delete'),
