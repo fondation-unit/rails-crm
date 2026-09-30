@@ -5,10 +5,6 @@ gemspec
 
 gem "puma"
 
-gem "sqlite3"
-
-gem "propshaft"
-
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 gem "rubocop-rails-omakase", require: false
 
@@ -16,4 +12,3 @@ gem "rubocop-rails-omakase", require: false
 # gem "debug", ">= 1.0.0"
 
 gem "telephone_number"
-gem "pundit"

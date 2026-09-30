@@ -2,7 +2,6 @@ module Crm
   class InvestmentsController < ApplicationController
     include Searchable
     include Filterable
-    include Pundit::Authorization
 
     def index
       investments = Investment.all.order(sort_column => sort_direction)
