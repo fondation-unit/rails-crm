@@ -137,6 +137,7 @@ module Crm
     end
 
     def import
+      authorize Member
       uploaded_file = params[:csv_file]
 
       if uploaded_file.present?

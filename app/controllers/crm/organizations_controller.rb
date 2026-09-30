@@ -4,7 +4,7 @@ module Crm
     include Searchable
 
     def index
-      organizations = Organization.includes(:notes)
+      organizations = policy_scope(Organization.includes(:notes))
       records = search_and_filter(organizations)
       organizations = records.order(sort_column => sort_direction)
       @pagy, @records = pagy(organizations)
@@ -17,6 +17,8 @@ module Crm
 
     def show
       @organization = Organization.includes(:members, :notes).find(params[:id])
+      authorize @organization
+
       @pagy, @records = pagy(@organization.members)
 
       notes = @organization.notes
@@ -25,16 +27,20 @@ module Crm
 
     def new
       @organization = Organization.new
+      authorize @organization
     end
 
     def edit
       @organization = Organization.find(params[:id])
+      authorize @organization
+
       notes = @organization.notes
       @pagy, @notes = pagy(notes)
     end
 
     def create
       @organization = Organization.new(organization_params)
+      authorize @organization
 
       if @organization.save
         redirect_to organizations_path, notice: "Institution créée"
@@ -46,6 +52,7 @@ module Crm
 
     def update
       @organization = Organization.find(params[:id])
+      authorize @organization
 
       if @organization.update(organization_params)
         redirect_to organizations_path,
@@ -60,6 +67,8 @@ module Crm
 
     def destroy
       @organization = Organization.find(params[:id])
+      authorize @organization
+
       nom = @organization.name
 
       if @organization.destroy
@@ -86,6 +95,7 @@ module Crm
     end
 
     def import
+      authorize Organization
       uploaded_file = params[:csv_file]
 
       if uploaded_file.present?

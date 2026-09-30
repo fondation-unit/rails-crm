@@ -7,12 +7,16 @@ module Crm
 
     def new
       @note = Note.new
+      authorize @note
+
       @notable = find_notable
     end
 
     def create
       notable = find_notable
       @note = Note.new(note_params)
+      authorize @note
+
       @note.notable = notable
 
       if @note.save
@@ -26,10 +30,13 @@ module Crm
 
     def edit
       @note = Note.find(params[:id])
+      authorize @note
     end
 
     def update
       @note = Note.includes(:notable).find(params[:id])
+      authorize @note
+
       notable = @note.notable
 
       if @note.update(note_params)
@@ -43,6 +50,8 @@ module Crm
 
     def destroy
       @note = Note.includes(:notable).find(params[:id])
+      authorize @note
+
       notable = @note.notable
 
       if @note.destroy
