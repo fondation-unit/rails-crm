@@ -119,12 +119,12 @@ module Crm
 
     def search_and_filter_render(pagy, records)
       respond_to do |format|
-        format.html { render "admin/organizations/list" }
+        format.html { render "organizations/list" }
         format.turbo_stream do
           render turbo_stream: [
                   turbo_stream.update(
                     "search_results",
-                    partial: "admin/organizations/list",
+                    partial: "organizations/list",
                     locals: {
                       records: records,
                       pagy: pagy
