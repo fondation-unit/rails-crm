@@ -1,20 +1,23 @@
 module Crm
   class DisciplinesController < ApplicationController
     def index
-      disciplines = Discipline.all.order(sort_column => sort_direction)
+      disciplines = policy_scope(Discipline.all.order(sort_column => sort_direction))
       @pagy, @records = pagy(disciplines)
     end
 
     def new
       @discipline = Discipline.new
+      authorize @discipline
     end
 
     def edit
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
     end
 
     def create
       @discipline = Discipline.new(discipline_params)
+      authorize @discipline
 
       if @discipline.save
         redirect_to disciplines_path,
@@ -27,6 +30,7 @@ module Crm
 
     def update
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
 
       if @discipline.update(discipline_params)
         redirect_to disciplines_path,
@@ -40,6 +44,7 @@ module Crm
 
     def destroy
       @discipline = Discipline.find(params[:id])
+      authorize @discipline
 
       if @discipline.destroy
         redirect_to disciplines_path,

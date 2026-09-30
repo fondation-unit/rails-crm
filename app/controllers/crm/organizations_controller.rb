@@ -4,13 +4,8 @@ module Crm
     include Searchable
 
     def index
-      # Requête initiale
       organizations = Organization.includes(:notes)
-
-      # Application des filtres s'il y en a en session
       records = search_and_filter(organizations)
-
-      # Complément de requête
       organizations = records.order(sort_column => sort_direction)
       @pagy, @records = pagy(organizations)
 
@@ -23,6 +18,7 @@ module Crm
     def show
       @organization = Organization.includes(:members, :notes).find(params[:id])
       @pagy, @records = pagy(@organization.members)
+
       notes = @organization.notes
       @pagy2, @notes = pagy(notes)
     end
@@ -118,13 +114,17 @@ module Crm
     end
 
     def search_and_filter_render(pagy, records)
+      list_partial = "#{controller_path}/list"
+
       respond_to do |format|
-        format.html { render "organizations/list" }
+        format.html do
+          render partial: list_partial, locals: { records:, pagy: }
+        end
         format.turbo_stream do
           render turbo_stream: [
                   turbo_stream.update(
                     "search_results",
-                    partial: "organizations/list",
+                    partial: list_partial,
                     locals: {
                       records: records,
                       pagy: pagy

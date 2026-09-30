@@ -24,7 +24,7 @@
     <%
       options =
         options_for_select(
-          Member.statuses.map { |key, value| [I18n.t("members.organizations.statuses.#{key}"), key] },
+          Crm::Member.statuses.map { |key, value| [I18n.t("members.organizations.statuses.#{key}"), key] },
           f.object.status,
         )
     %>

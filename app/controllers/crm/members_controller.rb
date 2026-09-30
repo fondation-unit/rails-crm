@@ -11,7 +11,6 @@ module Crm
     before_action :set_disciplines, only: %i[new create edit update]
 
     def index
-      # Requête initiale
       members =
         Member.includes(
           :organizations,
@@ -22,10 +21,8 @@ module Crm
           :investments
         ).order(sort_column => sort_direction)
 
-      # Application des filtres (s'il y en a en session)
+      members = policy_scope(members)
       records = search_and_filter(members)
-
-      # Complément de Requête (!= Elise Lucet)
       members = records.order(sort_column => sort_direction)
 
       respond_to do |format|
@@ -41,6 +38,7 @@ module Crm
 
     def show
       @member = Member.find(params[:id])
+      authorize @member
 
       notes = @member.notes
       @pagy, @notes = pagy(notes)
@@ -48,6 +46,8 @@ module Crm
 
     def new
       @member = Member.new
+      authorize @member
+
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -56,6 +56,8 @@ module Crm
 
     def edit
       @member = Member.find(params[:id])
+      authorize @member
+
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -67,6 +69,7 @@ module Crm
 
     def create
       @member = Member.new(member_params)
+      authorize @member
 
       if @member.save
         ReferentMailer.with(member: @member).investments_email.deliver_later
@@ -84,6 +87,7 @@ module Crm
 
     def update
       @member = Member.find(params[:id])
+      authorize @member
 
       if @member.update(member_params)
         redirect_to members_path,
@@ -100,6 +104,7 @@ module Crm
 
     def destroy
       @member = Member.find(params[:id])
+      authorize @member
 
       if @member.destroy
         redirect_to members_path,
