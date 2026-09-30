@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in crm.gemspec.
 gemspec
 
-gem "puma"
+gem "puma", ">= 5.0"
 gem "sqlite3"
 gem "propshaft"
 
