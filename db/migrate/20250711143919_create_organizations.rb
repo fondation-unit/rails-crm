@@ -16,7 +16,10 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    execute <<~SQL
+    add_index :crm_organizations, :name, unique: true
+
+    if ActiveRecord::Base.connection.adapter_name.downcase == "postgresql"
+      execute <<~SQL
         ALTER TABLE crm_organizations
         ADD COLUMN search_vector tsvector
         GENERATED ALWAYS AS (
@@ -28,7 +31,7 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
         ) STORED;
       SQL
 
-    add_index :crm_organizations, :name, unique: true
-    add_index :crm_organizations, :search_vector, using: :gin
+      add_index :crm_organizations, :search_vector, using: :gin
+    end
   end
 end
