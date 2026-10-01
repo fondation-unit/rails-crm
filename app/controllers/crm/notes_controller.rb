@@ -16,14 +16,17 @@ module Crm
       notable = find_notable
       @note = Note.new(note_params)
       authorize @note
+      p '*'*90
+      p notable
+      p '*'*90
 
       @note.notable = notable
 
       if @note.save
-        redirect_to crm.polymorphic_path([:admin, @note.notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     notice: I18n.t("notes.created")
       else
-        redirect_to crm.polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     notice: @note.errors.full_messages.join(", ")
       end
     end
@@ -40,10 +43,10 @@ module Crm
       notable = @note.notable
 
       if @note.update(note_params)
-        redirect_to crm.polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     notice: I18n.t("notes.updated")
       else
-        redirect_to crm.polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     notice: @note.errors.full_messages.join(", ")
       end
     end
@@ -55,10 +58,10 @@ module Crm
       notable = @note.notable
 
       if @note.destroy
-        redirect_to crm.polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     alert: I18n.t("notes.deleted")
       else
-        redirect_to crm.polymorphic_path([:admin, notable]),
+        redirect_to crm.polymorphic_path([crm, notable]),
                     alert: I18n.t("notes.error_update")
       end
     end
