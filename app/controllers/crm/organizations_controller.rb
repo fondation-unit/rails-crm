@@ -95,7 +95,7 @@ module Crm
       uploaded_file = params[:csv_file]
 
       if uploaded_file.present?
-        OrganizationImporter.new(uploaded_file, user: current_user).call
+        CRM::OrganizationImporter.new(uploaded_file, user: current_user).call
 
         redirect_to crm.organizations_path,
                     notice: I18n.t("members.organizations.imported")
