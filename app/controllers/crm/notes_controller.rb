@@ -16,9 +16,6 @@ module Crm
       notable = find_notable
       @note = Note.new(note_params)
       authorize @note
-      p '*'*90
-      p notable
-      p '*'*90
 
       @note.notable = notable
 

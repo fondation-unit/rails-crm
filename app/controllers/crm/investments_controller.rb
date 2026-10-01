@@ -10,10 +10,12 @@ module Crm
 
     def new
       @investment = Investment.new
+      authorize @investment
     end
 
     def create
       @investment = Investment.new(investment_params)
+      authorize @investment
 
       if @investment.save
         redirect_to crm.investments_path,
@@ -26,10 +28,12 @@ module Crm
 
     def edit
       @investment = Investment.find(params[:id])
+      authorize @investment
     end
 
     def update
       @investment = Investment.find(params[:id])
+      authorize @investment
 
       if @investment.update(investment_params)
         redirect_to crm.investments_path,
@@ -42,6 +46,7 @@ module Crm
 
     def destroy
       @investment = Investment.find(params[:id])
+      authorize @investment
 
       if @investment.destroy
         redirect_to crm.investments_path,
