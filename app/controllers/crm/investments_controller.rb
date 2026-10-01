@@ -4,7 +4,7 @@ module Crm
     include Filterable
 
     def index
-      investments = Investment.all.order(sort_column => sort_direction)
+      investments = policy_scope(Investment.order(sort_column => sort_direction))
       @pagy, @records = pagy(investments)
     end
 

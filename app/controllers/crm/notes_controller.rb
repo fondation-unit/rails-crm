@@ -3,6 +3,7 @@ module Crm
     include MemberHelper
 
     def index
+      authorize Note
     end
 
     def new
