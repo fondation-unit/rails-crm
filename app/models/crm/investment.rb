@@ -1,6 +1,6 @@
 module Crm
   class Investment < ApplicationRecord
-    has_and_belongs_to_many :members, join_table: "members_investments"
+    has_and_belongs_to_many :members, join_table: "crm_members_investments"
 
     validates :name, presence: true
 

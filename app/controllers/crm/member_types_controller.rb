@@ -7,14 +7,17 @@ module Crm
 
     def new
       @member_type = MemberType.new
+      authorize @member_type
     end
 
     def edit
       @member_type = MemberType.find(params[:id])
+      authorize @member_type
     end
 
     def create
       @member_type = MemberType.new(member_type_params)
+      authorize @member_type
 
       if @member_type.save
         redirect_to crm.member_types_path,
@@ -27,6 +30,7 @@ module Crm
 
     def update
       @member_type = MemberType.find(params[:id])
+      authorize @member_type
 
       if @member_type.update(member_type_params)
         redirect_to crm.member_types_path,
@@ -43,6 +47,8 @@ module Crm
 
     def destroy
       @member_type = MemberType.find(params[:id])
+      authorize @member_type
+
       nom = @member_type.name
 
       if @member_type.destroy

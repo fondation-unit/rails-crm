@@ -1,6 +1,6 @@
 module Crm
   class Discipline < ApplicationRecord
-    has_and_belongs_to_many :members, join_table: "members_disciplines"
+    has_and_belongs_to_many :members, join_table: "crm_members_disciplines"
 
     validates :name, presence: true
 
