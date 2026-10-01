@@ -114,7 +114,8 @@ module Crm
     end
 
     def search
-      scope = Member.includes(:notes)
+      authorize Member, :search?
+      scope = policy_scope(Member.includes(:notes))
       records = search_and_filter(scope)
 
       @pagy, @records = pagy(records)
@@ -175,13 +176,17 @@ module Crm
     end
 
     def search_and_filter_render(pagy, records)
+      list_partial = "#{controller_path}/list"
+
       respond_to do |format|
-        format.html { render "members/list" }
+        format.html do
+          render partial: list_partial, locals: { records:, pagy: }
+        end
         format.turbo_stream do
           render turbo_stream: [
                   turbo_stream.update(
                     "search_results",
-                    partial: "members/list",
+                    partial: list_partial,
                     locals: {
                       records: records,
                       pagy: pagy
