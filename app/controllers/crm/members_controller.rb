@@ -3,6 +3,7 @@ module Crm
     include MemberHelper
     include Searchable
     include Filterable
+    require 'crm/member_importer'
 
     before_action :set_organizations, only: %i[new create edit update]
     before_action :set_member_types, only: %i[new create edit update]
