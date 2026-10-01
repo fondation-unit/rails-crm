@@ -76,7 +76,8 @@ module Crm
     end
 
     def search
-      records = search_and_filter
+      authorize Organization, :search?
+      records = policy_scope(search_and_filter)
       @pagy, @records = pagy(records)
 
       search_and_filter_render(@pagy, @records)
