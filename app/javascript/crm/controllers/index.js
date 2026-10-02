@@ -1,7 +1,7 @@
 import { Application } from "@hotwired/stimulus";
-import SortableController from "./_sortable_controller";
-import SearchBarController from "./_searchbar_controller";
-import MemberEditController from "./_member_edit_controller";
+import SortableController from "./controllers/_sortable_controller";
+import SearchBarController from "./controllers/_searchbar_controller";
+import MemberEditController from "./controllers/_member_edit_controller";
 
 const application = Application.start();
 application.register("sortable", SortableController);

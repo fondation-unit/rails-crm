@@ -1,4 +1,4 @@
-<div id="crm"></div>
+<div id="crm">
   <table class="table" data-controller="sortable">
     <thead>
       <tr>
@@ -29,7 +29,7 @@
     <tbody>
       <% records.each_with_index do |c, i| %>
         <tr class="<%= Crm::MemberHelper.status_class(c) %>">
-          <td><%= c.id %></td>
+          <td scope="row"><%= c.id %></td>
           <td><%= link_to c.first_name, crm.member_path(c.id) %></td>
           <td><%= link_to c.last_name, crm.member_path(c.id) %></td>
           <td><%= c.email_address %></td>
