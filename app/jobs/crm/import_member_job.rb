@@ -35,7 +35,7 @@ module Crm
 
         if !member.has_organizations?
           sql =
-            "INSERT INTO members_organizations (member_id, organization_id) VALUES (#{member.id}, #{orga.id})"
+            "INSERT INTO crm_members_organizations (member_id, organization_id) VALUES (#{member.id}, #{orga.id})"
           ActiveRecord::Base.connection.execute(sql)
         end
       end

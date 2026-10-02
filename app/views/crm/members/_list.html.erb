@@ -1,55 +1,57 @@
-<table class="table" data-controller="sortable">
-  <thead>
-    <tr>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'id' %>">#</th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'first_name' %>">
-        <%= I18n.t('first_name') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'last_name' %>">
-        <%= I18n.t('last_name') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'email_address' %>">
-        <%= I18n.t('email_address') %>
-      </th>
-      <th scope="col">
-        <%= I18n.t('members.institution') %>
-      </th>
-      <th scope="col">
-        <%= I18n.t('investments.investments') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'status' %>">
-        <%= I18n.t('members.organizations.status') %>
-      </th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% records.each_with_index do |c, i| %>
-      <tr class="<%= Crm::MemberHelper.status_class(c) %>">
-        <td><%= c.id %></td>
-        <td><%= link_to c.first_name, crm.member_path(c.id) %></td>
-        <td><%= link_to c.last_name, crm.member_path(c.id) %></td>
-        <td><%= c.email_address %></td>
-        <td>
-          <%= raw c.organizations_names.map { |wl| link_to wl[:name], crm.organization_path(wl[:id]) }.join(', ') %>
-        </td>
-        <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
-        <td><%= raw c.investments_names.map { |wl| wl[:name] }.join(', ') %></td>
-        <td><%= link_to I18n.t('notes.add'), crm.new_member_note_path(c), { class: 'btn btn-info' } %></td>
-        <td><%= link_to I18n.t('edit'), crm.edit_member_path(c) %></td>
-        <td>
-          <%=
-            link_to I18n.t('delete'),
-                    crm.member_path(c),
-                    data: {
-                      turbo_method: :delete,
-                      turbo_confirm: I18n.t('members.validation_delete'),
-                    }
-          %>
-        </td>
+<div id="crm">
+  <table class="table" data-controller="sortable">
+    <thead>
+      <tr>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'id' %>">#</th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'first_name' %>">
+          <%= I18n.t('first_name') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'last_name' %>">
+          <%= I18n.t('last_name') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'email_address' %>">
+          <%= I18n.t('email_address') %>
+        </th>
+        <th scope="col">
+          <%= I18n.t('members.institution') %>
+        </th>
+        <th scope="col">
+          <%= I18n.t('investments.investments') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'status' %>">
+          <%= I18n.t('members.organizations.status') %>
+        </th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% records.each_with_index do |c, i| %>
+        <tr class="<%= Crm::MemberHelper.status_class(c) %>">
+          <td scope="row"><%= c.id %></td>
+          <td><%= link_to c.first_name, crm.member_path(c.id) %></td>
+          <td><%= link_to c.last_name, crm.member_path(c.id) %></td>
+          <td><%= c.email_address %></td>
+          <td>
+            <%= raw c.organizations_names.map { |wl| link_to wl[:name], crm.organization_path(wl[:id]) }.join(', ') %>
+          </td>
+          <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
+          <td><%= raw c.investments_names.map { |wl| wl[:name] }.join(', ') %></td>
+          <td><%= link_to I18n.t('notes.add'), crm.new_member_note_path(c), { class: 'btn btn-info' } %></td>
+          <td><%= link_to I18n.t('edit'), crm.edit_member_path(c) %></td>
+          <td>
+            <%=
+              link_to I18n.t('delete'),
+                      crm.member_path(c),
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: I18n.t('members.validation_delete'),
+                      }
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
