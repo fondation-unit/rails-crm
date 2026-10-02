@@ -1,5 +1,6 @@
 <%# stimulus controller "search-bar" %>
-<div data-controller="search-bar">
+<fieldset data-controller="search-bar">
+<legend class="visually-hidden">Recherche et filtres pour les membres</legend>
   <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
     <div class="d-flex">
       <div class="input-group mb-3">
@@ -22,8 +23,9 @@
         %>
       </div>
     </div>
-    <div>
-      <%= f.label 'Choisissez une institution :' %>
+    <fieldset>
+    <legend class="visually-hidden">Liste des institutions disponibles</legend>
+      <%= f.label 'filters_organization_ids','Choisissez une institution :' %>
       <%=
         select_tag 'filters[organization_ids]',
                    options_from_collection_for_select(@organizations, :id, :name),
@@ -32,11 +34,12 @@
                      action: 'change->search-bar#search',
                    }
       %>
-    </div>
+    </fieldset>
     <div class="d-flex align-items-center">
-      <div class="d-flex flex-column w-100">
+      <fieldset class="d-flex flex-column w-100">
         <%= hidden_field_tag 'filters[__sent]', '1' %>
         <% filters.each do |filter_name, values| %>
+          <legend class="visually-hidden"><%= I18n.t("members.#{translate}.#{filter_name}") %></legend>
           <h3><%= I18n.t("members.#{translate}.#{filter_name}") %></h3>
 
           <% values.each_with_index do |(key, value), index| %>
@@ -57,7 +60,7 @@
             </div>
           <% end %>
         <% end %>
-      </div>
+      </fieldset>
       <div class="d-flex flex-column w-100">
         <h3><%= I18n.t('investments.investments') %></h3>
         <% @investments.each_with_index do |i, index| %>
@@ -80,4 +83,4 @@
       </div>
     </div>
   <% end %>
-</div>
+</fieldset>
