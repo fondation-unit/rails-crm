@@ -1,43 +1,45 @@
-<table class="table" data-controller="sortable">
-  <thead>
-    <tr>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'id' %>">#</th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'name' %>">
-        <%= I18n.t('name') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent1' %>">
-        <%= I18n.t('investments.referent1') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent2' %>">
-        <%= I18n.t('investments.referent2') %>
-      </th>
-      <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'copy' %>">
-        <%= I18n.t('investments.copy') %>
-      </th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% records.each_with_index do |c| %>
+<div id="crm">
+  <table class="table" data-controller="sortable">
+    <thead>
       <tr>
-        <td><%= c.id %></td>
-        <td><%= c.name %></td>
-        <td><%= c.referent1 %></td>
-        <td><%= c.referent2 %></td>
-        <td><%= c.copy %></td>
-        <td><%= link_to I18n.t('edit'), crm.edit_investment_path(c) %></td>
-        <td>
-          <%=
-            link_to I18n.t('delete'),
-                    crm.investment_path(c),
-                    data: {
-                      turbo_method: :delete,
-                      turbo_confirm: I18n.t('investments.validation_delete'),
-                    }
-          %>
-        </td>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'id' %>">#</th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'name' %>">
+          <%= I18n.t('name') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent1' %>">
+          <%= I18n.t('investments.referent1') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'referent2' %>">
+          <%= I18n.t('investments.referent2') %>
+        </th>
+        <th scope="col" data-action="click->sortable#sort" data-sortable-column-value="<%= 'copy' %>">
+          <%= I18n.t('investments.copy') %>
+        </th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% records.each_with_index do |c| %>
+        <tr>
+          <td><%= c.id %></td>
+          <td><%= c.name %></td>
+          <td><%= c.referent1 %></td>
+          <td><%= c.referent2 %></td>
+          <td><%= c.copy %></td>
+          <td><%= link_to I18n.t('edit'), crm.edit_investment_path(c) %></td>
+          <td>
+            <%=
+              link_to I18n.t('delete'),
+                      crm.investment_path(c),
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: I18n.t('investments.validation_delete'),
+                      }
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<div>
