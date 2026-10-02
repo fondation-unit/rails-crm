@@ -41,8 +41,7 @@
       <fieldset class="d-flex flex-column w-100">
         <%= hidden_field_tag 'filters[__sent]', '1' %>
         <% filters.each do |filter_name, values| %>
-          <legend class="visually-hidden"><%= I18n.t("members.#{translate}.#{filter_name}") %></legend>
-          <h3><%= I18n.t("members.#{translate}.#{filter_name}") %></h3>
+          <legend ><%= I18n.t("members.#{translate}.#{filter_name}") %></legend>
 
           <% values.each_with_index do |(key, value), index| %>
             <div class="form-check form-check-inline">
@@ -63,8 +62,8 @@
           <% end %>
         <% end %>
       </fieldset>
-      <div class="d-flex flex-column w-100">
-        <h3><%= I18n.t('investments.investments') %></h3>
+      <fieldset class="d-flex flex-column w-100">
+      <legend ><%= I18n.t('investments.investments') %></legend>
         <% @investments.each_with_index do |i, index| %>
           <div class="form-check form-check-inline">
             <%=
@@ -82,7 +81,7 @@
             </label>
           </div>
         <% end %>
-      </div>
+      </fieldset>
     </div>
   <% end %>
 </fieldset>
