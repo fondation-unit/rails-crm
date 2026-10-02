@@ -2,11 +2,13 @@
 <fieldset data-controller="search-bar">
 <legend class="visually-hidden">Recherche et filtres pour les membres</legend>
   <%= form_with url: path, method: :get, data: { "search-bar-target": "form" } do |f| %>
+    <p><label for="q "><%= t(:search).capitalize %></label></p>
     <div class="d-flex">
       <div class="input-group mb-3">
         <span class="input-group-text" id="q">
           <i class="bi bi-search position-relative"></i>
         </span>
+        
         <%=
           f.search_field :q,
                          data: {
