@@ -138,7 +138,7 @@ module Crm
                    ),
                    turbo_stream.update(
                      "search_pagination",
-                     partial: "shared/ui/pagy",
+                     partial: "shared/pagy",
                      locals: {
                        pagy: pagy
                      }
