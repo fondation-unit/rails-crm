@@ -30,8 +30,8 @@ Crm::Engine.routes.draw do
       to: "organizations#import",
       as: :organization_import_form
   post "/organization/import",
-        to: "organizations#import",
-        as: :organization_import
+       to: "organizations#import",
+       as: :organization_import
 
   get "/notes/new/member/:member_id", to: "notes#new", as: :new_member_note
   get "/notes/new/organization/:organization_id",

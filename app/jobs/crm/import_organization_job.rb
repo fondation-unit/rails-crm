@@ -18,11 +18,11 @@ module Crm
       )
 
       if row["Notes"].present? &&
-          !Note.find_by(
-            user_id: user.id,
-            notable_id: orga.id,
-            notable_type: "Organization"
-          ).present?
+           !Note.find_by(
+             user_id: user.id,
+             notable_id: orga.id,
+             notable_type: "Organization"
+           ).present?
         orga.notes.create!(
           user_id: user.id,
           content: Crm::MemberHelper.utf_decode(row["Notes"])

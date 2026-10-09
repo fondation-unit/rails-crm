@@ -1,7 +1,8 @@
 module Crm
   class DisciplinesController < ApplicationController
     def index
-      disciplines = policy_scope(Discipline.order(sort_column => sort_direction))
+      disciplines =
+        policy_scope(Discipline.order(sort_column => sort_direction))
       @pagy, @records = pagy(disciplines)
     end
 
@@ -35,7 +36,10 @@ module Crm
       if @discipline.update(discipline_params)
         redirect_to crm.disciplines_path,
                     notice:
-                      I18n.t("members.discipline.updated", name: @discipline.name)
+                      I18n.t(
+                        "members.discipline.updated",
+                        name: @discipline.name
+                      )
       else
         redirect_to crm.disciplines_path,
                     alert: @discipline.errors.full_messages.join(", ")
@@ -49,7 +53,10 @@ module Crm
       if @discipline.destroy
         redirect_to crm.disciplines_path,
                     notice:
-                      I18n.t("members.discipline.deleted", name: @discipline.name)
+                      I18n.t(
+                        "members.discipline.deleted",
+                        name: @discipline.name
+                      )
       else
         redirect_to crm.disciplines_path,
                     alert: I18n.t("members.discipline.error_update")

@@ -36,8 +36,8 @@ en:
       'linkedin_connected': 'Linkedin account connected ?'
       'status': 'Status'
       'statuses':
-        "a_contacter": "To contact"
-        "contacte": "Contacted"
-        "rappel": "Recall"
-        "refus": "Refused"
-        "inconnu": "Unknown"
+        'a_contacter': 'To contact'
+        'contacte': 'Contacted'
+        'rappel': 'Recall'
+        'refus': 'Refused'
+        'inconnu': 'Unknown'

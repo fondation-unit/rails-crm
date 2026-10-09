@@ -128,22 +128,22 @@ module Crm
         end
         format.turbo_stream do
           render turbo_stream: [
-                  turbo_stream.update(
-                    "search_results",
-                    partial: list_partial,
-                    locals: {
-                      records: records,
-                      pagy: pagy
-                    }
-                  ),
-                  turbo_stream.update(
-                    "search_pagination",
-                    partial: "shared/ui/pagy",
-                    locals: {
-                      pagy: pagy
-                    }
-                  )
-                ]
+                   turbo_stream.update(
+                     "search_results",
+                     partial: list_partial,
+                     locals: {
+                       records: records,
+                       pagy: pagy
+                     }
+                   ),
+                   turbo_stream.update(
+                     "search_pagination",
+                     partial: "shared/ui/pagy",
+                     locals: {
+                       pagy: pagy
+                     }
+                   )
+                 ]
         end
       end
     end
