@@ -10,13 +10,14 @@ module Crm
     end
 
     def generate_recipients(member)
-      recipients = if member.investments.any?
-        member.investments.flat_map do |investment|
-          [investment.referent1, investment.referent2, investment.copy]
+      recipients =
+        if member.investments.any?
+          member.investments.flat_map do |investment|
+            [investment.referent1, investment.referent2, investment.copy]
+          end
+        else
+          [ENV.fetch("REFERENT_EMAIL")]
         end
-      else
-        [ENV.fetch("REFERENT_EMAIL")]
-      end
 
       recipients.compact_blank.uniq.join(";")
     end
