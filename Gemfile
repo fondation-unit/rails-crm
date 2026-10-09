@@ -9,7 +9,6 @@ gem "propshaft"
 
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 
-
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
 
@@ -19,4 +18,5 @@ group :development, :test do
   gem "syntax_tree"
 end
 
+gem "pagy", "~> 43"
 gem "telephone_number"
