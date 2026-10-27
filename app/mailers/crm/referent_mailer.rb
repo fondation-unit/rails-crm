@@ -1,7 +1,5 @@
 module Crm
   class ReferentMailer < ApplicationMailer
-    self.delivery_job = "Crm::ReferentMailDeliveryJob"
-
     def investments_email
       @member = params[:member]
       recipients = generate_recipients(@member)
