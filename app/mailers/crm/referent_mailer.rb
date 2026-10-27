@@ -1,6 +1,6 @@
 module Crm
   class ReferentMailer < ApplicationMailer
-    discard_on ActiveJob::DeserializationError
+    self.delivery_job = "Crm::ReferentMailDeliveryJob"
 
     def investments_email
       @member = params[:member]
