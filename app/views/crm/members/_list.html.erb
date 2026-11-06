@@ -39,10 +39,10 @@
           <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
           <td><%= raw c.investments_names.map { |wl| wl[:name] }.join(', ') %></td>
           <td><%= link_to I18n.t('notes.add'), crm.new_member_note_path(c), { class: 'btn btn-info' } %></td>
-          <td><%= link_to I18n.t('edit'), crm.edit_member_path(c) %></td>
+          <td><%= link_to I18n.t('edit_translate', entity: "le membre", name: Crm::MemberHelper.full_name(c)).html_safe, crm.edit_member_path(c) %></td>
           <td>
             <%=
-              link_to I18n.t('delete'),
+              link_to I18n.t('delete_translate', entity: "le membre", name: Crm::MemberHelper.full_name(c)).html_safe,
                       crm.member_path(c),
                       data: {
                         turbo_method: :delete,

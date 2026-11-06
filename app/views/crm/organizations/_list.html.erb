@@ -41,10 +41,10 @@
           <td><%= I18n.t("members.organizations.statuses.#{c.status}") %></td>
           <td><%= Crm::UserHelper.full_name(c.user) %></td>
           <td><%= link_to I18n.t('notes.add'), crm.new_organization_note_path(c), { class: 'btn btn-info' } %></td>
-          <td><%= link_to I18n.t('edit'), crm.edit_organization_path(c) %></td>
+          <td><%= link_to I18n.t('edit_translate', entity: "l'institution", name: c.name).html_safe, crm.edit_organization_path(c) %></td>
           <td>
             <%=
-              link_to I18n.t('delete'),
+              link_to I18n.t('delete_translate', entity: "l'institution", name: c.name).html_safe,
                       crm.organization_path(c),
                       data: {
                         turbo_method: :delete,

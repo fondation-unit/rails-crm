@@ -27,10 +27,10 @@
           <td><%= c.referent1 %></td>
           <td><%= c.referent2 %></td>
           <td><%= c.copy %></td>
-          <td><%= link_to I18n.t('edit'), crm.edit_investment_path(c) %></td>
+          <td><%= link_to I18n.t('edit_translate', entity: "le type d'investissement", name: c.name).html_safe, crm.edit_investment_path(c) %></td>
           <td>
             <%=
-              link_to I18n.t('delete'),
+              link_to I18n.t('delete_translate', entity: "le type d'investissement", name: c.name).html_safe,
                       crm.investment_path(c),
                       data: {
                         turbo_method: :delete,

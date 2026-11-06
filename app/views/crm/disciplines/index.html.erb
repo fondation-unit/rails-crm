@@ -9,9 +9,9 @@
          pagy: @pagy,
          columns: %w[id name edit delete],
          formatters: {
-           edit: ->(discipline) { link_to I18n.t('edit'), crm.edit_discipline_path(discipline) },
+           edit: ->(discipline) { link_to I18n.t('edit_translate', entity: "le module", name: discipline.name).html_safe, crm.edit_discipline_path(discipline) },
            delete: ->(discipline) {
-             link_to I18n.t('delete'),
+             link_to I18n.t('delete_translate', entity: "le module", name: discipline.name).html_safe,
                      crm.discipline_path(discipline),
                      data: {
                        turbo_method: :delete,
