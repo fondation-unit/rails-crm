@@ -38,7 +38,8 @@ module Crm
 
     attr_accessor :remove_logo
 
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
+    normalizes :name, with: ->(n) { n.strip }
 
     before_save :purge_logo_if_wanted
 
