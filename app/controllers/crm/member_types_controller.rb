@@ -1,7 +1,8 @@
 module Crm
   class MemberTypesController < ApplicationController
     def index
-      member_types = policy_scope(MemberType.order(sort_column => sort_direction))
+      member_types =
+        policy_scope(MemberType.order(sort_column => sort_direction))
       @pagy, @records = pagy(member_types)
     end
 

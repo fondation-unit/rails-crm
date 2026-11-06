@@ -1,3 +1,1 @@
-Rails.application.routes.draw do
-  mount Crm::Engine => "/crm"
-end
+Rails.application.routes.draw { mount Crm::Engine => "/crm" }

@@ -41,11 +41,11 @@ module Crm
       end
 
       if row["Notes"].present? &&
-          !Note.find_by(
-            user_id: user.id,
-            notable_id: member.id,
-            notable_type: "Member"
-          ).present?
+           !Note.find_by(
+             user_id: user.id,
+             notable_id: member.id,
+             notable_type: "Member"
+           ).present?
         member.notes.create!(
           user_id: user.id,
           content: Crm::MemberHelper.utf_decode(row["Notes"])

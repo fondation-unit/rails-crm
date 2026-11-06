@@ -4,7 +4,8 @@ module Crm
     include Filterable
 
     def index
-      investments = policy_scope(Investment.order(sort_column => sort_direction))
+      investments =
+        policy_scope(Investment.order(sort_column => sort_direction))
       @pagy, @records = pagy(investments)
     end
 
@@ -19,7 +20,8 @@ module Crm
 
       if @investment.save
         redirect_to crm.investments_path,
-                    notice: I18n.t("investments.created", name: @investment.name)
+                    notice:
+                      I18n.t("investments.created", name: @investment.name)
       else
         redirect_to crm.investments_path,
                     alert: @investment.errors.full_messages.join(", ")
@@ -37,7 +39,8 @@ module Crm
 
       if @investment.update(investment_params)
         redirect_to crm.investments_path,
-                    notice: I18n.t("investments.updated", name: @investment.name)
+                    notice:
+                      I18n.t("investments.updated", name: @investment.name)
       else
         redirect_to crm.investments_path,
                     alert: @investment.errors.full_messages.join(", ")
@@ -50,7 +53,8 @@ module Crm
 
       if @investment.destroy
         redirect_to crm.investments_path,
-                    notice: I18n.t("investments.updated", name: @investment.name)
+                    notice:
+                      I18n.t("investments.updated", name: @investment.name)
       else
         redirect_to crm.investments_path,
                     alert: @investment.errors.full_messages.join(", ")

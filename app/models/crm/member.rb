@@ -5,8 +5,10 @@ module Crm
 
     has_many :notes, as: :notable
 
-    has_and_belongs_to_many :member_types, join_table: "crm_members_member_types"
-    has_and_belongs_to_many :organizations, join_table: "crm_members_organizations"
+    has_and_belongs_to_many :member_types,
+                            join_table: "crm_members_member_types"
+    has_and_belongs_to_many :organizations,
+                            join_table: "crm_members_organizations"
     has_and_belongs_to_many :investments, join_table: "crm_members_investments"
     has_and_belongs_to_many :levels, join_table: "crm_members_levels"
     has_and_belongs_to_many :disciplines, join_table: "crm_members_disciplines"

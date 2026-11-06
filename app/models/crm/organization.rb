@@ -22,14 +22,14 @@ module Crm
     has_one_attached :logo do |attachable|
       attachable.variant :thumb, resize_to_limit: [200, 200]
       attachable.variant :medium,
-                        resize_to_limit: [600, 400],
-                        format: :webp,
-                        saver: {
-                          subsample_mode: "on",
-                          strip: true,
-                          interlace: true,
-                          quality: 85
-                        }
+                         resize_to_limit: [600, 400],
+                         format: :webp,
+                         saver: {
+                           subsample_mode: "on",
+                           strip: true,
+                           interlace: true,
+                           quality: 85
+                         }
     end
 
     attaches_one :logo # Validate the file through FileAttachable

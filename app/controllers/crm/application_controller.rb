@@ -3,7 +3,7 @@ module Crm
     helper Crm::FilterHelper
 
     def index
-      render 'crm/dashboard/index'
+      render "crm/dashboard/index"
     end
   end
 end
