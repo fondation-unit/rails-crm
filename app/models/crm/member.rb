@@ -34,6 +34,12 @@ module Crm
               },
               allow_blank: true
 
+    validates :gender,
+              inclusion: {
+                in: %w[male female neutral]
+              },
+              allow_blank: true
+
     normalize_user_names :first_name, :last_name
 
     before_save :set_phone_number
