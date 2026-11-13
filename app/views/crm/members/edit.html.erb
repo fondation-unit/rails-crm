@@ -1,4 +1,4 @@
-<h1><%= I18n.t('members.add') %></h1>
+<h1><%= member ? I18n.t('members.update') : I18n.t('members.add') %></h1>
 
 <%=
   render 'form_members', member: @member, url: crm.member_path(@member), member_types: @member_types, method: 'patch'
