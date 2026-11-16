@@ -53,6 +53,10 @@ module Crm
       @member = Member.find(params[:id])
       authorize @member
 
+      p "*" * 90
+      p @member
+      p "*" * 90
+
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -82,9 +86,13 @@ module Crm
 
     def update
       @member = Member.find(params[:id])
+
       authorize @member
 
       if @member.update(member_params)
+        p "*" * 90
+        p @member
+        p "*" * 90
         redirect_to crm.members_path,
                     notice:
                       I18n.t(
@@ -239,6 +247,7 @@ module Crm
     def member_params
       params.expect(
         member: [
+          :gender,
           :first_name,
           :last_name,
           :email_address,
