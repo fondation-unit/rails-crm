@@ -37,32 +37,57 @@
                    }
       %>
     </fieldset>
-    <div class="d-flex align-items-center">
-      <fieldset class="d-flex flex-column w-100">
+    <div class="d-flex align-items-center flex-row flex-wrap">
+      
         <%= hidden_field_tag 'filters[__sent]', '1' %>
         <% filters.each do |filter_name, values| %>
-          <legend ><%= I18n.t("members.#{translate}.#{filter_name}") %></legend>
+          <fieldset class="d-flex flex-column col-md-4">
+            <legend ><%= I18n.t("members.#{translate}.#{filter_name}") %></legend>
 
-          <% values.each_with_index do |(key, value), index| %>
-            <div class="form-check form-check-inline">
-              <%=
-                check_box_tag "filters[#{filter_name}][]",
-                              value,
-                              active_filter?(filter_name, value),
-                              id: "filterCheckbox_#{filter_name}_#{index}",
-                              class: 'mx-2 form-check-input',
-                              data: {
-                                action: 'change->search-bar#search',
-                              }
-              %>
-              <label class="form-check-label" for="<%= "filterCheckbox_#{filter_name}_#{index}" %>">
-                <%= I18n.t("members.#{translate_list}.#{key}") %>
-              </label>
-            </div>
-          <% end %>
+            <% values.each_with_index do |(key, value), index| %>
+              <div class="form-check form-check-inline">
+                <%=
+                  check_box_tag "filters[#{filter_name}][]",
+                                value,
+                                active_filter?(filter_name, value),
+                                id: "filterCheckbox_#{filter_name}_#{index}",
+                                class: 'mx-2 form-check-input',
+                                data: {
+                                  action: 'change->search-bar#search',
+                                }
+                %>
+                <label class="form-check-label" for="<%= "filterCheckbox_#{filter_name}_#{index}" %>">
+                  <%= I18n.t("members.#{translate_list}.#{key}") %>
+                </label>
+              </div>
+            <% end %>
+            </fieldset>
         <% end %>
-      </fieldset>
-      <fieldset class="d-flex flex-column w-100">
+        
+        <fieldset class="d-flex flex-column col-md-4">
+          <legend ><%= I18n.t("members.miscellaneous") %></legend>
+          <% miscellaneous.each do |(key, value), index| %>
+              <div class="form-check form-check-inline">
+                <%=
+                check_box_tag "filters[#{key}]",
+                        value,
+                        active_filter?(@member, key),
+                        id: "filterCheckbox_#{key}",
+                        class: 'mx-2 form-check-input',
+                        data: {
+                          action: 'change->search-bar#search',
+                        }
+                %>
+                <label class="form-check-label" for="<%= "filterCheckbox_#{key}" %>">
+                <%= I18n.t("members.#{key}") %>
+                </label>
+              </div>  
+          <% end %>
+        </fieldset>
+        
+        
+      
+      <fieldset class="d-flex flex-column col-md-4">
       <legend ><%= I18n.t('investments.investments') %></legend>
         <% @investments.each_with_index do |i, index| %>
           <div class="form-check form-check-inline">
@@ -82,6 +107,7 @@
           </div>
         <% end %>
       </fieldset>
+      
     </div>
   <% end %>
 </fieldset>
