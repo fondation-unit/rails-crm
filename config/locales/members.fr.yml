@@ -19,6 +19,10 @@ fr:
         "invest": "Souhaite s'investir"
         "import": "Importer des membres"
         "imported": "Les membres ont bien été importés"
+        "gt": "GT Prof"
+        "comite": "Membre Comité experts"
+        "evofia": "A suivi une formation EVOFIA"
+        "miscellaneous": "Divers"
         member_type:
             "created": "Type de membre créé"
             "updated": 'Type de membre "%{name}" mis à jour'
@@ -47,6 +51,7 @@ fr:
             "deleted": 'Institution "%{name}" supprimée'
             "statuses":
                 "a_contacter": "À contacter"
+                "contact_without_return": "Contacté sans retour actuel"
                 "contacte": "Contacté"
                 "rappel": "Rappel"
                 "refus": "Refus"

@@ -53,10 +53,6 @@ module Crm
       @member = Member.find(params[:id])
       authorize @member
 
-      p "*" * 90
-      p @member
-      p "*" * 90
-
       @member_types = MemberType.ordered
       @investments = Investment.ordered
       @levels = Level.ordered
@@ -90,9 +86,6 @@ module Crm
       authorize @member
 
       if @member.update(member_params)
-        p "*" * 90
-        p @member
-        p "*" * 90
         redirect_to crm.members_path,
                     notice:
                       I18n.t(
@@ -160,6 +153,10 @@ module Crm
       filters&.each do |key, values|
         key = key.to_s
 
+        p "*" * 90
+        p key
+        p "*" * 90
+
         records =
           case key
           when "organization_ids"
@@ -171,6 +168,8 @@ module Crm
               .where(organizations: { id: values })
           when "investment_ids"
             records.joins(:investments).where(investments: { id: values })
+            #when "miscellaneous"
+            #  values&.each { |v| records.where("#{v}": true) }
           else
             # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
             # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
@@ -255,6 +254,9 @@ module Crm
           :phone_number,
           :copil,
           :comex,
+          :gt,
+          :comite,
+          :evofia,
           :notes,
           :decisionnaire,
           :principal,

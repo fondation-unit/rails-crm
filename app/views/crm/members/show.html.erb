@@ -36,6 +36,19 @@
         :
         <%= @member.comex ? I18n.t('Yes') : I18n.t('No') %>
         <br />
+        <%= I18n.t('members.gt') %>
+        :
+        <%= @member.gt ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+        <%= I18n.t('members.comite') %>
+        :
+        <%= @member.comite ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
+        <br />
+        <%= I18n.t('members.evofia') %>
+        :
+        <%= @member.evofia ? I18n.t('Yes') : I18n.t('No') %>
+        <br />
       </div>
     </div>
     <div class="col-md-6">
