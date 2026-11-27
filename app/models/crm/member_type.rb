@@ -4,7 +4,7 @@ module Crm
 
     validates :name, presence: true
 
-    scope :ordered, -> { order(name: "asc") }
+    default_scope -> { order(name: :asc) }
   end
 end
 

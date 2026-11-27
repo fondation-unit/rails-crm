@@ -1,4 +1,8 @@
-<%= form_with url: url, method: method, model: member do |f| %>
+<%= form_with url: url, method: method, model: member, :id =>"edit_member" do |f| %>
+<div class="form-group my-4">
+    <%= f.label :gender, I18n.t('gender') %>
+    <%= f.select(:gender, [I18n.t('male'), I18n.t('female'), I18n.t('neutral')], {}, { :class => 'form-control' }) %>
+</div>
 <div class="form-group my-4">
     <%= f.label :first_name, I18n.t('first_name') %>
     <%= f.text_field :first_name, required: true, class: 'form-control' %>
@@ -45,20 +49,36 @@
                 <%= f.label :comex, class: 'form-check-label' %>
             </div>
         </div>
+        <div class="form_group my-4">
+            <div class="form-check">
+                <%= f.check_box :gt, class: 'form-check-input', as: :boolean %>
+                <%= f.label :gt, I18n.t('members.gt'), class: 'form-check-label' %>
+            </div>
+        </div>
+        <div class="form_group my-4">
+            <div class="form-check">
+                <%= f.check_box :comite, class: 'form-check-input', as: :boolean %>
+                <%= f.label :comite, I18n.t('members.comite'), class: 'form-check-label' %>
+            </div>
+        </div>
+        <div class="form_group my-4">
+            <div class="form-check">
+                <%= f.check_box :evofia, class: 'form-check-input', as: :boolean %>
+                <%= f.label :evofia, I18n.t('members.evofia'), class: 'form-check-label' %>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
         <%= f.label I18n.t('members.institution') %>
         <div class="form_group my-4">
-            <%=
-            f.collection_select(
-                :organization_ids,
-                @organizations,
-                :id,
-                :name,
-                { prompt: I18n.t('members.select_institution') },
-                { multiple: true, class: "form-select" },
-            )
-            %>
+            <%= f.text_field :organization_name, list: "organizations", onchange: "updateHidden(this)", value: member && member.has_organizations? ? member.organizations[0].name : '' %>
+            <input type="hidden" name="member[organization_ids][]" id="organization_name" value="<%= member && member.has_organizations? ? member.organizations[0].id : '' %>">
+
+            <datalist id="organizations">
+                <% @organizations.each do |organization| %>
+                <option value="<%= organization.name %>" data-id="<%= organization.id %>"></option>
+                <% end %>
+            </datalist>
         </div>
     </div>
     <div class="col-md-4">
@@ -166,3 +186,16 @@
     <% end %>
 </button>
 <% end %>
+
+<script>
+//document.querySelector('#organizations').addEventListener('change', updateHidden);
+
+function updateHidden(elem) {
+    //console.log('event : 'event);
+  const value = elem.value
+  //var value2send = document.querySelector(`#titles option[value='${selectedTitle}']`).dataset.value;
+  const id = document.querySelector(`datalist option[value='${value}']`).dataset.id;
+    document.querySelector('#organization_name').value = id;
+}
+
+</script>

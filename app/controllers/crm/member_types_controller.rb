@@ -50,11 +50,11 @@ module Crm
       @member_type = MemberType.find(params[:id])
       authorize @member_type
 
-      nom = @member_type.name
+      name = @member_type.name
 
       if @member_type.destroy
         redirect_to crm.member_types_path,
-                    notice: I18n.t("members.member_type.deleted", name: nom)
+                    notice: I18n.t("members.member_type.deleted", name: name)
       else
         redirect_to crm.member_types_path,
                     alert: I18n.t("members.member_type.error_update")

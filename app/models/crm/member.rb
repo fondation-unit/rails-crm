@@ -15,11 +15,14 @@ module Crm
 
     STATUS_TABLE_MEMBER_CLASSES = {
       a_contacter: "table-info",
+      contact_without_return: "table-primary",
       contacte: "table-success",
       rappel: "table-secondary",
       refus: "table-danger",
       inconnu: "table-warning"
     }
+
+    MISCELLANEOUS = { gt: "gt", comite: "comite", evofia: "evofia" }
 
     validates :first_name, :last_name, presence: true
     validates :email_address,
@@ -87,6 +90,9 @@ end
 #  linkedin              :string
 #  linkedin_connected    :boolean
 #  newsletter_ressources :boolean
+#  gt                    :boolean
+#  comite                :boolean
+#  evofia                :boolean
 #  phone_number          :string
 #  position              :string
 #  principal             :boolean

@@ -4,11 +4,7 @@ module Crm
     include Searchable
     include Filterable
 
-    before_action :set_organizations, only: %i[new create edit update]
-    before_action :set_member_types, only: %i[new create edit update]
-    before_action :set_investments, only: %i[new create edit update]
-    before_action :set_levels, only: %i[new create edit update]
-    before_action :set_disciplines, only: %i[new create edit update]
+    before_action :set_data, only: %i[new edit create update]
 
     def index
       members =
@@ -25,8 +21,8 @@ module Crm
       records = search_and_filter(members)
       members = records.order(sort_column => sort_direction)
 
-      @organizations = Organization.order(:name)
-      @investments = Investment.order(:name)
+      @organizations = Organization.all
+      @investments = Investment.all
 
       @pagy, @records = pagy(members)
     end
@@ -42,21 +38,11 @@ module Crm
     def new
       @member = Member.new
       authorize @member
-
-      @member_types = MemberType.ordered
-      @investments = Investment.ordered
-      @levels = Level.ordered
-      @disciplines = Discipline.ordered
     end
 
     def edit
       @member = Member.find(params[:id])
       authorize @member
-
-      @member_types = MemberType.ordered
-      @investments = Investment.ordered
-      @levels = Level.ordered
-      @disciplines = Discipline.ordered
 
       notes = @member.notes
       @pagy, @notes = pagy(notes)
@@ -163,6 +149,8 @@ module Crm
               .where(organizations: { id: values })
           when "investment_ids"
             records.joins(:investments).where(investments: { id: values })
+            # when "miscellaneous"
+            #   values&.each { |v| records.where("#{v}": true) }
           else
             # Rejecter les paramètres qui ne correspondent pas à des attributs du modèle.
             # Nécessaire pour ne pas crasher à cause des paramètres en session issus d'autres contrôleurs.
@@ -204,24 +192,12 @@ module Crm
       end
     end
 
-    def set_organizations
-      @organizations = Organization.ordered
-    end
-
-    def set_member_types
-      @member_types = MemberType.ordered
-    end
-
-    def set_investments
-      @investments = Investment.ordered
-    end
-
-    def set_levels
-      @levels = Level.ordered
-    end
-
-    def set_disciplines
-      @disciplines = Discipline.ordered
+    def set_data
+      @organizations = Organization.all
+      @member_types = MemberType.all
+      @investments = Investment.all
+      @levels = Level.all
+      @disciplines = Discipline.all
     end
 
     def sort_column
@@ -239,6 +215,7 @@ module Crm
     def member_params
       params.expect(
         member: [
+          :gender,
           :first_name,
           :last_name,
           :email_address,
@@ -246,6 +223,9 @@ module Crm
           :phone_number,
           :copil,
           :comex,
+          :gt,
+          :comite,
+          :evofia,
           :notes,
           :decisionnaire,
           :principal,

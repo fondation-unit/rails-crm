@@ -7,7 +7,7 @@ module Crm
 
     validates_associated :user
 
-    scope :ordered, -> { order(created_at: "desc") }
+    default_scope -> { order(name: :asc) }
   end
 end
 
