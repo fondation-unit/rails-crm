@@ -43,7 +43,7 @@ module Crm
 
     before_save :purge_logo_if_wanted
 
-    scope :ordered, -> { order(name: "asc") }
+    default_scope :ordered, -> { order(name: "asc") }
 
     private
 
