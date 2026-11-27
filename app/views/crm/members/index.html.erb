@@ -13,8 +13,9 @@
            translate: 'organizations',
            translate_list: 'organizations.statuses',
            filters: {
-             status: Crm::Organization.statuses,
+             status: Crm::Member.statuses,
            },
+           miscellaneous: Crm::Member::MISCELLANEOUS,
          }
 %>
 
