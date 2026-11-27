@@ -153,10 +153,6 @@ module Crm
       filters&.each do |key, values|
         key = key.to_s
 
-        p "*" * 90
-        p key
-        p "*" * 90
-
         records =
           case key
           when "organization_ids"
