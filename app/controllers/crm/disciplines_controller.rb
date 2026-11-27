@@ -50,13 +50,11 @@ module Crm
       @discipline = Discipline.find(params[:id])
       authorize @discipline
 
+      name = @discipline.name
+
       if @discipline.destroy
         redirect_to crm.disciplines_path,
-                    notice:
-                      I18n.t(
-                        "members.discipline.deleted",
-                        name: @discipline.name
-                      )
+                    notice: I18n.t("members.discipline.deleted", name: name)
       else
         redirect_to crm.disciplines_path,
                     alert: I18n.t("members.discipline.error_update")

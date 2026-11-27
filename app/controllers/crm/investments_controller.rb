@@ -51,10 +51,11 @@ module Crm
       @investment = Investment.find(params[:id])
       authorize @investment
 
+      name = @investment.name
+
       if @investment.destroy
         redirect_to crm.investments_path,
-                    notice:
-                      I18n.t("investments.updated", name: @investment.name)
+                    notice: I18n.t("investments.updated", name: name)
       else
         redirect_to crm.investments_path,
                     alert: @investment.errors.full_messages.join(", ")

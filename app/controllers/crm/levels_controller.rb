@@ -44,11 +44,11 @@ module Crm
       @level = Level.find(params[:id])
       authorize @level
 
-      nom = @level.name
+      name = @level.name
 
       if @level.destroy
         redirect_to crm.levels_path,
-                    notice: I18n.t("members.level.deleted", name: nom)
+                    notice: I18n.t("members.level.deleted", name: name)
       else
         redirect_to crm.levels_path, alert: I18n.t("members.level.error_update")
       end

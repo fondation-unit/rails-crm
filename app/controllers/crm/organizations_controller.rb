@@ -4,9 +4,10 @@ module Crm
     include Searchable
 
     def index
-      organizations = policy_scope(Organization.includes(:notes))
-      records = search_and_filter(organizations)
-      organizations = records.order(sort_column => sort_direction)
+      organizations = policy_scope(Organization).includes(:notes)
+      organizations = search_and_filter(organizations)
+      organizations = organizations.order(sort_column => sort_direction)
+
       @pagy, @records = pagy(organizations)
     end
 
@@ -64,11 +65,11 @@ module Crm
       @organization = Organization.find(params[:id])
       authorize @organization
 
-      nom = @organization.name
+      name = @organization.name
 
       if @organization.destroy
         redirect_to crm.organizations_path,
-                    notice: "Institution \"#{nom}\" supprimée"
+                    notice: "Institution \"#{name}\" supprimée"
       else
         redirect_to crm.organizations_path,
                     alert: "Erreur lors de la suppression de l'institution"
